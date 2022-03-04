@@ -41,6 +41,11 @@ public final class Config {
 	// --------------------------------------------------
 	/** Balancer */
 	public static boolean BALANCER_ALLOW;
+	/** Buffer */
+	public static String FIGHTER_SET;
+	public static int[] FIGHTER_SET_LIST;
+	public static String MAGE_SET;
+	public static int[] MAGE_SET_LIST;
 
 	/** Custom Buff Time */
 	public static boolean ENABLE_ALTERNATIVE_SKILL_DURATION;
@@ -739,6 +744,20 @@ public final class Config {
 		 */
 
 		BALANCER_ALLOW = mods.getProperty("BalancerAllow", true);
+		
+					FIGHTER_SET = mods.getProperty("FighterSet", "2375,3500,3501,3502,4422,4423,4424,4425,6648,6649,6650");
+					MAGE_SET = mods.getProperty("MageSet", "2375,3500,3501,3502,4422,4423,4424,4425,6648,6649,6650");
+				
+					String[] FighterList = FIGHTER_SET.split(",");
+					FIGHTER_SET_LIST = new int[FighterList.length];
+					for (int i = 0; i < FighterList.length; i++)
+						FIGHTER_SET_LIST[i] = Integer.parseInt(FighterList[i]);
+					
+					String[] MageList = MAGE_SET.split(",");
+					MAGE_SET_LIST = new int[MageList.length];
+					for (int i = 0; i < MageList.length; i++)
+						MAGE_SET_LIST[i] = Integer.parseInt(MageList[i]);
+		
 
 		ENABLE_ALTERNATIVE_SKILL_DURATION = Boolean
 				.parseBoolean(mods.getProperty("EnableAlternativeSkillDuration", "false"));
