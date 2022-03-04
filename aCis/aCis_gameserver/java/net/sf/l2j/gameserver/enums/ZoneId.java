@@ -22,7 +22,7 @@ public enum ZoneId
 	NO_RESTART(17),
 	SCRIPT(18),
 	BOSS(19),
-	MULTI_FUNCTION(20);
+	FLAG(20);
 	
 	private final int _id;
 	
