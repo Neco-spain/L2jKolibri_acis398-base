@@ -41,6 +41,12 @@ public final class Config {
 	// --------------------------------------------------
 	/** Balancer */
 	public static boolean BALANCER_ALLOW;
+
+	/** Custom Buff Time */
+	public static boolean ENABLE_ALTERNATIVE_SKILL_DURATION;
+	public static HashMap<Integer, Integer> SKILL_DURATION_LIST;
+
+	/** Vip System */
 	public static boolean ENABLE_VIP_SYSTEM;
 	public static boolean ALLOW_VIP_NCOLOR;
 	public static int VIP_NCOLOR;
@@ -733,6 +739,68 @@ public final class Config {
 		 */
 
 		BALANCER_ALLOW = mods.getProperty("BalancerAllow", true);
+
+		ENABLE_ALTERNATIVE_SKILL_DURATION = Boolean
+				.parseBoolean(mods.getProperty("EnableAlternativeSkillDuration", "false"));
+		if (ENABLE_ALTERNATIVE_SKILL_DURATION)
+
+		{
+			SKILL_DURATION_LIST = new HashMap<>();
+
+			String[] propertySplit;
+
+			propertySplit = mods.getProperty("SkillDurationList", "").split(";");
+
+			for (String skill : propertySplit)
+
+			{
+
+				String[] skillSplit = skill.split(",");
+
+				if (skillSplit.length != 2)
+
+				{
+
+					System.out.println(
+							"[SkillDurationList]: invalid config property -> SkillDurationList \"" + skill + "\"");
+
+				}
+
+				else
+
+				{
+
+					try
+
+					{
+
+						SKILL_DURATION_LIST.put(Integer.parseInt(skillSplit[0]), Integer.parseInt(skillSplit[1]));
+
+					}
+
+					catch (NumberFormatException nfe)
+
+					{
+
+						nfe.printStackTrace();
+
+						if (!skill.equals(""))
+
+						{
+
+							System.out.println("[SkillDurationList]: invalid config property -> SkillList \""
+									+ skillSplit[0] + "\"" + skillSplit[1]);
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
 		ENABLE_VIP_SYSTEM = Boolean.parseBoolean(mods.getProperty("EnableVipSystem", "True"));
 		ALLOW_VIP_NCOLOR = Boolean.parseBoolean(mods.getProperty("AllowVipNameColor", "True"));
 		VIP_NCOLOR = Integer.decode("0x" + mods.getProperty("VipNameColor", "88AA88"));
