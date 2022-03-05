@@ -77,6 +77,9 @@ public final class Config {
 	// --------------------------------------------------
 	public static boolean ALT_OLY_END_ANNOUNCE;
 	public static boolean ENABLE_RAIDBOSS_NOBLES;
+	public static boolean ANNOUNCE_BOSS_ALIVE;
+	public static boolean ANNOUNCE_RAIDBOS_KILL;
+	public static boolean ANNOUNCE_GRANDBOS_KILL;
 
 	/** Balancer */
 	public static boolean BALANCER_ALLOW;
@@ -1051,6 +1054,9 @@ public final class Config {
 
 		ALT_OLY_END_ANNOUNCE = Boolean.parseBoolean(mods.getProperty("AltOlyEndAnnounce", "False"));
 		ENABLE_RAIDBOSS_NOBLES = Boolean.parseBoolean(mods.getProperty("RaidBossNobles", "false"));
+		ANNOUNCE_RAIDBOS_KILL = Boolean.parseBoolean(mods.getProperty("AnnounceRaidBossKill", "false"));
+		ANNOUNCE_GRANDBOS_KILL = Boolean.parseBoolean(mods.getProperty("AnnounceGranBossKill", "false"));
+		ANNOUNCE_BOSS_ALIVE = Boolean.parseBoolean(mods.getProperty("AnnounceSpawnAllBoss", "false"));
 
 		/**
 		 * Balancer.

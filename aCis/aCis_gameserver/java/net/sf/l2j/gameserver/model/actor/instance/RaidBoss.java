@@ -8,6 +8,7 @@ import net.sf.l2j.commons.random.Rnd;
 import net.sf.l2j.gameserver.data.manager.HeroManager;
 import net.sf.l2j.gameserver.data.manager.RaidBossManager;
 import net.sf.l2j.gameserver.data.manager.RaidPointManager;
+import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Creature;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.actor.template.NpcTemplate;
@@ -101,6 +102,13 @@ public class RaidBoss extends Monster {
 		if (killer != null) {
 			final Player player = killer.getActingPlayer();
 			if (player != null) {
+				if (Config.ANNOUNCE_RAIDBOS_KILL) {
+					if (player.getClan() != null)
+						World.announceToOnlinePlayers("Boss: " + getName() + " was killed by " + player.getName()
+								+ " of the clan: " + player.getClan().getName());
+					else
+						World.announceToOnlinePlayers("Boss: " + getName() + " was killed by " + player.getName());
+				}
 				broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.RAID_WAS_SUCCESSFUL));
 				broadcastPacket(new PlaySound("systemmsg_e.1209"));
 
