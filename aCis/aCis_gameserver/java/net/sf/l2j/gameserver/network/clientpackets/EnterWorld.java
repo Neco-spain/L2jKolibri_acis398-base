@@ -222,6 +222,10 @@ public class EnterWorld extends L2GameClientPacket {
 
 		if (Config.ALLOW_VIP_TCOLOR && player.isVip())
 			player.getAppearance().setTitleColor(Config.VIP_TCOLOR);
+
+		if (Config.ALT_OLY_END_ANNOUNCE) {
+			Olympiad.olympiadEnd(player);
+		}
 		// If the Player is a Dark Elf, check for Shadow Sense at night.
 		if (player.getRace() == ClassRace.DARK_ELF && player.hasSkill(L2Skill.SKILL_SHADOW_SENSE))
 			player.sendPacket(SystemMessage

@@ -39,6 +39,7 @@ public final class Config {
 	// --------------------------------------------------
 	// Mods settings
 	// --------------------------------------------------
+	public static boolean ALT_OLY_END_ANNOUNCE;
 	/** Balancer */
 	public static boolean BALANCER_ALLOW;
 	/** Buffer */
@@ -739,25 +740,26 @@ public final class Config {
 	 */
 	private static final void loadMods() {
 		final ExProperties mods = initProperties(MODS_FILE);
+
+		ALT_OLY_END_ANNOUNCE = Boolean.parseBoolean(mods.getProperty("AltOlyEndAnnounce", "False"));
 		/**
 		 * Balancer.
 		 */
 
 		BALANCER_ALLOW = mods.getProperty("BalancerAllow", true);
-		
-					FIGHTER_SET = mods.getProperty("FighterSet", "2375,3500,3501,3502,4422,4423,4424,4425,6648,6649,6650");
-					MAGE_SET = mods.getProperty("MageSet", "2375,3500,3501,3502,4422,4423,4424,4425,6648,6649,6650");
-				
-					String[] FighterList = FIGHTER_SET.split(",");
-					FIGHTER_SET_LIST = new int[FighterList.length];
-					for (int i = 0; i < FighterList.length; i++)
-						FIGHTER_SET_LIST[i] = Integer.parseInt(FighterList[i]);
-					
-					String[] MageList = MAGE_SET.split(",");
-					MAGE_SET_LIST = new int[MageList.length];
-					for (int i = 0; i < MageList.length; i++)
-						MAGE_SET_LIST[i] = Integer.parseInt(MageList[i]);
-		
+
+		FIGHTER_SET = mods.getProperty("FighterSet", "2375,3500,3501,3502,4422,4423,4424,4425,6648,6649,6650");
+		MAGE_SET = mods.getProperty("MageSet", "2375,3500,3501,3502,4422,4423,4424,4425,6648,6649,6650");
+
+		String[] FighterList = FIGHTER_SET.split(",");
+		FIGHTER_SET_LIST = new int[FighterList.length];
+		for (int i = 0; i < FighterList.length; i++)
+			FIGHTER_SET_LIST[i] = Integer.parseInt(FighterList[i]);
+
+		String[] MageList = MAGE_SET.split(",");
+		MAGE_SET_LIST = new int[MageList.length];
+		for (int i = 0; i < MageList.length; i++)
+			MAGE_SET_LIST[i] = Integer.parseInt(MageList[i]);
 
 		ENABLE_ALTERNATIVE_SKILL_DURATION = Boolean
 				.parseBoolean(mods.getProperty("EnableAlternativeSkillDuration", "false"));
