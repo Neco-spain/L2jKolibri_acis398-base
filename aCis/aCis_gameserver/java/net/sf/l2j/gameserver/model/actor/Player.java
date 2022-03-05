@@ -311,6 +311,21 @@ public final class Player extends Playable {
 	private Boat _boat;
 	private final SpawnLocation _boatPosition = new SpawnLocation(0, 0, 0, 0);
 
+	private Map<Integer, Future<?>> _autoPotTasks = new HashMap<>();
+
+	public boolean isAutoPot(int id) {
+		return _autoPotTasks.keySet().contains(id);
+	}
+
+	public void setAutoPot(int id, Future<?> task, boolean add) {
+		if (add)
+			_autoPotTasks.put(id, task);
+		else {
+			_autoPotTasks.get(id).cancel(true);
+			_autoPotTasks.remove(id);
+		}
+	}
+
 	private boolean _canFeed;
 	protected PetTemplate _petTemplate;
 	private PetDataEntry _petData;
@@ -2761,7 +2776,18 @@ public final class Player extends Playable {
 			}
 			return;
 		}
-
+		if (isAutoPot(728)) {
+			sendPacket(new ExAutoSoulShot(728, 0));
+			setAutoPot(728, null, false);
+		}
+		if (isAutoPot(1539)) {
+			sendPacket(new ExAutoSoulShot(1539, 0));
+			setAutoPot(1539, null, false);
+		}
+		if (isAutoPot(5592)) {
+			sendPacket(new ExAutoSoulShot(5592, 0));
+			setAutoPot(5592, null, false);
+		}
 		// Check if it's pvp (cases : regular, wars, victim is PKer)
 		if (checkIfPvP(target) || (targetPlayer.getClan() != null && getClan() != null
 				&& getClan().isAtWarWith(targetPlayer.getClanId()) && targetPlayer.getClan().isAtWarWith(getClanId())

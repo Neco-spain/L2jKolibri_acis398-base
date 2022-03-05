@@ -8,6 +8,7 @@ import net.sf.l2j.gameserver.model.actor.Summon;
 import net.sf.l2j.gameserver.model.olympiad.OlympiadGameTask;
 import net.sf.l2j.gameserver.model.zone.type.subtype.SpawnZoneType;
 import net.sf.l2j.gameserver.network.SystemMessageId;
+import net.sf.l2j.gameserver.network.serverpackets.ExAutoSoulShot;
 import net.sf.l2j.gameserver.network.serverpackets.ExOlympiadMatchEnd;
 import net.sf.l2j.gameserver.network.serverpackets.ExOlympiadUserInfo;
 import net.sf.l2j.gameserver.network.serverpackets.L2GameServerPacket;
@@ -16,110 +17,105 @@ import net.sf.l2j.gameserver.network.serverpackets.SystemMessage;
 /**
  * A zone extending {@link SpawnZoneType}, used for olympiad event.<br>
  * <br>
- * Restart and the use of "summoning friend" skill aren't allowed. The zone is considered a pvp zone.
+ * Restart and the use of "summoning friend" skill aren't allowed. The zone is
+ * considered a pvp zone.
  */
-public class OlympiadStadiumZone extends SpawnZoneType
-{
+public class OlympiadStadiumZone extends SpawnZoneType {
 	OlympiadGameTask _task = null;
-	
-	public OlympiadStadiumZone(int id)
-	{
+
+	public OlympiadStadiumZone(int id) {
 		super(id);
 	}
-	
+
 	@Override
-	protected final void onEnter(Creature character)
-	{
-		character.setInsideZone(ZoneId.NO_SUMMON_FRIEND, true);
-		character.setInsideZone(ZoneId.NO_RESTART, true);
-		
-		if (_task != null && _task.isBattleStarted())
-		{
-			character.setInsideZone(ZoneId.PVP, true);
-			if (character instanceof Player)
-			{
-				character.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ENTERED_COMBAT_ZONE));
-				_task.getGame().sendOlympiadInfo(character);
+	protected final void onEnter(Creature character) {
+		if (character instanceof Player) {
+			final Player player2 = (Player) character;
+			if (player2.isAutoPot(728) && player2.isAutoPot(1539) && player2.isAutoPot(5592)) {
+				player2.sendPacket(new ExAutoSoulShot(728, 0));
+				player2.sendPacket(new ExAutoSoulShot(1539, 0));
+				player2.sendPacket(new ExAutoSoulShot(5592, 0));
+				player2.setAutoPot(728, null, false);
+				player2.setAutoPot(1539, null, false);
+				player2.setAutoPot(5592, null, false);
+				player2.sendMessage("Deactivated auto pots .");
+			}
+
+			character.setInsideZone(ZoneId.NO_SUMMON_FRIEND, true);
+			character.setInsideZone(ZoneId.NO_RESTART, true);
+
+			if (_task != null && _task.isBattleStarted()) {
+				character.setInsideZone(ZoneId.PVP, true);
+				if (character instanceof Player) {
+					character.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ENTERED_COMBAT_ZONE));
+					_task.getGame().sendOlympiadInfo(character);
+				}
+			}
+
+			// Only participants, observers and GMs are allowed.
+			final Player player = character.getActingPlayer();
+			if (player != null && !player.isGM() && !player.isInOlympiadMode() && !player.isInObserverMode()) {
+				final Summon summon = player.getSummon();
+				if (summon != null)
+					summon.unSummon(player);
+
+				player.teleportTo(TeleportType.TOWN);
 			}
 		}
-		
-		// Only participants, observers and GMs are allowed.
-		final Player player = character.getActingPlayer();
-		if (player != null && !player.isGM() && !player.isInOlympiadMode() && !player.isInObserverMode())
-		{
-			final Summon summon = player.getSummon();
-			if (summon != null)
-				summon.unSummon(player);
-			
-			player.teleportTo(TeleportType.TOWN);
-		}
 	}
-	
+
 	@Override
-	protected final void onExit(Creature character)
-	{
+	protected final void onExit(Creature character) {
 		character.setInsideZone(ZoneId.NO_SUMMON_FRIEND, false);
 		character.setInsideZone(ZoneId.NO_RESTART, false);
-		
-		if (_task != null && _task.isBattleStarted())
-		{
+
+		if (_task != null && _task.isBattleStarted()) {
 			character.setInsideZone(ZoneId.PVP, false);
-			
-			if (character instanceof Player)
-			{
+
+			if (character instanceof Player) {
 				character.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.LEFT_COMBAT_ZONE));
 				character.sendPacket(ExOlympiadMatchEnd.STATIC_PACKET);
 			}
 		}
 	}
-	
-	public final void updateZoneStatusForCharactersInside()
-	{
+
+	public final void updateZoneStatusForCharactersInside() {
 		if (_task == null)
 			return;
-		
+
 		final boolean battleStarted = _task.isBattleStarted();
-		final SystemMessage sm = SystemMessage.getSystemMessage((battleStarted) ? SystemMessageId.ENTERED_COMBAT_ZONE : SystemMessageId.LEFT_COMBAT_ZONE);
-		
-		for (Creature character : _characters.values())
-		{
-			if (battleStarted)
-			{
+		final SystemMessage sm = SystemMessage.getSystemMessage(
+				(battleStarted) ? SystemMessageId.ENTERED_COMBAT_ZONE : SystemMessageId.LEFT_COMBAT_ZONE);
+
+		for (Creature character : _characters.values()) {
+			if (battleStarted) {
 				character.setInsideZone(ZoneId.PVP, true);
 				if (character instanceof Player)
 					character.sendPacket(sm);
-			}
-			else
-			{
+			} else {
 				character.setInsideZone(ZoneId.PVP, false);
-				if (character instanceof Player)
-				{
+				if (character instanceof Player) {
 					character.sendPacket(sm);
 					character.sendPacket(ExOlympiadMatchEnd.STATIC_PACKET);
 				}
 			}
 		}
 	}
-	
-	public final void registerTask(OlympiadGameTask task)
-	{
+
+	public final void registerTask(OlympiadGameTask task) {
 		_task = task;
 	}
-	
-	public final void broadcastStatusUpdate(Player player)
-	{
+
+	public final void broadcastStatusUpdate(Player player) {
 		final ExOlympiadUserInfo packet = new ExOlympiadUserInfo(player);
-		for (Player plyr : getKnownTypeInside(Player.class))
-		{
+		for (Player plyr : getKnownTypeInside(Player.class)) {
 			if (plyr.isInObserverMode() || plyr.getOlympiadSide() != player.getOlympiadSide())
 				plyr.sendPacket(packet);
 		}
 	}
-	
-	public final void broadcastPacketToObservers(L2GameServerPacket packet)
-	{
-		for (Player player : getKnownTypeInside(Player.class))
-		{
+
+	public final void broadcastPacketToObservers(L2GameServerPacket packet) {
+		for (Player player : getKnownTypeInside(Player.class)) {
 			if (player.isInObserverMode())
 				player.sendPacket(packet);
 		}

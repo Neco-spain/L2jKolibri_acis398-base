@@ -1,274 +1,575 @@
 package net.sf.l2j.gameserver.network.clientpackets;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.commons.random.Rnd;
-
-import net.sf.l2j.gameserver.data.SkillTable;
-import net.sf.l2j.gameserver.data.xml.ArmorSetData;
-import net.sf.l2j.gameserver.enums.Paperdoll;
 import net.sf.l2j.gameserver.enums.StatusType;
+import net.sf.l2j.gameserver.enums.items.ItemLocation;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.item.ArmorSet;
 import net.sf.l2j.gameserver.model.item.instance.ItemInstance;
-import net.sf.l2j.gameserver.model.item.kind.Armor;
-import net.sf.l2j.gameserver.model.item.kind.Item;
-import net.sf.l2j.gameserver.model.item.kind.Weapon;
+import net.sf.l2j.gameserver.model.olympiad.OlympiadManager;
 import net.sf.l2j.gameserver.network.SystemMessageId;
 import net.sf.l2j.gameserver.network.serverpackets.EnchantResult;
 import net.sf.l2j.gameserver.network.serverpackets.InventoryUpdate;
 import net.sf.l2j.gameserver.network.serverpackets.ItemList;
 import net.sf.l2j.gameserver.network.serverpackets.StatusUpdate;
 import net.sf.l2j.gameserver.network.serverpackets.SystemMessage;
-import net.sf.l2j.gameserver.skills.L2Skill;
 
-public final class RequestEnchantItem extends AbstractEnchantPacket
-{
+public final class RequestEnchantItem extends L2GameClientPacket {
+	private static final int[] DONATOR_WEAPON_SCROLL = { Config.GOLD_WEAPON };
+	private static final int[] DONATOR_ARMOR_SCROLL = { Config.GOLD_ARMOR };
+	private static final int[] CRYSTAL_SCROLLS = { 731, 732, 949, 950, 953, 954, 957, 958, 961, 962 };
+	private static final int[] NORMAL_WEAPON_SCROLLS = { 729, 947, 951, 955, 959 };
+	private static final int[] BLESSED_WEAPON_SCROLLS = { 6569, 6571, 6573, 6575, 6577 };
+	private static final int[] CRYSTAL_WEAPON_SCROLLS = { 731, 949, 953, 957, 961 };
+	private static final int[] NORMAL_ARMOR_SCROLLS = { 730, 948, 952, 956, 960 };
+	private static final int[] BLESSED_ARMOR_SCROLLS = { 6570, 6572, 6574, 6576, 6578 };
+	private static final int[] CRYSTAL_ARMOR_SCROLLS = { 732, 950, 954, 958, 962 };
 	private int _objectId;
-	
+
 	@Override
-	protected void readImpl()
-	{
+	protected void readImpl() {
 		_objectId = readD();
 	}
-	
+
 	@Override
-	protected void runImpl()
-	{
-		final Player player = getClient().getPlayer();
-		if (player == null || _objectId == 0)
-			return;
-		
-		if (!player.isOnline() || getClient().isDetached())
-		{
-			player.setActiveEnchantItem(null);
+	protected void runImpl() {
+		Player activeChar = getClient().getPlayer();
+		if ((activeChar == null) || (_objectId == 0)) {
 			return;
 		}
-		
-		if (player.isProcessingTransaction() || player.isOperating())
-		{
-			player.sendPacket(SystemMessageId.CANNOT_ENCHANT_WHILE_STORE);
-			player.setActiveEnchantItem(null);
-			player.sendPacket(EnchantResult.CANCELLED);
+		if (activeChar.getActiveTradeList() != null) {
+			activeChar.cancelActiveTrade();
+			activeChar.sendMessage("Your trade canceled");
 			return;
 		}
-		
-		final ItemInstance item = player.getInventory().getItemByObjectId(_objectId);
-		ItemInstance scroll = player.getActiveEnchantItem();
-		
-		if (item == null || scroll == null)
-		{
-			player.setActiveEnchantItem(null);
-			player.sendPacket(SystemMessageId.ENCHANT_SCROLL_CANCELLED);
-			player.sendPacket(EnchantResult.CANCELLED);
+		if (activeChar.isProcessingTransaction()) {
+			activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
+			activeChar.setActiveEnchantItem(null);
 			return;
 		}
-		
-		// template for scroll
-		final EnchantScroll scrollTemplate = getEnchantScroll(scroll);
-		if (scrollTemplate == null)
-			return;
-		
-		// first validation check
-		if (!scrollTemplate.isValid(item) || !isEnchantable(item))
-		{
-			player.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
-			player.setActiveEnchantItem(null);
-			player.sendPacket(EnchantResult.CANCELLED);
+		if (!activeChar.isOnline()) {
+			activeChar.setActiveEnchantItem(null);
 			return;
 		}
-		
-		// attempting to destroy scroll
-		scroll = player.getInventory().destroyItem("Enchant", scroll.getObjectId(), 1, player, item);
-		if (scroll == null)
-		{
-			player.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
-			player.setActiveEnchantItem(null);
-			player.sendPacket(EnchantResult.CANCELLED);
+		if ((activeChar.isInOlympiadMode()) || (OlympiadManager.getInstance().isRegistered(activeChar))) {
+			activeChar.sendMessage("[Olympiad]: Cant enchant while registered in Oly!!");
 			return;
 		}
-		
-		if (player.getActiveTradeList() != null)
-		{
-			player.cancelActiveTrade();
-			player.sendPacket(SystemMessageId.TRADE_ATTEMPT_FAILED);
+		if (!activeChar.isOnline()) {
+			activeChar.setActiveEnchantItem(null);
 			return;
 		}
-		
-		synchronized (item)
-		{
-			double chance = scrollTemplate.getChance(item);
-			
-			// last validation check
-			if (item.getOwnerId() != player.getObjectId() || !isEnchantable(item) || chance < 0)
-			{
-				player.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
-				player.setActiveEnchantItem(null);
-				player.sendPacket(EnchantResult.CANCELLED);
-				return;
+		ItemInstance item = activeChar.getInventory().getItemByObjectId(_objectId);
+		ItemInstance scroll = activeChar.getActiveEnchantItem();
+		activeChar.setActiveEnchantItem(null);
+		if ((item == null) || (scroll == null)) {
+			activeChar.setActiveEnchantItem(null);
+			return;
+		}
+		if ((!Config.ENCHANT_HERO_WEAPON) && (item.getItemId() >= 6611) && (item.getItemId() <= 6621)) {
+			activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
+			activeChar.setActiveEnchantItem(null);
+			return;
+		}
+		int itemType2 = item.getItem().getType2();
+		boolean enchantItem = false;
+		boolean blessedScroll = false;
+		boolean crystalScroll = false;
+		boolean donatorScroll = false;
+		int crystalId = 0;
+		switch (item.getItem().getCrystalType()) {
+		case A:
+			crystalId = 1461;
+			if ((scroll.getItemId() == Config.GOLD_WEAPON) && (itemType2 == 0)) {
+				enchantItem = true;
+			} else if ((scroll.getItemId() == Config.GOLD_ARMOR) && ((itemType2 == 1) || (itemType2 == 2))) {
+				enchantItem = true;
 			}
-			
-			// success
-			if (Rnd.nextDouble() < chance)
-			{
-				// announce the success
-				SystemMessage sm;
-				
-				if (item.getEnchantLevel() == 0)
-				{
-					sm = SystemMessage.getSystemMessage(SystemMessageId.S1_SUCCESSFULLY_ENCHANTED);
-					sm.addItemName(item.getItemId());
-					player.sendPacket(sm);
+			switch (scroll.getItemId()) {
+			case 729:
+			case 731:
+			case 6569:
+				if (itemType2 == 0) {
+					enchantItem = true;
 				}
-				else
-				{
-					sm = SystemMessage.getSystemMessage(SystemMessageId.S1_S2_SUCCESSFULLY_ENCHANTED);
+				break;
+			case 730:
+			case 732:
+			case 6570:
+				if ((itemType2 == 1) || (itemType2 == 2)) {
+					enchantItem = true;
+				}
+				break;
+			}
+			break;
+		case B:
+			crystalId = 1460;
+			if ((scroll.getItemId() == Config.GOLD_WEAPON) && (itemType2 == 0)) {
+				enchantItem = true;
+			} else if ((scroll.getItemId() == Config.GOLD_ARMOR) && ((itemType2 == 1) || (itemType2 == 2))) {
+				enchantItem = true;
+			}
+			switch (scroll.getItemId()) {
+			case 947:
+			case 949:
+			case 6571:
+				if (itemType2 == 0) {
+					enchantItem = true;
+				}
+				break;
+			case 948:
+			case 950:
+			case 6572:
+				if ((itemType2 == 1) || (itemType2 == 2)) {
+					enchantItem = true;
+				}
+				break;
+			}
+			break;
+		case C:
+			crystalId = 1459;
+			if ((scroll.getItemId() == Config.GOLD_WEAPON) && (itemType2 == 0)) {
+				enchantItem = true;
+			} else if ((scroll.getItemId() == Config.GOLD_ARMOR) && ((itemType2 == 1) || (itemType2 == 2))) {
+				enchantItem = true;
+			}
+			switch (scroll.getItemId()) {
+			case 951:
+			case 953:
+			case 6573:
+				if (itemType2 == 0) {
+					enchantItem = true;
+				}
+				break;
+			case 952:
+			case 954:
+			case 6574:
+				if ((itemType2 == 1) || (itemType2 == 2)) {
+					enchantItem = true;
+				}
+				break;
+			}
+			break;
+		case D:
+			crystalId = 1458;
+			if ((scroll.getItemId() == Config.GOLD_WEAPON) && (itemType2 == 0)) {
+				enchantItem = true;
+			} else if ((scroll.getItemId() == Config.GOLD_ARMOR) && ((itemType2 == 1) || (itemType2 == 2))) {
+				enchantItem = true;
+			}
+			switch (scroll.getItemId()) {
+			case 955:
+			case 957:
+			case 6575:
+				if (itemType2 == 0) {
+					enchantItem = true;
+				}
+				break;
+			case 956:
+			case 958:
+			case 6576:
+				if ((itemType2 == 1) || (itemType2 == 2)) {
+					enchantItem = true;
+				}
+				break;
+			}
+			break;
+		case S:
+			crystalId = 1462;
+			if ((scroll.getItemId() == Config.GOLD_WEAPON) && (itemType2 == 0)) {
+				enchantItem = true;
+			} else if ((scroll.getItemId() == Config.GOLD_ARMOR) && ((itemType2 == 1) || (itemType2 == 2))) {
+				enchantItem = true;
+			}
+			switch (scroll.getItemId()) {
+			case 959:
+			case 961:
+			case 6577:
+				if (itemType2 == 0) {
+					enchantItem = true;
+				}
+				break;
+			case 960:
+			case 962:
+			case 6578:
+				if ((itemType2 == 1) || (itemType2 == 2)) {
+					enchantItem = true;
+				}
+				break;
+			}
+			break;
+		}
+		if (!enchantItem) {
+			activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
+			return;
+		}
+		if ((scroll.getItemId() >= 6569) && (scroll.getItemId() <= 6578)) {
+			blessedScroll = true;
+		} else if ((scroll.getItemId() == Config.GOLD_WEAPON) || (scroll.getItemId() == Config.GOLD_ARMOR)) {
+			donatorScroll = true;
+		} else {
+			for (int crystalscroll : CRYSTAL_SCROLLS) {
+				if (scroll.getItemId() == crystalscroll) {
+					crystalScroll = true;
+					break;
+				}
+			}
+		}
+		int chance = 0;
+		int maxEnchantLevel = 0;
+		int minEnchantLevel = 0;
+		int nextEnchantLevel = item.getEnchantLevel() + 1;
+		if (item.getItem().getType2() == 0) {
+			if (blessedScroll) {
+				for (int blessedweaponscroll : BLESSED_WEAPON_SCROLLS) {
+					if (scroll.getItemId() == blessedweaponscroll) {
+						if (item.getEnchantLevel() >= Config.BLESS_WEAPON_ENCHANT_LEVEL.size()) {
+							chance = Config.BLESS_WEAPON_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.BLESS_WEAPON_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.BLESS_WEAPON_ENCHANT_LEVEL.get(Integer.valueOf(item.getEnchantLevel() + 1))
+									.intValue();
+						}
+						maxEnchantLevel = Config.BLESSED_ENCHANT_WEAPON_MAX;
+						break;
+					}
+				}
+			} else if (crystalScroll) {
+				for (int crystalweaponscroll : CRYSTAL_WEAPON_SCROLLS) {
+					if (scroll.getItemId() == crystalweaponscroll) {
+						if (item.getEnchantLevel() >= Config.CRYSTAL_WEAPON_ENCHANT_LEVEL.size()) {
+							chance = Config.CRYSTAL_WEAPON_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.CRYSTAL_WEAPON_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.CRYSTAL_WEAPON_ENCHANT_LEVEL
+									.get(Integer.valueOf(item.getEnchantLevel() + 1)).intValue();
+						}
+						minEnchantLevel = Config.CRYSTAL_ENCHANT_MIN;
+						maxEnchantLevel = Config.CRYSTAL_ENCHANT_WEAPON_MAX;
+						break;
+					}
+				}
+			} else if (donatorScroll) {
+				for (int donateweaponscroll : DONATOR_WEAPON_SCROLL) {
+					if (scroll.getItemId() == donateweaponscroll) {
+						if (item.getEnchantLevel() >= Config.DONATOR_WEAPON_ENCHANT_LEVEL.size()) {
+							chance = Config.DONATOR_WEAPON_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.DONATOR_WEAPON_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.DONATOR_WEAPON_ENCHANT_LEVEL
+									.get(Integer.valueOf(item.getEnchantLevel() + 1)).intValue();
+						}
+						minEnchantLevel = Config.DONATOR_ENCHANT_MIN;
+						maxEnchantLevel = Config.DONATOR_ENCHANT_WEAPON_MAX;
+						break;
+					}
+				}
+			} else {
+				for (int normalweaponscroll : NORMAL_WEAPON_SCROLLS) {
+					if (scroll.getItemId() == normalweaponscroll) {
+						if (item.getEnchantLevel() >= Config.NORMAL_WEAPON_ENCHANT_LEVEL.size()) {
+							chance = Config.NORMAL_WEAPON_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.NORMAL_WEAPON_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.NORMAL_WEAPON_ENCHANT_LEVEL.get(Integer.valueOf(item.getEnchantLevel() + 1))
+									.intValue();
+						}
+						maxEnchantLevel = Config.ENCHANT_WEAPON_MAX;
+						break;
+					}
+				}
+			}
+		} else if (item.getItem().getType2() == 1) {
+			if (blessedScroll) {
+				for (int blessedarmorscroll : BLESSED_ARMOR_SCROLLS) {
+					if (scroll.getItemId() == blessedarmorscroll) {
+						if (item.getEnchantLevel() >= Config.BLESS_ARMOR_ENCHANT_LEVEL.size()) {
+							chance = Config.BLESS_ARMOR_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.BLESS_ARMOR_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.BLESS_ARMOR_ENCHANT_LEVEL.get(Integer.valueOf(item.getEnchantLevel() + 1))
+									.intValue();
+						}
+						maxEnchantLevel = Config.BLESSED_ENCHANT_ARMOR_MAX;
+						break;
+					}
+				}
+			} else if (crystalScroll) {
+				for (int crystalarmorscroll : CRYSTAL_ARMOR_SCROLLS) {
+					if (scroll.getItemId() == crystalarmorscroll) {
+						if (item.getEnchantLevel() >= Config.CRYSTAL_ARMOR_ENCHANT_LEVEL.size()) {
+							chance = Config.CRYSTAL_ARMOR_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.CRYSTAL_ARMOR_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.CRYSTAL_ARMOR_ENCHANT_LEVEL.get(Integer.valueOf(item.getEnchantLevel() + 1))
+									.intValue();
+						}
+						minEnchantLevel = Config.CRYSTAL_ENCHANT_MIN;
+						maxEnchantLevel = Config.CRYSTAL_ENCHANT_ARMOR_MAX;
+						break;
+					}
+				}
+			} else if (donatorScroll) {
+				for (int donatorarmorscroll : DONATOR_ARMOR_SCROLL) {
+					if (scroll.getItemId() == donatorarmorscroll) {
+						if (item.getEnchantLevel() >= Config.DONATOR_ARMOR_ENCHANT_LEVEL.size()) {
+							chance = Config.DONATOR_ARMOR_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.DONATOR_ARMOR_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.DONATOR_ARMOR_ENCHANT_LEVEL.get(Integer.valueOf(item.getEnchantLevel() + 1))
+									.intValue();
+						}
+						minEnchantLevel = Config.DONATOR_ENCHANT_MIN;
+						maxEnchantLevel = Config.DONATOR_ENCHANT_ARMOR_MAX;
+						break;
+					}
+				}
+			} else {
+				for (int normalarmorscroll : NORMAL_ARMOR_SCROLLS) {
+					if (scroll.getItemId() == normalarmorscroll) {
+						if (item.getEnchantLevel() >= Config.NORMAL_ARMOR_ENCHANT_LEVEL.size()) {
+							chance = Config.NORMAL_ARMOR_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.NORMAL_ARMOR_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.NORMAL_ARMOR_ENCHANT_LEVEL.get(Integer.valueOf(item.getEnchantLevel() + 1))
+									.intValue();
+						}
+						maxEnchantLevel = Config.ENCHANT_ARMOR_MAX;
+						break;
+					}
+				}
+			}
+		} else if (item.getItem().getType2() == 2) {
+			if (blessedScroll) {
+				for (int blessedjewelscroll : BLESSED_ARMOR_SCROLLS) {
+					if (scroll.getItemId() == blessedjewelscroll) {
+						if (item.getEnchantLevel() >= Config.BLESS_JEWELRY_ENCHANT_LEVEL.size()) {
+							chance = Config.BLESS_JEWELRY_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.BLESS_JEWELRY_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.BLESS_JEWELRY_ENCHANT_LEVEL.get(Integer.valueOf(item.getEnchantLevel() + 1))
+									.intValue();
+						}
+						maxEnchantLevel = Config.BLESSED_ENCHANT_JEWELRY_MAX;
+						break;
+					}
+				}
+			} else if (crystalScroll) {
+				for (int crystaljewelscroll : CRYSTAL_ARMOR_SCROLLS) {
+					if (scroll.getItemId() == crystaljewelscroll) {
+						if (item.getEnchantLevel() >= Config.CRYSTAL_JEWELRY_ENCHANT_LEVEL.size()) {
+							chance = Config.CRYSTAL_JEWELRY_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.CRYSTAL_JEWELRY_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.CRYSTAL_JEWELRY_ENCHANT_LEVEL
+									.get(Integer.valueOf(item.getEnchantLevel() + 1)).intValue();
+						}
+						minEnchantLevel = Config.CRYSTAL_ENCHANT_MIN;
+						maxEnchantLevel = Config.CRYSTAL_ENCHANT_JEWELRY_MAX;
+
+						break;
+					}
+				}
+			} else if (donatorScroll) {
+				for (int donatorjewelscroll : DONATOR_ARMOR_SCROLL) {
+					if (scroll.getItemId() == donatorjewelscroll) {
+						if (item.getEnchantLevel() >= Config.DONATOR_JEWELRY_ENCHANT_LEVEL.size()) {
+							chance = Config.DONATOR_JEWELRY_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.DONATOR_JEWELRY_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.DONATOR_JEWELRY_ENCHANT_LEVEL
+									.get(Integer.valueOf(item.getEnchantLevel() + 1)).intValue();
+						}
+						minEnchantLevel = Config.DONATOR_ENCHANT_MIN;
+						maxEnchantLevel = Config.DONATOR_ENCHANT_JEWELRY_MAX;
+						break;
+					}
+				}
+			} else {
+				for (int normaljewelscroll : NORMAL_ARMOR_SCROLLS) {
+					if (scroll.getItemId() == normaljewelscroll) {
+						if (item.getEnchantLevel() >= Config.NORMAL_JEWELRY_ENCHANT_LEVEL.size()) {
+							chance = Config.NORMAL_JEWELRY_ENCHANT_LEVEL
+									.get(Integer.valueOf(Config.NORMAL_JEWELRY_ENCHANT_LEVEL.size())).intValue();
+						} else {
+							chance = Config.NORMAL_JEWELRY_ENCHANT_LEVEL
+									.get(Integer.valueOf(item.getEnchantLevel() + 1)).intValue();
+						}
+						maxEnchantLevel = Config.ENCHANT_JEWELRY_MAX;
+						break;
+					}
+				}
+			}
+		}
+		if (((maxEnchantLevel != 0) && (item.getEnchantLevel() >= maxEnchantLevel))
+				|| (item.getEnchantLevel() < minEnchantLevel) || (item.getEnchantLevel() >= nextEnchantLevel)) {
+			activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
+			return;
+		}
+		if (Config.SCROLL_STACKABLE) {
+			scroll = activeChar.getInventory().destroyItem("Enchant", scroll.getObjectId(), 1, activeChar, item);
+		} else {
+			scroll = activeChar.getInventory().destroyItem("Enchant", scroll, activeChar, item);
+		}
+		if (scroll == null) {
+			activeChar.sendPacket(SystemMessageId.NOT_ENOUGH_ITEMS);
+			return;
+		}
+		if ((item.getEnchantLevel() < Config.ENCHANT_SAFE_MAX) || ((item.getItem().getBodyPart() == 32768)
+				&& (item.getEnchantLevel() < Config.ENCHANT_SAFE_MAX_FULL))) {
+			chance = 100;
+		}
+		int rndValue = Rnd.get(100);
+
+		Object aChance = item.fireEvent("calcEnchantChance", new Object[chance]);
+		if (aChance != null) {
+			chance = ((Integer) aChance).intValue();
+		}
+		synchronized (item) {
+			if (rndValue < chance) {
+				if (item.getOwnerId() != activeChar.getObjectId()) {
+					activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
+					return;
+				}
+				if ((item.getLocation() != ItemLocation.INVENTORY) && (item.getLocation() != ItemLocation.PAPERDOLL)) {
+					activeChar.sendPacket(SystemMessageId.INAPPROPRIATE_ENCHANT_CONDITION);
+					return;
+				}
+				if (item.getEnchantLevel() == 0) {
+					SystemMessage sm = new SystemMessage(SystemMessageId.S1_SUCCESSFULLY_ENCHANTED);
+					sm.addItemName(item.getItemId());
+					activeChar.sendPacket(sm);
+				} else {
+					SystemMessage sm = new SystemMessage(SystemMessageId.S1_S2_SUCCESSFULLY_ENCHANTED);
 					sm.addNumber(item.getEnchantLevel());
 					sm.addItemName(item.getItemId());
-					player.sendPacket(sm);
+					activeChar.sendPacket(sm);
+
 				}
-				
 				item.setEnchantLevel(item.getEnchantLevel() + 1);
 				item.updateDatabase();
-				
-				// If item is equipped, verify the skill obtention (+4 duals, +6 armorset).
-				if (item.isEquipped())
-				{
-					final Item it = item.getItem();
-					
-					// Add skill bestowed by +4 duals.
-					if (it instanceof Weapon && item.getEnchantLevel() == 4)
-					{
-						final L2Skill enchant4Skill = ((Weapon) it).getEnchant4Skill();
-						if (enchant4Skill != null)
-						{
-							player.addSkill(enchant4Skill, false);
-							player.sendSkillList();
+			} else {
+				if (crystalScroll) {
+					SystemMessage sm = SystemMessage
+							.sendString("Failed in Crystal Enchant. The enchant value of the item become "
+									+ Config.CRYSTAL_ENCHANT_MIN);
+					activeChar.sendPacket(sm);
+				} else if (blessedScroll) {
+					SystemMessage sm = new SystemMessage(SystemMessageId.BLESSED_ENCHANT_FAILED);
+					activeChar.sendPacket(sm);
+				} else if (donatorScroll) {
+					if (Config.DONATOR_DECREASE_ENCHANT) {
+						if (item.getEnchantLevel() <= Config.DONATOR_ENCHANT_MIN) {
+							SystemMessage sm1 = SystemMessage.sendString("Failed Golden Enchant.");
+							activeChar.sendPacket(sm1);
+						} else {
+							SystemMessage sm1 = SystemMessage
+									.sendString("Failed Golden Enchant. His equipment had 1 reduced enchant.");
+							activeChar.sendPacket(sm1);
 						}
+					} else {
+						SystemMessage sm1 = SystemMessage.sendString("Failed Golden Enchant.");
+						activeChar.sendPacket(sm1);
 					}
-					// Add skill bestowed by +6 armorset.
-					else if (it instanceof Armor && item.getEnchantLevel() == 6)
-					{
-						// Checks if player is wearing a chest item
-						final int chestId = player.getInventory().getItemIdFrom(Paperdoll.CHEST);
-						if (chestId != 0)
-						{
-							final ArmorSet armorSet = ArmorSetData.getInstance().getSet(chestId);
-							if (armorSet != null && armorSet.isEnchanted6(player)) // has all parts of set enchanted to 6 or more
-							{
-								final int skillId = armorSet.getEnchant6skillId();
-								if (skillId > 0)
-								{
-									final L2Skill skill = SkillTable.getInstance().getInfo(skillId, 1);
-									if (skill != null)
-									{
-										player.addSkill(skill, false);
-										player.sendSkillList();
-									}
-								}
-							}
-						}
-					}
+				} else if (item.getEnchantLevel() > 0) {
+					SystemMessage sm = new SystemMessage(SystemMessageId.ENCHANTMENT_FAILED_S1_S2_EVAPORATED);
+					sm.addNumber(item.getEnchantLevel());
+					sm.addItemName(item.getItemId());
+					activeChar.sendPacket(sm);
+				} else {
+					SystemMessage sm = new SystemMessage(SystemMessageId.ENCHANTMENT_FAILED_S1_EVAPORATED);
+					sm.addItemName(item.getItemId());
+					activeChar.sendPacket(sm);
 				}
-				player.sendPacket(EnchantResult.SUCCESS);
-			}
-			else
-			{
-				// Drop passive skills from items.
-				if (item.isEquipped())
-				{
-					final Item it = item.getItem();
-					
-					// Remove skill bestowed by +4 duals.
-					if (it instanceof Weapon && item.getEnchantLevel() >= 4)
-					{
-						final L2Skill enchant4Skill = ((Weapon) it).getEnchant4Skill();
-						if (enchant4Skill != null)
-						{
-							player.removeSkill(enchant4Skill.getId(), false);
-							player.sendSkillList();
-						}
+				if ((!blessedScroll) && (!crystalScroll) && (!donatorScroll)) {
+					if (item.getEnchantLevel() > 0) {
+						SystemMessage sm = new SystemMessage(SystemMessageId.EQUIPMENT_S1_S2_REMOVED);
+						sm.addNumber(item.getEnchantLevel());
+						sm.addItemName(item.getItemId());
+						activeChar.sendPacket(sm);
+					} else {
+						SystemMessage sm = new SystemMessage(SystemMessageId.S1_DISARMED);
+						sm.addItemName(item.getItemId());
+						activeChar.sendPacket(sm);
 					}
-					// Add skill bestowed by +6 armorset.
-					else if (it instanceof Armor && item.getEnchantLevel() >= 6)
-					{
-						// Checks if player is wearing a chest item
-						final int chestId = player.getInventory().getItemIdFrom(Paperdoll.CHEST);
-						if (chestId != 0)
-						{
-							final ArmorSet armorSet = ArmorSetData.getInstance().getSet(chestId);
-							if (armorSet != null && armorSet.isEnchanted6(player)) // has all parts of set enchanted to 6 or more
-							{
-								final int skillId = armorSet.getEnchant6skillId();
-								if (skillId > 0)
-								{
-									player.removeSkill(skillId, false);
-									player.sendSkillList();
-								}
-							}
+					if (item.isEquipped()) {
+						if (item.isAugmented()) {
+							item.getAugmentation().removeBonus(activeChar);
 						}
+						ItemInstance[] unequiped = activeChar.getInventory()
+								.unequipItemInSlotAndRecord(item.getEquipSlot());
+						InventoryUpdate iu = new InventoryUpdate();
+						for (ItemInstance element : unequiped) {
+							iu.addModifiedItem(element);
+						}
+						activeChar.sendPacket(iu);
+
+						activeChar.broadcastUserInfo();
 					}
-				}
-				
-				if (scrollTemplate.isBlessed())
-				{
-					// blessed enchant - clear enchant value
-					player.sendPacket(SystemMessageId.BLESSED_ENCHANT_FAILED);
-					
-					item.setEnchantLevel(0);
-					item.updateDatabase();
-					player.sendPacket(EnchantResult.UNSUCCESS);
-				}
-				else
-				{
-					// enchant failed, destroy item
-					int crystalId = item.getItem().getCrystalItemId();
 					int count = item.getCrystalCount() - (item.getItem().getCrystalCount() + 1) / 2;
-					if (count < 1)
+					if (count < 1) {
 						count = 1;
-					
-					ItemInstance destroyItem = player.getInventory().destroyItem("Enchant", item, player, null);
-					if (destroyItem == null)
-					{
-						player.setActiveEnchantItem(null);
-						player.sendPacket(EnchantResult.CANCELLED);
+					}
+					if (item.fireEvent("enchantFail", new Object[0]) != null) {
 						return;
 					}
-					
-					if (crystalId != 0)
-					{
-						player.getInventory().addItem("Enchant", crystalId, count, player, destroyItem);
-						player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.EARNED_S2_S1_S).addItemName(crystalId).addItemNumber(count));
+					ItemInstance destroyItem = activeChar.getInventory().destroyItem("Enchant", item, activeChar, null);
+					if (destroyItem == null) {
+						return;
 					}
-					
-					InventoryUpdate iu = new InventoryUpdate();
-					if (destroyItem.getCount() == 0)
-						iu.addRemovedItem(destroyItem);
-					else
-						iu.addModifiedItem(destroyItem);
-					
-					player.sendPacket(iu);
-					
-					// Messages.
-					if (item.getEnchantLevel() > 0)
-						player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ENCHANTMENT_FAILED_S1_S2_EVAPORATED).addNumber(item.getEnchantLevel()).addItemName(item.getItemId()));
-					else
-						player.sendPacket(SystemMessage.getSystemMessage(SystemMessageId.ENCHANTMENT_FAILED_S1_EVAPORATED).addItemName(item.getItemId()));
-					
-					World.getInstance().removeObject(destroyItem);
-					if (crystalId == 0)
-						player.sendPacket(EnchantResult.UNK_RESULT_4);
-					else
-						player.sendPacket(EnchantResult.UNK_RESULT_1);
-					
-					StatusUpdate su = new StatusUpdate(player);
-					su.addAttribute(StatusType.CUR_LOAD, player.getCurrentWeight());
-					player.sendPacket(su);
+					ItemInstance crystals = activeChar.getInventory().addItem("Enchant", crystalId, count, activeChar,
+							destroyItem);
+
+					SystemMessage sm = new SystemMessage(SystemMessageId.EARNED_S2_S1_S);
+					sm.addItemName(crystals.getItemId());
+					sm.addNumber(count);
+					activeChar.sendPacket(sm);
+
+					activeChar.sendPacket(new ItemList(activeChar, true));
+
+					StatusUpdate su = new StatusUpdate(activeChar);
+					su.addAttribute(StatusType.CUR_LOAD, activeChar.getCurrentWeight());
+					activeChar.sendPacket(su);
+
+					activeChar.broadcastUserInfo();
+
+					World world = World.getInstance();
+					world.removeObject(destroyItem);
+				} else if (blessedScroll) {
+					item.setEnchantLevel(Config.BREAK_ENCHANT);
+					item.updateDatabase();
+				} else if (crystalScroll) {
+					item.setEnchantLevel(Config.CRYSTAL_ENCHANT_MIN);
+					item.updateDatabase();
+				} else if (donatorScroll) {
+					if (Config.DONATOR_DECREASE_ENCHANT) {
+						if (item.getEnchantLevel() <= Config.DONATOR_ENCHANT_MIN) {
+							item.setEnchantLevel(item.getEnchantLevel());
+						} else {
+							item.setEnchantLevel(item.getEnchantLevel() - 1);
+						}
+					} else {
+						item.setEnchantLevel(item.getEnchantLevel());
+					}
+					item.updateDatabase();
 				}
 			}
-			
-			player.sendPacket(new ItemList(player, false));
-			player.broadcastUserInfo();
-			player.setActiveEnchantItem(null);
 		}
+
+		StatusUpdate su = new StatusUpdate(activeChar);
+		su.addAttribute(StatusType.CUR_LOAD, activeChar.getCurrentWeight());
+		activeChar.sendPacket(su);
+		su = null;
+
+		activeChar.sendPacket(new EnchantResult(item.getEnchantLevel()));
+		activeChar.sendPacket(new ItemList(activeChar, false));
+		activeChar.broadcastUserInfo();
+		activeChar.setActiveEnchantItem(null);
+	}
+
+	@Override
+	public String getType() {
+		return "[C] 58 RequestEnchantItem";
 	}
 }

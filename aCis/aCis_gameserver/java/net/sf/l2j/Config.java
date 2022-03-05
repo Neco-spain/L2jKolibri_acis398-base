@@ -35,11 +35,49 @@ public final class Config {
 	public static final String SIEGE_FILE = "./config/siege.properties";
 	public static final String MODS_FILE = "./config/mods.properties";
 	public static final String SKIN_FILE = "./config/Skin.properties";
+	public static final String ENCHANT_FILE = "./config/EnchantSystem.properties";
+
+	// Enchant Setting
+	public static int ENCHANT_WEAPON_MAX;
+	public static int ENCHANT_ARMOR_MAX;
+	public static int ENCHANT_JEWELRY_MAX;
+	public static int BLESSED_ENCHANT_WEAPON_MAX;
+	public static int BLESSED_ENCHANT_ARMOR_MAX;
+	public static int BLESSED_ENCHANT_JEWELRY_MAX;
+	public static int BREAK_ENCHANT;
+	public static int CRYSTAL_ENCHANT_MIN;
+	public static int CRYSTAL_ENCHANT_WEAPON_MAX;
+	public static int CRYSTAL_ENCHANT_ARMOR_MAX;
+	public static int CRYSTAL_ENCHANT_JEWELRY_MAX;
+	public static int DONATOR_ENCHANT_MIN;
+	public static int DONATOR_ENCHANT_WEAPON_MAX;
+	public static int DONATOR_ENCHANT_ARMOR_MAX;
+	public static int DONATOR_ENCHANT_JEWELRY_MAX;
+	public static boolean DONATOR_DECREASE_ENCHANT;
+	public static int GOLD_WEAPON;
+	public static int GOLD_ARMOR;
+	public static boolean SCROLL_STACKABLE;
+	public static boolean ENCHANT_HERO_WEAPON;
+	public static HashMap<Integer, Integer> NORMAL_WEAPON_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> BLESS_WEAPON_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> CRYSTAL_WEAPON_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> DONATOR_WEAPON_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> NORMAL_ARMOR_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> BLESS_ARMOR_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> CRYSTAL_ARMOR_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> DONATOR_ARMOR_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> NORMAL_JEWELRY_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> BLESS_JEWELRY_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> CRYSTAL_JEWELRY_ENCHANT_LEVEL = new HashMap<>();
+	public static HashMap<Integer, Integer> DONATOR_JEWELRY_ENCHANT_LEVEL = new HashMap<>();
+	public static boolean DEBUG;
 
 	// --------------------------------------------------
 	// Mods settings
 	// --------------------------------------------------
 	public static boolean ALT_OLY_END_ANNOUNCE;
+	public static boolean ENABLE_RAIDBOSS_NOBLES;
+
 	/** Balancer */
 	public static boolean BALANCER_ALLOW;
 	/** Buffer */
@@ -736,12 +774,284 @@ public final class Config {
 	}
 
 	/**
-	 * Loads clan and clan hall settings.
+	 * config enchant novo.
+	 */
+	private static final void loadEnchantSystemConfig() {
+		final ExProperties enchant = initProperties(ENCHANT_FILE);
+		DEBUG = enchant.getProperty("Debug", false);
+		String[] propertySplit = enchant.getProperty("NormalWeaponEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				LOGGER.info("invalid config property");
+			} else {
+				try {
+					NORMAL_WEAPON_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						LOGGER.info("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("BlessWeaponEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				LOGGER.info("invalid config property");
+			} else {
+				try {
+					BLESS_WEAPON_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						LOGGER.info("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("CrystalWeaponEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				LOGGER.info("invalid config property");
+			} else {
+				try {
+					CRYSTAL_WEAPON_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						LOGGER.info("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("DonatorWeaponEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				System.out.println("invalid config property");
+			} else {
+				try {
+					DONATOR_WEAPON_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						System.out.println("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("NormalArmorEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				LOGGER.info("invalid config property");
+			} else {
+				try {
+					NORMAL_ARMOR_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						LOGGER.info("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("BlessArmorEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				LOGGER.info("invalid config property");
+			} else {
+				try {
+					BLESS_ARMOR_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						LOGGER.info("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("CrystalArmorEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				LOGGER.info("invalid config property");
+			} else {
+				try {
+					CRYSTAL_ARMOR_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						LOGGER.info("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("DonatorArmorEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				System.out.println("invalid config property");
+			} else {
+				try {
+					DONATOR_ARMOR_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						System.out.println("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("NormalJewelryEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				LOGGER.info("invalid config property");
+			} else {
+				try {
+					NORMAL_JEWELRY_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						LOGGER.info("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("BlessJewelryEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				LOGGER.info("invalid config property");
+			} else {
+				try {
+					BLESS_JEWELRY_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						LOGGER.info("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("CrystalJewelryEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				LOGGER.info("invalid config property");
+			} else {
+				try {
+					CRYSTAL_JEWELRY_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						LOGGER.info("invalid config property");
+					}
+				}
+			}
+		}
+		propertySplit = enchant.getProperty("DonatorJewelryEnchantLevel", "").split(";");
+		for (String readData : propertySplit) {
+			String[] writeData = readData.split(",");
+			if (writeData.length != 2) {
+				System.out.println("invalid config property");
+			} else {
+				try {
+					DONATOR_JEWELRY_ENCHANT_LEVEL.put(Integer.valueOf(Integer.parseInt(writeData[0])),
+							Integer.valueOf(Integer.parseInt(writeData[1])));
+				} catch (NumberFormatException nfe) {
+					if (DEBUG) {
+						nfe.printStackTrace();
+					}
+					if (!readData.equals("")) {
+						System.out.println("invalid config property");
+					}
+				}
+			}
+		}
+		ENCHANT_HERO_WEAPON = Boolean.parseBoolean(enchant.getProperty("EnableEnchantHeroWeapons", "False"));
+
+		GOLD_WEAPON = Integer.parseInt(enchant.getProperty("IdEnchantDonatorWeapon", "10010"));
+
+		GOLD_ARMOR = Integer.parseInt(enchant.getProperty("IdEnchantDonatorArmor", "10011"));
+
+		ENCHANT_SAFE_MAX = Integer.parseInt(enchant.getProperty("EnchantSafeMax", "3"));
+
+		ENCHANT_SAFE_MAX_FULL = Integer.parseInt(enchant.getProperty("EnchantSafeMaxFull", "4"));
+
+		SCROLL_STACKABLE = Boolean.parseBoolean(enchant.getProperty("ScrollStackable", "False"));
+
+		ENCHANT_WEAPON_MAX = Integer.parseInt(enchant.getProperty("EnchantWeaponMax", "25"));
+		ENCHANT_ARMOR_MAX = Integer.parseInt(enchant.getProperty("EnchantArmorMax", "25"));
+		ENCHANT_JEWELRY_MAX = Integer.parseInt(enchant.getProperty("EnchantJewelryMax", "25"));
+
+		BLESSED_ENCHANT_WEAPON_MAX = Integer.parseInt(enchant.getProperty("BlessedEnchantWeaponMax", "25"));
+		BLESSED_ENCHANT_ARMOR_MAX = Integer.parseInt(enchant.getProperty("BlessedEnchantArmorMax", "25"));
+		BLESSED_ENCHANT_JEWELRY_MAX = Integer.parseInt(enchant.getProperty("BlessedEnchantJewelryMax", "25"));
+
+		BREAK_ENCHANT = Integer.valueOf(enchant.getProperty("BreakEnchant", "0")).intValue();
+
+		CRYSTAL_ENCHANT_MIN = Integer.parseInt(enchant.getProperty("CrystalEnchantMin", "20"));
+		CRYSTAL_ENCHANT_WEAPON_MAX = Integer.parseInt(enchant.getProperty("CrystalEnchantWeaponMax", "25"));
+		CRYSTAL_ENCHANT_ARMOR_MAX = Integer.parseInt(enchant.getProperty("CrystalEnchantArmorMax", "25"));
+		CRYSTAL_ENCHANT_JEWELRY_MAX = Integer.parseInt(enchant.getProperty("CrystalEnchantJewelryMax", "25"));
+
+		DONATOR_ENCHANT_MIN = Integer.parseInt(enchant.getProperty("DonatorEnchantMin", "20"));
+		DONATOR_ENCHANT_WEAPON_MAX = Integer.parseInt(enchant.getProperty("DonatorEnchantWeaponMax", "25"));
+		DONATOR_ENCHANT_ARMOR_MAX = Integer.parseInt(enchant.getProperty("DonatorEnchantArmorMax", "25"));
+		DONATOR_ENCHANT_JEWELRY_MAX = Integer.parseInt(enchant.getProperty("DonatorEnchantJewelryMax", "25"));
+		DONATOR_DECREASE_ENCHANT = Boolean.valueOf(enchant.getProperty("DonatorDecreaseEnchant", "false"))
+				.booleanValue();
+
+	}
+
+	/**
+	 * Loads mods settings.
 	 */
 	private static final void loadMods() {
 		final ExProperties mods = initProperties(MODS_FILE);
 
 		ALT_OLY_END_ANNOUNCE = Boolean.parseBoolean(mods.getProperty("AltOlyEndAnnounce", "False"));
+		ENABLE_RAIDBOSS_NOBLES = Boolean.parseBoolean(mods.getProperty("RaidBossNobles", "false"));
+
 		/**
 		 * Balancer.
 		 */
@@ -1270,16 +1580,6 @@ public final class Config {
 		REGION_BASED_FREIGHT = players.getProperty("RegionBasedFreight", true);
 		FREIGHT_PRICE = players.getProperty("FreightPrice", 1000);
 
-		ENCHANT_CHANCE_WEAPON_MAGIC = players.getProperty("EnchantChanceMagicWeapon", 0.4);
-		ENCHANT_CHANCE_WEAPON_MAGIC_15PLUS = players.getProperty("EnchantChanceMagicWeapon15Plus", 0.2);
-		ENCHANT_CHANCE_WEAPON_NONMAGIC = players.getProperty("EnchantChanceNonMagicWeapon", 0.7);
-		ENCHANT_CHANCE_WEAPON_NONMAGIC_15PLUS = players.getProperty("EnchantChanceNonMagicWeapon15Plus", 0.35);
-		ENCHANT_CHANCE_ARMOR = players.getProperty("EnchantChanceArmor", 0.66);
-		ENCHANT_MAX_WEAPON = players.getProperty("EnchantMaxWeapon", 0);
-		ENCHANT_MAX_ARMOR = players.getProperty("EnchantMaxArmor", 0);
-		ENCHANT_SAFE_MAX = players.getProperty("EnchantSafeMax", 3);
-		ENCHANT_SAFE_MAX_FULL = players.getProperty("EnchantSafeMaxFull", 4);
-
 		AUGMENTATION_NG_SKILL_CHANCE = players.getProperty("AugmentationNGSkillChance", 15);
 		AUGMENTATION_NG_GLOW_CHANCE = players.getProperty("AugmentationNGGlowChance", 0);
 		AUGMENTATION_MID_SKILL_CHANCE = players.getProperty("AugmentationMidSkillChance", 30);
@@ -1555,6 +1855,8 @@ public final class Config {
 		loadMods();
 		// Loads Skin Click
 		loadSkin();
+		// enchant settings new
+		loadEnchantSystemConfig();
 	}
 
 	public static final void loadLoginServer() {

@@ -2,10 +2,9 @@ package net.sf.l2j.gameserver.model.actor.instance;
 
 import java.util.concurrent.ScheduledFuture;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.commons.pool.ThreadPool;
 import net.sf.l2j.commons.random.Rnd;
-
-import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.data.manager.HeroManager;
 import net.sf.l2j.gameserver.data.manager.RaidBossManager;
 import net.sf.l2j.gameserver.data.manager.RaidPointManager;
@@ -16,55 +15,54 @@ import net.sf.l2j.gameserver.model.group.CommandChannel;
 import net.sf.l2j.gameserver.model.group.Party;
 import net.sf.l2j.gameserver.model.spawn.Spawn;
 import net.sf.l2j.gameserver.network.SystemMessageId;
+import net.sf.l2j.gameserver.network.serverpackets.ItemList;
+import net.sf.l2j.gameserver.network.serverpackets.NpcHtmlMessage;
 import net.sf.l2j.gameserver.network.serverpackets.PlaySound;
 import net.sf.l2j.gameserver.network.serverpackets.SystemMessage;
 
 /**
  * This class manages all classic raid bosses.<br>
  * <br>
- * Raid Bosses (RB) are mobs which are supposed to be defeated by a party of several players. It extends most of {@link Monster} aspects.<br>
+ * Raid Bosses (RB) are mobs which are supposed to be defeated by a party of
+ * several players. It extends most of {@link Monster} aspects.<br>
  * <br>
- * They automatically teleport if out of their initial spawn area, and can randomly attack a Player from their Hate List once attacked.<br>
+ * They automatically teleport if out of their initial spawn area, and can
+ * randomly attack a Player from their Hate List once attacked.<br>
  * <br>
- * Their looting rights are affected by {@link CommandChannel}s. The first who attacks got the priority over loots. Those rights are lost if no attack has been done for 900sec.
+ * Their looting rights are affected by {@link CommandChannel}s. The first who
+ * attacks got the priority over loots. Those rights are lost if no attack has
+ * been done for 900sec.
  */
-public class RaidBoss extends Monster
-{
+public class RaidBoss extends Monster {
 	private ScheduledFuture<?> _maintenanceTask;
-	
-	public RaidBoss(int objectId, NpcTemplate template)
-	{
+
+	public RaidBoss(int objectId, NpcTemplate template) {
 		super(objectId, template);
-		
+
 		setRaid(true);
 	}
-	
+
 	@Override
-	public void onSpawn()
-	{
+	public void onSpawn() {
 		// No random walk allowed.
 		setNoRndWalk(true);
-		
+
 		// Basic behavior.
 		super.onSpawn();
-		
+
 		// "AI task" for regular bosses.
-		_maintenanceTask = ThreadPool.scheduleAtFixedRate(() ->
-		{
+		_maintenanceTask = ThreadPool.scheduleAtFixedRate(() -> {
 			// Don't bother with dead bosses.
-			if (!isDead())
-			{
+			if (!isDead()) {
 				// The boss isn't in combat, check the teleport possibility.
-				if (!isInCombat())
-				{
+				if (!isInCombat()) {
 					// Gordon is excluded too.
-					if (getNpcId() != 29095 && Rnd.nextBoolean())
-					{
+					if (getNpcId() != 29095 && Rnd.nextBoolean()) {
 						// Spawn must exist.
 						final Spawn spawn = getSpawn();
 						if (spawn == null)
 							return;
-						
+
 						// If the boss is above drift range (or 200 minimum), teleport him on his spawn.
 						if (!isIn3DRadius(spawn.getLoc(), Math.max(Config.MAX_DRIFT_RANGE, 200)))
 							teleportTo(spawn.getLoc(), 0);
@@ -74,16 +72,14 @@ public class RaidBoss extends Monster
 				else if (Rnd.get(5) == 0)
 					getAggroList().randomizeAttack();
 			}
-			
+
 			// For each minion (if any), randomize the attack.
-			if (hasMinions())
-			{
-				for (Monster minion : getMinionList().getSpawnedMinions())
-				{
+			if (hasMinions()) {
+				for (Monster minion : getMinionList().getSpawnedMinions()) {
 					// Don't bother with dead minions.
 					if (minion.isDead() || !minion.isInCombat())
 						return;
-					
+
 					// Randomized attack if the boss is already attacking.
 					if (Rnd.get(3) == 0)
 						minion.getAggroList().randomizeAttack();
@@ -91,59 +87,63 @@ public class RaidBoss extends Monster
 			}
 		}, 1000, 60000);
 	}
-	
+
 	@Override
-	public boolean doDie(Creature killer)
-	{
+	public boolean doDie(Creature killer) {
 		if (!super.doDie(killer))
 			return false;
-		
-		if (_maintenanceTask != null)
-		{
+
+		if (_maintenanceTask != null) {
 			_maintenanceTask.cancel(false);
 			_maintenanceTask = null;
 		}
-		
-		if (killer != null)
-		{
+
+		if (killer != null) {
 			final Player player = killer.getActingPlayer();
-			if (player != null)
-			{
+			if (player != null) {
 				broadcastPacket(SystemMessage.getSystemMessage(SystemMessageId.RAID_WAS_SUCCESSFUL));
 				broadcastPacket(new PlaySound("systemmsg_e.1209"));
-				
+
 				final Party party = player.getParty();
-				if (party != null)
-				{
-					for (Player member : party.getMembers())
-					{
-						RaidPointManager.getInstance().addPoints(member, getNpcId(), (getStatus().getLevel() / 2) + Rnd.get(-5, 5));
+				if (party != null) {
+					for (Player member : party.getMembers()) {
+						if (Config.ENABLE_RAIDBOSS_NOBLES) {
+							if (getNpcId() == 25325 && !member.isNoble() && member.isIn3DRadius(killer, 2000)) {
+								member.setNoble(true, true);
+								NpcHtmlMessage html = new NpcHtmlMessage(getObjectId());
+								html.setHtml(
+										"<html><body><title>Congratulations!!!</title><br><center><img src=l2font-e.replay_logo-e width=255 height=60><br><br><br><br><font color=\"LEVEL\">Congratulations!</font><br><br>You acquired all<br1>status from a Noblesse.<br><br><table><tr><td><img src=icon.skill1323 width=32 height=32></td><td width=5></td><td><img src=icon.skill1324 width=32 height=32></td><td width=5></td><td><img src=icon.skill1325 width=32 height=32></td><td width=5></td><td><img src=icon.skill1326 width=32 height=32></td></tr><tr></tr><tr></tr><tr><td><img src=icon.skill1327 width=32 height=32></td><td width=5></td><td><img src=icon.skill0325 width=32 height=32></td><td width=5></td><td><img src=icon.skill0326 width=32 height=32></td><td width=5></td><td><img src=icon.skill0327 width=32 height=32></td></tr></table></center></body></html>");
+								member.sendPacket(html);
+								member.getInventory().addItem("Nobles Circlets", 7694, 1, member, null);
+								member.sendPacket(new ItemList(member, true));
+								member.sendMessage("You receive the Noblesse Tiara");
+							}
+						}
+						RaidPointManager.getInstance().addPoints(member, getNpcId(),
+								(getStatus().getLevel() / 2) + Rnd.get(-5, 5));
 						if (member.isNoble())
 							HeroManager.getInstance().setRBkilled(member.getObjectId(), getNpcId());
 					}
-				}
-				else
-				{
-					RaidPointManager.getInstance().addPoints(player, getNpcId(), (getStatus().getLevel() / 2) + Rnd.get(-5, 5));
+				} else {
+					RaidPointManager.getInstance().addPoints(player, getNpcId(),
+							(getStatus().getLevel() / 2) + Rnd.get(-5, 5));
 					if (player.isNoble())
 						HeroManager.getInstance().setRBkilled(player.getObjectId(), getNpcId());
 				}
 			}
 		}
-		
+
 		RaidBossManager.getInstance().onDeath(this);
 		return true;
 	}
-	
+
 	@Override
-	public void deleteMe()
-	{
-		if (_maintenanceTask != null)
-		{
+	public void deleteMe() {
+		if (_maintenanceTask != null) {
 			_maintenanceTask.cancel(false);
 			_maintenanceTask = null;
 		}
-		
+
 		super.deleteMe();
 	}
 }
