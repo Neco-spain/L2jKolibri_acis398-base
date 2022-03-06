@@ -74,7 +74,6 @@ import net.sf.l2j.gameserver.enums.bbs.ForumType;
 import net.sf.l2j.gameserver.enums.items.ActionType;
 import net.sf.l2j.gameserver.enums.items.EtcItemType;
 import net.sf.l2j.gameserver.enums.items.ItemLocation;
-import net.sf.l2j.gameserver.enums.items.ItemState;
 import net.sf.l2j.gameserver.enums.items.ShotType;
 import net.sf.l2j.gameserver.enums.items.WeaponType;
 import net.sf.l2j.gameserver.enums.skills.EffectFlag;
@@ -3426,40 +3425,144 @@ public final class Player extends Playable {
 		return _clan != null && getObjectId() == _clan.getLeaderId();
 	}
 
-	/**
-	 * Reduce the number of arrows owned by the Player and send InventoryUpdate or
-	 * ItemList (to unequip if the last arrow was consummed).
-	 */
-	@Override
-	public void reduceArrowCount() // TODO: replace with a simple player.destroyItem...
-	{
-		final ItemInstance arrows = getSecondaryWeaponInstance();
-		if (arrows == null)
-			return;
+	private boolean _first_log;
+	private boolean _select_armor;
+	private boolean _select_weapon;
+	private boolean _select_classe;
 
-		final InventoryUpdate iu = new InventoryUpdate();
-
-		if (arrows.getCount() > 1) {
-			synchronized (arrows) {
-				arrows.changeCount(null, -1, this, null);
-				arrows.setLastChange(ItemState.MODIFIED);
-
-				iu.addModifiedItem(arrows);
-
-				// could do also without saving, but let's save approx 1 of 10
-				if (Rnd.get(10) < 1)
-					arrows.updateDatabase();
-
-				_inventory.refreshWeight();
-			}
-		} else {
-			iu.addRemovedItem(arrows);
-
-			// Destroy entire item and save to database
-			_inventory.destroyItem("Consume", arrows, this, null);
-		}
-		sendPacket(iu);
+	public boolean getFirstLog() {
+		return _first_log;
 	}
+
+	public boolean getSelectArmor() {
+		return _select_armor;
+	}
+
+	public boolean getSelectWeapon() {
+		return _select_weapon;
+	}
+
+	public boolean getSelectClasse() {
+		return _select_classe;
+	}
+
+	public void setFirstLog(int firstlog) {
+		_first_log = false;
+
+		if (firstlog == 1)
+			_first_log = true;
+	}
+
+	public void setSelectArmor(int selectArmor) {
+		_select_armor = false;
+
+		if (selectArmor == 1)
+			_select_armor = true;
+	}
+
+	public void setSelectWeapon(int selectWeapon) {
+		_select_weapon = false;
+
+		if (selectWeapon == 1)
+			_select_weapon = true;
+	}
+
+	public void setSelectClasse(int selectClasse) {
+		_select_classe = false;
+
+		if (selectClasse == 1)
+			_select_classe = true;
+	}
+
+	public void setFirstLog(boolean firstlog) {
+		_first_log = firstlog;
+	}
+
+	public void setSelectArmor(boolean selectArmor) {
+		_select_armor = selectArmor;
+	}
+
+	public void setSelectWeapon(boolean selectWeapon) {
+		_select_weapon = selectWeapon;
+	}
+
+	public void setSelectClasse(boolean selectClasse) {
+		_select_classe = selectClasse;
+	}
+
+	public void updateSelectClasse() {
+		try (Connection con = ConnectionPool.getConnection()) {
+			PreparedStatement statement = con.prepareStatement("UPDATE characters SET select_classe=? WHERE obj_id=?");
+
+			int _sClasse;
+
+			if (getSelectClasse())
+				_sClasse = 1;
+			else
+				_sClasse = 0;
+
+			statement.setInt(1, _sClasse);
+			statement.setInt(2, getObjectId());
+			statement.execute();
+			statement.close();
+		} catch (Exception e) {
+			LOGGER.info("could not set char select class:" + e);
+		}
+	}
+
+	public void updateFirstLog() {
+		try (Connection con = ConnectionPool.getConnection()) {
+			PreparedStatement statement = con.prepareStatement("UPDATE characters SET first_log=? WHERE obj_id=?");
+
+			int _fl;
+
+			if (getFirstLog())
+				_fl = 1;
+			else
+				_fl = 0;
+
+			statement.setInt(1, _fl);
+			statement.setInt(2, getObjectId());
+			statement.execute();
+			statement.close();
+		} catch (Exception e) {
+			LOGGER.info("could not set char first login:" + e);
+		}
+	}
+//	/**
+//	 * Reduce the number of arrows owned by the Player and send InventoryUpdate or
+//	 * ItemList (to unequip if the last arrow was consummed).
+//	 */
+//	@Override
+//	public void reduceArrowCount() // TODO: replace with a simple player.destroyItem...
+//	{
+//		final ItemInstance arrows = getSecondaryWeaponInstance();
+//		if (arrows == null)
+//			return;
+//
+//		final InventoryUpdate iu = new InventoryUpdate();
+//
+//		if (arrows.getCount() > 1) {
+//			synchronized (arrows) {
+//				arrows.changeCount(null, -1, this, null);
+//				arrows.setLastChange(ItemState.MODIFIED);
+//
+//				iu.addModifiedItem(arrows);
+//
+//				// could do also without saving, but let's save approx 1 of 10
+//				if (Rnd.get(10) < 1)
+//					arrows.updateDatabase();
+//
+//				_inventory.refreshWeight();
+//			}
+//		} else {
+//			iu.addRemovedItem(arrows);
+//
+//			// Destroy entire item and save to database
+//			_inventory.destroyItem("Consume", arrows, this, null);
+//		}
+//		sendPacket(iu);
+//	}
 
 	/**
 	 * Check if the arrow item exists on inventory and is already slotted ; if not,

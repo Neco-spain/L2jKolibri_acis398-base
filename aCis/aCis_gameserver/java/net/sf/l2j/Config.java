@@ -37,7 +37,8 @@ public final class Config {
 	public static final String MODS_FILE = "./config/mods.properties";
 	public static final String SKIN_FILE = "./config/Skin.properties";
 	public static final String ENCHANT_FILE = "./config/EnchantSystem.properties";
-	public static final String PARTYFARMEVENT = "./config/PartyFarmEvent.ini";
+	public static final String PARTYFARMEVENT = "./config/PartyFarmEvent.properties";
+
 //=====================================================================================================================================================
 	// Party Farm Event
 	public static int EVENT_BEST_FARM_TIME;
@@ -94,6 +95,7 @@ public final class Config {
 	// --------------------------------------------------
 	// Mods settings
 	// --------------------------------------------------
+
 	public static boolean ALT_OLY_END_ANNOUNCE;
 	public static boolean ENABLE_RAIDBOSS_NOBLES;
 	public static boolean ENABLE_COMMAND_EPIC;
@@ -103,6 +105,8 @@ public final class Config {
 	public static boolean ANNOUNCE_BOSS_ALIVE;
 	public static boolean ANNOUNCE_RAIDBOS_KILL;
 	public static boolean ANNOUNCE_GRANDBOS_KILL;
+	public static boolean INFINITY_SS;
+	public static boolean INFINITY_ARROWS;
 
 	/** Balancer */
 	public static boolean BALANCER_ALLOW;
@@ -1127,7 +1131,8 @@ public final class Config {
 	 */
 	private static final void loadMods() {
 		final ExProperties mods = initProperties(MODS_FILE);
-
+		INFINITY_SS = mods.getProperty("InfinitySS", true);
+		INFINITY_ARROWS = mods.getProperty("InfinityArrows", true);
 		ALT_OLY_END_ANNOUNCE = Boolean.parseBoolean(mods.getProperty("AltOlyEndAnnounce", "False"));
 		ENABLE_RAIDBOSS_NOBLES = Boolean.parseBoolean(mods.getProperty("RaidBossNobles", "false"));
 		ANNOUNCE_RAIDBOS_KILL = Boolean.parseBoolean(mods.getProperty("AnnounceRaidBossKill", "false"));
