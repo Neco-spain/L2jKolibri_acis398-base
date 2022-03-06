@@ -38,6 +38,7 @@ import net.sf.l2j.gameserver.model.location.Location;
 import net.sf.l2j.gameserver.network.SystemMessageId;
 import net.sf.l2j.gameserver.network.serverpackets.SystemMessage;
 import net.sf.l2j.gameserver.skills.L2Skill;
+import net.sf.l2j.mods.partyfarm.PartyZoneReward;
 
 /**
  * A monster extends {@link Attackable} class.<br>
@@ -833,7 +834,8 @@ public class Monster extends Attackable {
 		final Player player = creature.getActingPlayer();
 		if (player == null)
 			return;
-
+		if (Config.PART_ZONE_MONSTERS_EVENT_ID.contains(Integer.valueOf(template.getNpcId())))
+			PartyZoneReward.addPartyZoneReward(player, this);
 		// Calculate level modifier.
 		final int levelModifier = calculateLevelModifierForDrop(player);
 

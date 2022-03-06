@@ -16,6 +16,7 @@ import net.sf.l2j.commons.logging.CLogger;
 import net.sf.l2j.commons.math.MathUtil;
 import net.sf.l2j.gameserver.enums.GeoType;
 import net.sf.l2j.gameserver.model.holder.IntIntHolder;
+import net.sf.l2j.loginserver.network.serverpackets.RewardHolder;
 
 /**
  * This class contains global server configuration.<br>
@@ -36,6 +37,24 @@ public final class Config {
 	public static final String MODS_FILE = "./config/mods.properties";
 	public static final String SKIN_FILE = "./config/Skin.properties";
 	public static final String ENCHANT_FILE = "./config/EnchantSystem.properties";
+	public static final String PARTYFARMEVENT = "./config/PartyFarmEvent.ini";
+//=====================================================================================================================================================
+	// Party Farm Event
+	public static int EVENT_BEST_FARM_TIME;
+	public static String[] EVENT_BEST_FARM_INTERVAL_BY_TIME_OF_DAY;
+	public static int PARTY_FARM_MONSTER_DALAY;
+	public static String PARTY_FARM_MESSAGE_TEXT;
+	public static int PARTY_FARM_MESSAGE_TIME;
+	public static int monsterId;
+	public static int MONSTER_LOCS_COUNT;
+	public static int[][] MONSTER_LOCS;
+	public static boolean PARTY_MESSAGE_ENABLED;
+	public static boolean ENABLE_DUALBOX_PARTYFARM;
+	public static boolean PARTY_FARM_BY_TIME_OF_DAY;
+	public static boolean START_PARTY;
+	public static String PART_ZONE_MONSTERS_EVENT;
+	public static List<Integer> PART_ZONE_MONSTERS_EVENT_ID;
+	public static List<RewardHolder> PARTY_ZONE_REWARDS = new ArrayList<>();
 
 	// Enchant Setting
 	public static int ENCHANT_WEAPON_MAX;
@@ -774,6 +793,59 @@ public final class Config {
 		}
 
 		return result;
+	}
+
+	// ================================================================================================================
+	private static final void loadPTFarmConfig() {
+		final ExProperties BestFarm = initProperties(PARTYFARMEVENT);
+		PART_ZONE_MONSTERS_EVENT = BestFarm.getProperty("PartyEventMonster");
+		PART_ZONE_MONSTERS_EVENT_ID = new ArrayList<>();
+		for (String id : PART_ZONE_MONSTERS_EVENT.split(","))
+			PART_ZONE_MONSTERS_EVENT_ID.add(Integer.parseInt(id));
+		PARTY_ZONE_REWARDS = parseReward(BestFarm, "PartyZoneReward");
+
+		PARTY_FARM_MONSTER_DALAY = Integer.parseInt(BestFarm.getProperty("MonsterDelay", "10"));
+		PARTY_FARM_BY_TIME_OF_DAY = Boolean.parseBoolean(BestFarm.getProperty("PartyFarmEventEnabled", "false"));
+		START_PARTY = Boolean.parseBoolean(BestFarm.getProperty("StartSpawnPartyFarm", "false"));
+		ENABLE_DUALBOX_PARTYFARM = Boolean.parseBoolean(BestFarm.getProperty("RenewalDualBoxPTFarm", "false"));
+		EVENT_BEST_FARM_TIME = Integer.parseInt(BestFarm.getProperty("EventBestFarmTime", "1"));
+		EVENT_BEST_FARM_INTERVAL_BY_TIME_OF_DAY = BestFarm.getProperty("BestFarmStartTime", "20:00").split(",");
+		PARTY_MESSAGE_ENABLED = Boolean.parseBoolean(BestFarm.getProperty("ScreenPartyMessageEnable", "false"));
+		PARTY_FARM_MESSAGE_TEXT = BestFarm.getProperty("ScreenPartyFarmMessageText", "Welcome to l2j server!");
+		PARTY_FARM_MESSAGE_TIME = Integer.parseInt(BestFarm.getProperty("ScreenPartyFarmMessageTime", "10")) * 1000;
+
+		String[] monsterLocs2 = BestFarm.getProperty("MonsterLoc", "").split(";");
+		String[] locSplit3 = null;
+
+		monsterId = Integer.parseInt(BestFarm.getProperty("MonsterId", "1"));
+
+		MONSTER_LOCS_COUNT = monsterLocs2.length;
+		MONSTER_LOCS = new int[MONSTER_LOCS_COUNT][3];
+		int g;
+		for (int e = 0; e < MONSTER_LOCS_COUNT; e++) {
+			locSplit3 = monsterLocs2[e].split(",");
+			for (g = 0; g < 3; g++) {
+				MONSTER_LOCS[e][g] = Integer.parseInt(locSplit3[g].trim());
+			}
+		}
+
+	}
+
+	public static List<RewardHolder> parseReward(Properties propertie, String configName) {
+		List<RewardHolder> auxReturn = new ArrayList<>();
+
+		String aux = propertie.getProperty(configName).trim();
+		for (String randomReward : aux.split(";")) {
+			final String[] infos = randomReward.split(",");
+
+			if (infos.length > 3)
+				auxReturn.add(new RewardHolder(Integer.valueOf(infos[0]), Integer.valueOf(infos[1]),
+						Integer.valueOf(infos[2]), Integer.valueOf(infos[3])));
+			else
+				auxReturn.add(new RewardHolder(Integer.valueOf(infos[0]), Integer.valueOf(infos[1]),
+						Integer.valueOf(infos[2])));
+		}
+		return auxReturn;
 	}
 
 	/**
@@ -1863,6 +1935,8 @@ public final class Config {
 		loadSkin();
 		// enchant settings new
 		loadEnchantSystemConfig();
+		// PartyFarmEvent
+		loadPTFarmConfig();
 	}
 
 	public static final void loadLoginServer() {

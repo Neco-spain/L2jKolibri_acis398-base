@@ -101,6 +101,9 @@ import net.sf.l2j.gameserver.taskmanager.PvpFlagTaskManager;
 import net.sf.l2j.gameserver.taskmanager.RandomAnimationTaskManager;
 import net.sf.l2j.gameserver.taskmanager.ShadowItemTaskManager;
 import net.sf.l2j.gameserver.taskmanager.WaterTaskManager;
+import net.sf.l2j.mods.partyfarm.InitialPartyFarm;
+import net.sf.l2j.mods.partyfarm.PartyFarm;
+import net.sf.l2j.mods.partyfarm.PartyZoneReward;
 import net.sf.l2j.util.DeadLockDetector;
 import net.sf.l2j.util.IPv4Filter;
 
@@ -231,7 +234,20 @@ public class GameServer {
 		NewbieBuffData.getInstance();
 		InstantTeleportData.getInstance();
 		TeleportData.getInstance();
+		PartyZoneReward.getInstance();
+		class SpawnMonsters implements Runnable {
+			public SpawnMonsters() {
+			}
 
+			@Override
+			public void run() {
+				PartyFarm._aborted = false;
+				PartyFarm._started = true;
+
+				PartyFarm.spawnMonsters();
+			}
+
+		}
 		StringUtil.printSection("Olympiads & Heroes");
 		OlympiadGameManager.getInstance();
 		Olympiad.getInstance();
@@ -273,6 +289,16 @@ public class GameServer {
 		LOGGER.info("Loaded {} target handlers.", TargetHandler.getInstance().size());
 		LOGGER.info("Loaded {} user command handlers.", UserCommandHandler.getInstance().size());
 		LOGGER.info("Loaded {} user VoicedCommandHandler handlers.", VoicedCommandHandler.getInstance().size());
+
+		StringUtil.printSection("Party Farm Events");
+		if ((Config.PARTY_FARM_BY_TIME_OF_DAY) && (!Config.START_PARTY)) {
+			InitialPartyFarm.getInstance().StartCalculationOfNextEventTime();
+			LOGGER.info("[Party Farm Time]: Enabled");
+		} else if ((Config.START_PARTY) && (!Config.PARTY_FARM_BY_TIME_OF_DAY)) {
+			LOGGER.info("[Start Spawn Party Farm]: Enabled");
+			ThreadPool.schedule(new SpawnMonsters(), 1000L);
+		}
+
 		StringUtil.printSection("System");
 		Runtime.getRuntime().addShutdownHook(Shutdown.getInstance());
 

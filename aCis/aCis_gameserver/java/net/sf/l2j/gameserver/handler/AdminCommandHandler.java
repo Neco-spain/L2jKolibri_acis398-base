@@ -23,6 +23,7 @@ import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminManage;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminManor;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminMovieMaker;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminOlympiad;
+import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminPartyFarm;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminPetition;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminPledge;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminPolymorph;
@@ -76,6 +77,7 @@ public class AdminCommandHandler {
 		registerHandler(new AdminZone());
 		registerHandler(new AdminBalancer());
 		registerHandler(new AdminVip());
+		registerHandler(new AdminPartyFarm());
 
 	}
 

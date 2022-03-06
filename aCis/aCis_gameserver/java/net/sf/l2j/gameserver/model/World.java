@@ -210,7 +210,7 @@ public final class World {
 	}
 
 	public static void announceToOnlinePlayers(String text) {
-		toAllOnlinePlayers(new CreatureSay(SayType.ANNOUNCEMENT, null, text));
+		toAllOnlinePlayers(new CreatureSay(SayType.CRITICAL_ANNOUNCE, null, text));
 	}
 
 	public static void announceToOnlinePlayers(String text, boolean critical) {
