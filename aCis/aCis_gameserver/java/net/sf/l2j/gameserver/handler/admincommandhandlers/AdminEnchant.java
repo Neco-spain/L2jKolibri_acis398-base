@@ -134,6 +134,7 @@ public class AdminEnchant implements IAdminCommandHandler {
 				player.sendMessage("Please specify a new enchant value.");
 			}
 		} else {
+			sendFile(player, "enchant.htm");
 			player.sendMessage("Usage: //enchant slot enchant");
 			player.sendMessage("Slots: under|lear|rear|neck|lfinger|rfinger|head|rhand|lhand");
 			player.sendMessage("Slots: gloves|chest|legs|feet|cloak|face|hair|hairall");
