@@ -4,7 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.GameServer;
+import net.sf.l2j.gameserver.handler.voicedcommandhandlers.GrandBossStatus;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Online;
 
 public class VoicedCommandHandler {
@@ -26,8 +28,10 @@ public class VoicedCommandHandler {
 		_datatable = new HashMap<>();
 		// registrar comando aqui exemplo abaixo
 		registerVoicedCommandHandler(new Online());
+		if (Config.ENABLE_COMMAND_EPIC) {
+			registerVoicedCommandHandler(new GrandBossStatus());
+		}
 
-		LOGGER.info("VoicedCommandHandler: Loaded " + _datatable.size() + " handlers.");
 	}
 
 	public void registerVoicedCommandHandler(final IVoicedCommandHandler handler) {

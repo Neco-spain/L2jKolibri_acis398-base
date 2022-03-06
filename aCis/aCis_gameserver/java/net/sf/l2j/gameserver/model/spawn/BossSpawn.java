@@ -13,6 +13,7 @@ import net.sf.l2j.commons.random.Rnd;
 import net.sf.l2j.gameserver.enums.BossStatus;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Npc;
+import net.sf.l2j.mods.epicinfo.RaidBossInfoManager;
 
 /**
  * A data holder keeping informations related to the {@link Spawn} of a
@@ -134,7 +135,8 @@ public class BossSpawn {
 
 		// Refresh the database for this particular boss entry.
 		updateOnDb();
-
+		if (Config.LIST_RAID_BOSS_IDS.contains(_spawn.getNpcId()))
+			RaidBossInfoManager.getInstance().updateRaidBossInfo(_spawn.getNpcId(), respawnTime);
 		LOGGER.info("Raid boss: {} - {} ({}h).", _spawn.getNpc().getName(),
 				new SimpleDateFormat("dd-MM-yyyy HH:mm").format(respawnTime), respawnDelay);
 	}
@@ -162,6 +164,8 @@ public class BossSpawn {
 
 		// Refresh the database for this particular boss entry.
 		updateOnDb();
+		if (Config.LIST_RAID_BOSS_IDS.contains(npc.getNpcId()))
+			RaidBossInfoManager.getInstance().updateRaidBossInfo(npc.getNpcId(), 0);
 		if (Config.ANNOUNCE_BOSS_ALIVE)
 			World.announceToOnlinePlayers("Boss: " + _spawn.getNpc().getName() + " has spawned in the world!");
 		LOGGER.info("{} raid boss has spawned.", npc.getName());

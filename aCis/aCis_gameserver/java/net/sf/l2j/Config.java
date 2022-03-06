@@ -96,6 +96,10 @@ public final class Config {
 	// --------------------------------------------------
 	public static boolean ALT_OLY_END_ANNOUNCE;
 	public static boolean ENABLE_RAIDBOSS_NOBLES;
+	public static boolean ENABLE_COMMAND_EPIC;
+	public static String RAID_BOSS_DATE_FORMAT;
+	public static String RAID_BOSS_IDS;
+	public static List<Integer> LIST_RAID_BOSS_IDS;
 	public static boolean ANNOUNCE_BOSS_ALIVE;
 	public static boolean ANNOUNCE_RAIDBOS_KILL;
 	public static boolean ANNOUNCE_GRANDBOS_KILL;
@@ -1129,7 +1133,14 @@ public final class Config {
 		ANNOUNCE_RAIDBOS_KILL = Boolean.parseBoolean(mods.getProperty("AnnounceRaidBossKill", "false"));
 		ANNOUNCE_GRANDBOS_KILL = Boolean.parseBoolean(mods.getProperty("AnnounceGranBossKill", "false"));
 		ANNOUNCE_BOSS_ALIVE = Boolean.parseBoolean(mods.getProperty("AnnounceSpawnAllBoss", "false"));
-
+		ENABLE_COMMAND_EPIC = mods.getProperty("EnableCommandEpic", false);
+		RAID_BOSS_DATE_FORMAT = mods.getProperty("RaidBossDateFormat", "MMM dd, HH:mm");
+		RAID_BOSS_IDS = mods.getProperty("RaidBossIds", "0,0");
+		LIST_RAID_BOSS_IDS = new ArrayList<>();
+		for (String val : RAID_BOSS_IDS.split(",")) {
+			int npcId = Integer.parseInt(val);
+			LIST_RAID_BOSS_IDS.add(npcId);
+		}
 		/**
 		 * Balancer.
 		 */

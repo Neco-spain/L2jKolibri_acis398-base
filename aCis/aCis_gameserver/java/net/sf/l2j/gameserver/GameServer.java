@@ -101,6 +101,7 @@ import net.sf.l2j.gameserver.taskmanager.PvpFlagTaskManager;
 import net.sf.l2j.gameserver.taskmanager.RandomAnimationTaskManager;
 import net.sf.l2j.gameserver.taskmanager.ShadowItemTaskManager;
 import net.sf.l2j.gameserver.taskmanager.WaterTaskManager;
+import net.sf.l2j.mods.epicinfo.RaidBossInfoManager;
 import net.sf.l2j.mods.partyfarm.InitialPartyFarm;
 import net.sf.l2j.mods.partyfarm.PartyFarm;
 import net.sf.l2j.mods.partyfarm.PartyZoneReward;
@@ -289,7 +290,7 @@ public class GameServer {
 		LOGGER.info("Loaded {} target handlers.", TargetHandler.getInstance().size());
 		LOGGER.info("Loaded {} user command handlers.", UserCommandHandler.getInstance().size());
 		LOGGER.info("Loaded {} user VoicedCommandHandler handlers.", VoicedCommandHandler.getInstance().size());
-
+		RaidBossInfoManager.getInstance();
 		StringUtil.printSection("Party Farm Events");
 		if ((Config.PARTY_FARM_BY_TIME_OF_DAY) && (!Config.START_PARTY)) {
 			InitialPartyFarm.getInstance().StartCalculationOfNextEventTime();
