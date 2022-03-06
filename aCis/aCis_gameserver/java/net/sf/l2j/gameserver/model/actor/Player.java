@@ -6807,6 +6807,102 @@ public final class Player extends Playable {
 		_requestedGate = door;
 	}
 
+	private int visual = 0;
+	private int visualTest = 0;
+
+	// Testing
+	public int visual_test_hair = 0;
+	public int visual_test_chest = 0;
+
+	public int visual_hair = 0;
+	public int visual_chest = 0;
+
+	public void setVisualTest(int val) {
+		// HARDCODED FOR NOW
+		switch (val) {
+		case 0:
+			visual_test_hair = 0;
+			visual_test_chest = 0;
+
+			break;
+
+		case 1: // Draconic
+			visual_test_hair = 6842;
+			visual_test_chest = 6379;
+
+			break;
+		case 2:
+			visual_test_hair = 26202;
+			visual_test_chest = 26102;
+			break;
+		case 3:
+			visual_test_hair = 26203;
+			visual_test_chest = 26103;
+			break;
+		case 4:
+			visual_test_hair = 26204;
+			visual_test_chest = 26104;
+			break;
+		case 5:
+			visual_test_hair = 26205;
+			visual_test_chest = 26105;
+			break;
+		case 6:
+			visual_test_hair = 0;
+			visual_test_chest = 23881;
+			break;
+		}
+
+		visualTest = val;
+		broadcastUserInfo();
+	}
+
+	public int getVisualTest() {
+		return visualTest;
+	}
+
+	public void setVisual(int val) {
+		// HARDCODED FOR NOW
+		switch (val) {
+		case 0:
+			visual_hair = 0;
+			visual_chest = 0;
+			break;
+
+		case 1:
+			visual_hair = 6842;
+			visual_chest = 6379;
+			break;
+		case 2:
+			visual_hair = 26202;
+			visual_chest = 26102;
+			break;
+		case 3:
+			visual_hair = 26203;
+			visual_chest = 26103;
+			break;
+		case 4:
+			visual_hair = 26204;
+			visual_chest = 26104;
+			break;
+		case 5:
+			visual_hair = 26205;
+			visual_chest = 26105;
+			break;
+		case 6:
+			visual_hair = 0;
+			visual_chest = 23881;
+			break;
+		}
+
+		visual = val;
+		broadcastUserInfo();
+	}
+
+	public int getVisual() {
+		return visual;
+	}
+
 	private DressMeData _dressmedata = null;
 	private boolean _dressed = false;
 

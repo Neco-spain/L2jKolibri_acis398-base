@@ -52,6 +52,10 @@ public class UserInfo extends L2GameServerPacket {
 		writeD(_player.getCurrentWeight());
 		writeD(_player.getWeightLimit());
 		writeD(_player.getActiveWeaponItem() != null ? 40 : 20);
+		
+
+		
+		
 		if (!_player.isDressMeEnabled()) {
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.HAIRALL));
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.REAR));
@@ -63,14 +67,17 @@ public class UserInfo extends L2GameServerPacket {
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND));
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.LHAND));
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.GLOVES));
-			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.CHEST));
+			//writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.CHEST));
+			//visual skin try start			
+			writeD(_player.visual_test_chest > 0 ? _player.visual_test_chest : (_player.visual_chest > 0 ? _player.visual_chest : _player.getInventory().getItemObjectIdFrom(Paperdoll.CHEST))); 
+		//visual skin try end
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.LEGS));
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.FEET));
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.CLOAK));
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND));
-			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.HAIR));
+			//	writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.HAIR));
+			writeD(_player.visual_test_hair > 0 ? _player.visual_test_hair : (_player.visual_hair > 0 ? _player.visual_hair : _player.getInventory().getItemObjectIdFrom(Paperdoll.HAIR)));
 			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.FACE));
-
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.HAIRALL));
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.REAR));
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.LEAR));
@@ -80,55 +87,101 @@ public class UserInfo extends L2GameServerPacket {
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.HEAD));
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.RHAND));
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.LHAND));
-			writeD(_player.getInventory().getItemIdFrom(Paperdoll.GLOVES));
-			writeD(_player.getInventory().getItemIdFrom(Paperdoll.CHEST));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.GLOVES));	
+			writeD(_player.visual_test_chest > 0 ? _player.visual_test_chest : (_player.visual_chest > 0 ? _player.visual_chest : _player.getInventory().getItemIdFrom(Paperdoll.CHEST))); 
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.LEGS));
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.FEET));
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.CLOAK));
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.RHAND));
-			writeD(_player.getInventory().getItemIdFrom(Paperdoll.HAIR));
+			writeD(_player.visual_test_hair > 0 ? _player.visual_test_hair : (_player.visual_hair > 0 ? _player.visual_hair : _player.getInventory().getItemIdFrom(Paperdoll.HAIR)));
 			writeD(_player.getInventory().getItemIdFrom(Paperdoll.FACE));
 		} else {
-			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.HAIRALL) : (_player.getDressMeData().getHelmetId() == 0 ? _player.getInventory().getItemObjectIdFrom(Paperdoll.HAIRALL) : _player.getDressMeData().getHelmetId()));
-					writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.REAR));
-					writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.LEAR));
-					writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.NECK));
-					writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.RFINGER));
-					writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.LFINGER));
-					writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.HEAD));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND) : (_player.getDressMeData().getWeapId() == 0 ? _player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND) : _player.getDressMeData().getWeapId()));
-					writeD(_player.getInventory().getItemIdFrom(Paperdoll.LHAND));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.GLOVES) : (_player.getDressMeData().getGlovesId() == 0 ? _player.getInventory().getItemObjectIdFrom(Paperdoll.GLOVES) : _player.getDressMeData().getGlovesId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.CHEST) : (_player.getDressMeData().getChestId() == 0 ? _player.getInventory().getItemObjectIdFrom(Paperdoll.CHEST) : _player.getDressMeData().getChestId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.LEGS) : (_player.getDressMeData().getLegsId() == 0 ? _player.getInventory().getItemObjectIdFrom(Paperdoll.LEGS) : _player.getDressMeData().getLegsId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.FEET) : (_player.getDressMeData().getBootsId() == 0 ? _player.getInventory().getItemObjectIdFrom(Paperdoll.FEET) : _player.getDressMeData().getBootsId()));
-					writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.CLOAK));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND) : (_player.getDressMeData().getWeapId() == 0 ? _player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND) : _player.getDressMeData().getWeapId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.HAIR) : (_player.getDressMeData().getHelmetId() == 0 ? _player.getInventory().getItemObjectIdFrom(Paperdoll.HAIR) : _player.getDressMeData().getHelmetId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.FACE) : (_player.getDressMeData().getHelmetId() == 0 ? _player.getInventory().getItemObjectIdFrom(Paperdoll.FACE) : _player.getDressMeData().getHelmetId()));
-			
-					
-					
-					
-					
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.HAIRALL) : (_player.getDressMeData().getHelmetId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.HAIRALL) : _player.getDressMeData().getHelmetId()));
-					writeD(_player.getInventory().getItemIdFrom(Paperdoll.REAR));
-					writeD(_player.getInventory().getItemIdFrom(Paperdoll.LEAR));
-					writeD(_player.getInventory().getItemIdFrom(Paperdoll.NECK));
-					writeD(_player.getInventory().getItemIdFrom(Paperdoll.RFINGER));
-					writeD(_player.getInventory().getItemIdFrom(Paperdoll.LFINGER));
-					writeD(_player.getInventory().getItemIdFrom(Paperdoll.HEAD));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.RHAND) : (_player.getDressMeData().getWeapId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.RHAND) : _player.getDressMeData().getWeapId()));
-					writeD(_player.getInventory().getItemIdFrom(Paperdoll.LHAND));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.GLOVES) : (_player.getDressMeData().getGlovesId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.GLOVES) : _player.getDressMeData().getGlovesId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.CHEST) : (_player.getDressMeData().getChestId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.CHEST) : _player.getDressMeData().getChestId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.LEGS) : (_player.getDressMeData().getLegsId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.LEGS) : _player.getDressMeData().getLegsId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.FEET) : (_player.getDressMeData().getBootsId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.FEET) : _player.getDressMeData().getBootsId()));
-					writeD(_player.getInventory().getItemIdFrom(Paperdoll.CLOAK));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.RHAND) : (_player.getDressMeData().getWeapId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.RHAND) : _player.getDressMeData().getWeapId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.HAIR) : (_player.getDressMeData().getHelmetId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.HAIR) : _player.getDressMeData().getHelmetId()));
-					writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.FACE) : (_player.getDressMeData().getHelmetId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.FACE) : _player.getDressMeData().getHelmetId()));
-					}
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.HAIRALL)
+					: (_player.getDressMeData().getHelmetId() == 0
+							? _player.getInventory().getItemObjectIdFrom(Paperdoll.HAIRALL)
+							: _player.getDressMeData().getHelmetId()));
+			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.REAR));
+			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.LEAR));
+			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.NECK));
+			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.RFINGER));
+			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.LFINGER));
+			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.HEAD));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND)
+					: (_player.getDressMeData().getWeapId() == 0
+							? _player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND)
+							: _player.getDressMeData().getWeapId()));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.LHAND));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.GLOVES)
+					: (_player.getDressMeData().getGlovesId() == 0
+							? _player.getInventory().getItemObjectIdFrom(Paperdoll.GLOVES)
+							: _player.getDressMeData().getGlovesId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.CHEST)
+					: (_player.getDressMeData().getChestId() == 0
+							? _player.getInventory().getItemObjectIdFrom(Paperdoll.CHEST)
+							: _player.getDressMeData().getChestId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.LEGS)
+					: (_player.getDressMeData().getLegsId() == 0
+							? _player.getInventory().getItemObjectIdFrom(Paperdoll.LEGS)
+							: _player.getDressMeData().getLegsId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.FEET)
+					: (_player.getDressMeData().getBootsId() == 0
+							? _player.getInventory().getItemObjectIdFrom(Paperdoll.FEET)
+							: _player.getDressMeData().getBootsId()));
+			writeD(_player.getInventory().getItemObjectIdFrom(Paperdoll.CLOAK));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND)
+					: (_player.getDressMeData().getWeapId() == 0
+							? _player.getInventory().getItemObjectIdFrom(Paperdoll.RHAND)
+							: _player.getDressMeData().getWeapId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.HAIR)
+					: (_player.getDressMeData().getHelmetId() == 0
+							? _player.getInventory().getItemObjectIdFrom(Paperdoll.HAIR)
+							: _player.getDressMeData().getHelmetId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemObjectIdFrom(Paperdoll.FACE)
+					: (_player.getDressMeData().getHelmetId() == 0
+							? _player.getInventory().getItemObjectIdFrom(Paperdoll.FACE)
+							: _player.getDressMeData().getHelmetId()));
+
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.HAIRALL)
+					: (_player.getDressMeData().getHelmetId() == 0
+							? _player.getInventory().getItemIdFrom(Paperdoll.HAIRALL)
+							: _player.getDressMeData().getHelmetId()));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.REAR));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.LEAR));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.NECK));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.RFINGER));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.LFINGER));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.HEAD));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.RHAND)
+					: (_player.getDressMeData().getWeapId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.RHAND)
+							: _player.getDressMeData().getWeapId()));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.LHAND));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.GLOVES)
+					: (_player.getDressMeData().getGlovesId() == 0
+							? _player.getInventory().getItemIdFrom(Paperdoll.GLOVES)
+							: _player.getDressMeData().getGlovesId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.CHEST)
+					: (_player.getDressMeData().getChestId() == 0
+							? _player.getInventory().getItemIdFrom(Paperdoll.CHEST)
+							: _player.getDressMeData().getChestId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.LEGS)
+					: (_player.getDressMeData().getLegsId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.LEGS)
+							: _player.getDressMeData().getLegsId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.FEET)
+					: (_player.getDressMeData().getBootsId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.FEET)
+							: _player.getDressMeData().getBootsId()));
+			writeD(_player.getInventory().getItemIdFrom(Paperdoll.CLOAK));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.RHAND)
+					: (_player.getDressMeData().getWeapId() == 0 ? _player.getInventory().getItemIdFrom(Paperdoll.RHAND)
+							: _player.getDressMeData().getWeapId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.HAIR)
+					: (_player.getDressMeData().getHelmetId() == 0
+							? _player.getInventory().getItemIdFrom(Paperdoll.HAIR)
+							: _player.getDressMeData().getHelmetId()));
+			writeD(_player.getDressMeData() == null ? _player.getInventory().getItemIdFrom(Paperdoll.FACE)
+					: (_player.getDressMeData().getHelmetId() == 0
+							? _player.getInventory().getItemIdFrom(Paperdoll.FACE)
+							: _player.getDressMeData().getHelmetId()));
+		}
 
 		writeH(0x00);
 		writeH(0x00);

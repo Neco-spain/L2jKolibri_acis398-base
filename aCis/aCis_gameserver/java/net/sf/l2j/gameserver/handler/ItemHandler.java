@@ -45,6 +45,7 @@ import net.sf.l2j.mods.skins.itemhandlers.Skin6;
 import net.sf.l2j.mods.skins.itemhandlers.Skin7;
 import net.sf.l2j.mods.skins.itemhandlers.Skin8;
 import net.sf.l2j.mods.skins.itemhandlers.Skin9;
+import net.sf.l2j.mods.skins.visual.Visual;
 import net.sf.l2j.mods.vip.itemhandlers.VipCoin;
 
 public class ItemHandler {
@@ -93,6 +94,7 @@ public class ItemHandler {
 		registerHandler(new Skin14());
 		registerHandler(new Skin15());
 		registerHandler(new VipCoin());
+		registerHandler(new Visual());
 
 	}
 
