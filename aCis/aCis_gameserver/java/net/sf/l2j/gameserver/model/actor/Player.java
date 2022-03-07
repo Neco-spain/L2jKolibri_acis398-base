@@ -159,6 +159,7 @@ import net.sf.l2j.gameserver.network.serverpackets.DeleteObject;
 import net.sf.l2j.gameserver.network.serverpackets.EtcStatusUpdate;
 import net.sf.l2j.gameserver.network.serverpackets.ExAutoSoulShot;
 import net.sf.l2j.gameserver.network.serverpackets.ExOlympiadMode;
+import net.sf.l2j.gameserver.network.serverpackets.ExPCCafePointInfo;
 import net.sf.l2j.gameserver.network.serverpackets.ExServerPrimitive;
 import net.sf.l2j.gameserver.network.serverpackets.ExSetCompassZoneCode;
 import net.sf.l2j.gameserver.network.serverpackets.ExStorageMaxCount;
@@ -238,7 +239,7 @@ public final class Player extends Playable {
 	private static final String DELETE_SKILL_SAVE = "DELETE FROM character_skills_save WHERE char_obj_id=? AND class_index=?";
 
 	private static final String INSERT_CHARACTER = "INSERT INTO characters (account_name,obj_Id,char_name,level,maxHp,curHp,maxCp,curCp,maxMp,curMp,face,hairStyle,hairColor,sex,exp,sp,karma,pvpkills,pkkills,clanid,race,classid,deletetime,cancraft,title,accesslevel,online,isin7sdungeon,clan_privs,wantspeace,base_class,nobless,power_grade) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-	private static final String UPDATE_CHARACTER = "UPDATE characters SET level=?,maxHp=?,curHp=?,maxCp=?,curCp=?,maxMp=?,curMp=?,face=?,hairStyle=?,hairColor=?,sex=?,heading=?,x=?,y=?,z=?,exp=?,expBeforeDeath=?,sp=?,karma=?,pvpkills=?,pkkills=?,clanid=?,race=?,classid=?,deletetime=?,title=?,accesslevel=?,online=?,isin7sdungeon=?,clan_privs=?,wantspeace=?,base_class=?,onlinetime=?,punish_level=?,punish_timer=?,nobless=?,power_grade=?,subpledge=?,lvl_joined_academy=?,apprentice=?,sponsor=?,varka_ketra_ally=?,clan_join_expiry_time=?,clan_create_expiry_time=?,char_name=?,death_penalty_level=?,vip=?,vip_end=? WHERE obj_id=?";
+	private static final String UPDATE_CHARACTER = "UPDATE characters SET level=?,maxHp=?,curHp=?,maxCp=?,curCp=?,maxMp=?,curMp=?,face=?,hairStyle=?,hairColor=?,sex=?,heading=?,x=?,y=?,z=?,exp=?,expBeforeDeath=?,sp=?,karma=?,pvpkills=?,pkkills=?,clanid=?,race=?,classid=?,deletetime=?,title=?,accesslevel=?,online=?,isin7sdungeon=?,clan_privs=?,wantspeace=?,base_class=?,onlinetime=?,punish_level=?,punish_timer=?,nobless=?,power_grade=?,subpledge=?,lvl_joined_academy=?,apprentice=?,sponsor=?,varka_ketra_ally=?,clan_join_expiry_time=?,clan_create_expiry_time=?,char_name=?,death_penalty_level=?,vip=?,vip_end=?,pc_point=? WHERE obj_id=?";
 	private static final String RESTORE_CHARACTER = "SELECT * FROM characters WHERE obj_id=?";
 
 	private static final String RESTORE_CHAR_SUBCLASSES = "SELECT class_id,exp,sp,level,class_index FROM character_subclasses WHERE char_obj_id=? ORDER BY class_index ASC";
@@ -4241,7 +4242,7 @@ public final class Player extends Playable {
 					player.setDeathPenaltyBuffLevel(rs.getInt("death_penalty_level"));
 					player.setVip(rs.getInt("vip") == 1 ? true : false);
 					player.setVipEndTime(rs.getLong("vip_end"));
-
+					player.setPcBang(rs.getInt("pc_point"));
 					// Set the position of the Player.
 					player.getPosition().set(rs.getInt("x"), rs.getInt("y"), rs.getInt("z"), rs.getInt("heading"));
 
@@ -4462,7 +4463,8 @@ public final class Player extends Playable {
 			ps.setLong(46, getDeathPenaltyBuffLevel());
 			ps.setInt(47, isVip() ? 1 : 0);
 			ps.setLong(48, getVipEndTime());
-			ps.setInt(49, getObjectId());
+			ps.setInt(49, getPcBangScore());
+			ps.setInt(50, getObjectId());
 
 			ps.execute();
 		} catch (final Exception e) {
@@ -4585,6 +4587,42 @@ public final class Player extends Playable {
 
 	public long getVipEndTime() {
 		return _vip_endTime;
+	}
+
+	private int pcBangPoint = 0;
+
+	public int getPcBang() {
+		return pcBangPoint;
+	}
+
+	public void setPcBang(int val) {
+		pcBangPoint = val;
+
+		ExPCCafePointInfo wnd = new ExPCCafePointInfo(this, 0, false, 24, false);
+		sendPacket(wnd);
+	}
+
+	public int getPcBangScore() {
+		return pcBangPoint;
+	}
+
+	public void reducePcBangScore(int to) {
+		pcBangPoint -= to;
+		updatePcBangWnd(to, false, false);
+	}
+
+	public void addPcBangScore(int to) {
+		pcBangPoint += to;
+	}
+
+	public void updatePcBangWnd(int score, boolean add, boolean duble) {
+		ExPCCafePointInfo wnd = new ExPCCafePointInfo(this, score, add, 24, duble);
+		sendPacket(wnd);
+	}
+
+	public void showPcBangWindow() {
+		ExPCCafePointInfo wnd = new ExPCCafePointInfo(this, 0, false, 24, false);
+		sendPacket(wnd);
 	}
 
 	public void setVipEndTime(long val) {
@@ -5636,6 +5674,55 @@ public final class Player extends Playable {
 	 * @return boolean subclassAdded
 	 */
 	public boolean addSubClass(int classId, int classIndex) {
+
+		// Remove Item RHAND
+		if (Config.REMOVE_WEAPON) {
+			ItemInstance rhand = getInventory().getItemFrom(Paperdoll.RHAND);
+			if (rhand != null) {
+				ItemInstance[] unequipped = getInventory()
+						.unequipItemInBodySlotAndRecord(rhand.getItem().getBodyPart());
+				InventoryUpdate iu = new InventoryUpdate();
+				for (ItemInstance element : unequipped)
+					iu.addModifiedItem(element);
+				sendPacket(iu);
+			}
+		}
+		// Remove Item CHEST
+		if (Config.REMOVE_CHEST) {
+			ItemInstance chest = getInventory().getItemFrom(Paperdoll.CHEST);
+			if (chest != null) {
+				ItemInstance[] unequipped = getInventory()
+						.unequipItemInBodySlotAndRecord(chest.getItem().getBodyPart());
+				InventoryUpdate iu = new InventoryUpdate();
+				for (ItemInstance element : unequipped)
+					iu.addModifiedItem(element);
+				sendPacket(iu);
+			}
+		}
+
+		// Remove Item LEG
+		if (Config.REMOVE_LEG) {
+			ItemInstance legs = getInventory().getItemFrom(Paperdoll.LEGS);
+			if (legs != null) {
+				ItemInstance[] unequipped = getInventory().unequipItemInBodySlotAndRecord(legs.getItem().getBodyPart());
+				InventoryUpdate iu = new InventoryUpdate();
+				for (ItemInstance element : unequipped)
+					iu.addModifiedItem(element);
+				sendPacket(iu);
+			}
+		}
+		// Remove Item TATTOO
+		if (Config.REMOVE_TATTOO) {
+			ItemInstance legs = getInventory().getItemFrom(Paperdoll.UNDER);
+			if (legs != null) {
+				ItemInstance[] unequipped = getInventory().unequipItemInBodySlotAndRecord(legs.getItem().getBodyPart());
+				InventoryUpdate iu = new InventoryUpdate();
+				for (ItemInstance element : unequipped)
+					iu.addModifiedItem(element);
+				sendPacket(iu);
+			}
+		}
+
 		if (!_subclassLock.tryLock())
 			return false;
 
@@ -5776,6 +5863,55 @@ public final class Player extends Playable {
 	 * @return true if successful.
 	 */
 	public boolean setActiveClass(int classIndex) {
+
+		// Remove Item RHAND
+		if (Config.REMOVE_WEAPON) {
+			ItemInstance rhand = getInventory().getItemFrom(Paperdoll.RHAND);
+			if (rhand != null) {
+				ItemInstance[] unequipped = getInventory()
+						.unequipItemInBodySlotAndRecord(rhand.getItem().getBodyPart());
+				InventoryUpdate iu = new InventoryUpdate();
+				for (ItemInstance element : unequipped)
+					iu.addModifiedItem(element);
+				sendPacket(iu);
+			}
+		}
+		// Remove Item CHEST
+		if (Config.REMOVE_CHEST) {
+			ItemInstance chest = getInventory().getItemFrom(Paperdoll.CHEST);
+			if (chest != null) {
+				ItemInstance[] unequipped = getInventory()
+						.unequipItemInBodySlotAndRecord(chest.getItem().getBodyPart());
+				InventoryUpdate iu = new InventoryUpdate();
+				for (ItemInstance element : unequipped)
+					iu.addModifiedItem(element);
+				sendPacket(iu);
+			}
+		}
+
+		// Remove Item LEG
+		if (Config.REMOVE_LEG) {
+			ItemInstance legs = getInventory().getItemFrom(Paperdoll.LEGS);
+			if (legs != null) {
+				ItemInstance[] unequipped = getInventory().unequipItemInBodySlotAndRecord(legs.getItem().getBodyPart());
+				InventoryUpdate iu = new InventoryUpdate();
+				for (ItemInstance element : unequipped)
+					iu.addModifiedItem(element);
+				sendPacket(iu);
+			}
+		}
+		// Remove Item TATTOO
+		if (Config.REMOVE_TATTOO) {
+			ItemInstance legs = getInventory().getItemFrom(Paperdoll.UNDER);
+			if (legs != null) {
+				ItemInstance[] unequipped = getInventory().unequipItemInBodySlotAndRecord(legs.getItem().getBodyPart());
+				InventoryUpdate iu = new InventoryUpdate();
+				for (ItemInstance element : unequipped)
+					iu.addModifiedItem(element);
+				sendPacket(iu);
+			}
+		}
+
 		if (!_subclassLock.tryLock())
 			return false;
 

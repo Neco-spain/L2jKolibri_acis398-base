@@ -107,6 +107,7 @@ import net.sf.l2j.mods.epicinfo.RaidBossInfoManager;
 import net.sf.l2j.mods.partyfarm.InitialPartyFarm;
 import net.sf.l2j.mods.partyfarm.PartyFarm;
 import net.sf.l2j.mods.partyfarm.PartyZoneReward;
+import net.sf.l2j.mods.pcbang.PcBang;
 import net.sf.l2j.util.DeadLockDetector;
 import net.sf.l2j.util.IPv4Filter;
 
@@ -237,6 +238,12 @@ public class GameServer {
 		NewbieBuffData.getInstance();
 		InstantTeleportData.getInstance();
 		TeleportLocationData.getInstance();
+		StringUtil.printSection("Events");
+		if (Config.PCB_ENABLE) {
+			System.out.println("############PCB_ENABLE################");
+			ThreadPool.scheduleAtFixedRate(PcBang.getInstance(), Config.PCB_INTERVAL * 1000,
+					Config.PCB_INTERVAL * 1000);
+		}
 
 		TeleportData.getInstance();
 		PartyZoneReward.getInstance();

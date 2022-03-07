@@ -38,8 +38,18 @@ public final class Config {
 	public static final String SKIN_FILE = "./config/Skin.properties";
 	public static final String ENCHANT_FILE = "./config/EnchantSystem.properties";
 	public static final String PARTYFARMEVENT = "./config/PartyFarmEvent.properties";
+	public static final String PCBANGEVENT = "./config/PcBangEvent.properties";
 
 //=====================================================================================================================================================
+	// PC Bang Event
+	public static int PCB_MIN_LEVEL;
+	public static int PCB_POINT_MIN;
+	public static int PCB_POINT_MAX;
+	public static int PCB_CHANCE_DUAL_POINT;
+	public static int PCB_INTERVAL;
+	public static int PCB_COIN_ID;
+	public static boolean PCB_ENABLE;
+
 	// Party Farm Event
 	public static int EVENT_BEST_FARM_TIME;
 	public static String[] EVENT_BEST_FARM_INTERVAL_BY_TIME_OF_DAY;
@@ -95,6 +105,18 @@ public final class Config {
 	// --------------------------------------------------
 	// Mods settings
 	// --------------------------------------------------
+	public static boolean ALT_DISABLE_BOW_CLASSES;
+	public static String DISABLE_BOW_CLASSES_STRING;
+	public static ArrayList<Integer> DISABLE_BOW_CLASSES = new ArrayList<>();
+
+	public static boolean ALT_DISABLE_HEAVY_CLASSES;
+	public static String DISABLE_HEAVY_CLASSES_STRING;
+	public static ArrayList<Integer> DISABLE_HEAVY_CLASSES = new ArrayList<>();
+
+	public static boolean REMOVE_WEAPON;
+	public static boolean REMOVE_CHEST;
+	public static boolean REMOVE_LEG;
+	public static boolean REMOVE_TATTOO;
 
 	public static boolean ALT_OLY_END_ANNOUNCE;
 	public static boolean ENABLE_RAIDBOSS_NOBLES;
@@ -805,6 +827,23 @@ public final class Config {
 	}
 
 	// ================================================================================================================
+
+	private static final void loadPcBangConfig() {
+		final ExProperties PcBanG = initProperties(PARTYFARMEVENT);
+		PCB_ENABLE = Boolean.parseBoolean(PcBanG.getProperty("PcBangPointEnable", "true"));
+		PCB_MIN_LEVEL = Integer.parseInt(PcBanG.getProperty("PcBangPointMinLevel", "20"));
+		PCB_POINT_MIN = Integer.parseInt(PcBanG.getProperty("PcBangPointMinCount", "20"));
+		PCB_POINT_MAX = Integer.parseInt(PcBanG.getProperty("PcBangPointMaxCount", "1000000"));
+		PCB_COIN_ID = Integer.parseInt(PcBanG.getProperty("PCBCoinId", "0"));
+		if (PCB_POINT_MAX < 1) {
+			PCB_POINT_MAX = Integer.MAX_VALUE;
+
+		}
+		PCB_CHANCE_DUAL_POINT = Integer.parseInt(PcBanG.getProperty("PcBangPointDualChance", "20"));
+		PCB_INTERVAL = Integer.parseInt(PcBanG.getProperty("PcBangPointTimeStamp", "900"));
+
+	}
+
 	private static final void loadPTFarmConfig() {
 		final ExProperties BestFarm = initProperties(PARTYFARMEVENT);
 		PART_ZONE_MONSTERS_EVENT = BestFarm.getProperty("PartyEventMonster");
@@ -1132,6 +1171,28 @@ public final class Config {
 	 */
 	private static final void loadMods() {
 		final ExProperties mods = initProperties(MODS_FILE);
+
+		ALT_DISABLE_BOW_CLASSES = Boolean.parseBoolean(mods.getProperty("AltDisableBow", "False"));
+		DISABLE_BOW_CLASSES_STRING = mods.getProperty("DisableBowForClasses", "");
+		DISABLE_BOW_CLASSES = new ArrayList<>();
+		for (String class_id : DISABLE_BOW_CLASSES_STRING.split(",")) {
+			if (!class_id.equals(""))
+				DISABLE_BOW_CLASSES.add(Integer.parseInt(class_id));
+		}
+
+		ALT_DISABLE_HEAVY_CLASSES = Boolean.parseBoolean(mods.getProperty("AltDisableHeavy", "False"));
+		DISABLE_HEAVY_CLASSES_STRING = mods.getProperty("DisableHeavyForClasses", "");
+		DISABLE_HEAVY_CLASSES = new ArrayList<>();
+		for (String class_id : DISABLE_BOW_CLASSES_STRING.split(",")) {
+			if (!class_id.equals(""))
+				DISABLE_BOW_CLASSES.add(Integer.parseInt(class_id));
+		}
+
+		REMOVE_WEAPON = Boolean.parseBoolean(mods.getProperty("RemoveWeapon", "False"));
+		REMOVE_CHEST = Boolean.parseBoolean(mods.getProperty("RemoveChest", "False"));
+		REMOVE_LEG = Boolean.parseBoolean(mods.getProperty("RemoveLeg", "False"));
+		REMOVE_TATTOO = Boolean.parseBoolean(mods.getProperty("RemoveLeg", "False"));
+
 		ALLOW_DIRECT_TP_TO_BOSS_ROOM = mods.getProperty("AllowDirectTeleportToBossRoom", false);
 		ALT_GAME_VIEWNPC = Boolean.parseBoolean(mods.getProperty("AltGameViewNpc", "False"));
 		INFINITY_SS = mods.getProperty("InfinitySS", true);
@@ -1956,6 +2017,8 @@ public final class Config {
 		loadEnchantSystemConfig();
 		// PartyFarmEvent
 		loadPTFarmConfig();
+		// PC Bang Event
+		loadPcBangConfig();
 	}
 
 	public static final void loadLoginServer() {
