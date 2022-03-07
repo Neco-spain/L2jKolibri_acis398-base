@@ -107,7 +107,8 @@ public final class Config {
 	public static boolean ANNOUNCE_GRANDBOS_KILL;
 	public static boolean INFINITY_SS;
 	public static boolean INFINITY_ARROWS;
-
+	public static boolean ALLOW_DIRECT_TP_TO_BOSS_ROOM;
+	public static boolean ALT_GAME_VIEWNPC;
 	/** Balancer */
 	public static boolean BALANCER_ALLOW;
 	/** Buffer */
@@ -1131,6 +1132,8 @@ public final class Config {
 	 */
 	private static final void loadMods() {
 		final ExProperties mods = initProperties(MODS_FILE);
+		ALLOW_DIRECT_TP_TO_BOSS_ROOM = mods.getProperty("AllowDirectTeleportToBossRoom", false);
+		ALT_GAME_VIEWNPC = Boolean.parseBoolean(mods.getProperty("AltGameViewNpc", "False"));
 		INFINITY_SS = mods.getProperty("InfinitySS", true);
 		INFINITY_ARROWS = mods.getProperty("InfinityArrows", true);
 		ALT_OLY_END_ANNOUNCE = Boolean.parseBoolean(mods.getProperty("AltOlyEndAnnounce", "False"));
@@ -1234,7 +1237,7 @@ public final class Config {
 		VIP_XP_SP_RATE = Float.parseFloat(mods.getProperty("VIPXpSpRate", "1.5"));
 		VIP_ADENA_RATE = Float.parseFloat(mods.getProperty("VIPAdenaRate", "1.5"));
 		VIP_DROP_RATE = Float.parseFloat(mods.getProperty("VIPDropRate", "1.5"));
-		VIP_BOSSDROP_RATE = Float.parseFloat(mods.getProperty("VIPDropRate", "1.5"));
+		VIP_BOSSDROP_RATE = Float.parseFloat(mods.getProperty("VIPBossDropRate", "1.5"));
 
 		VIP_SPOIL_RATE = Float.parseFloat(mods.getProperty("VIPSpoilRate", "1.5"));
 		MESSAGE_VIP_ENTER = mods.getProperty("ScreenVIPMessageText", "Forbidden to Use Enchant near the bank!");

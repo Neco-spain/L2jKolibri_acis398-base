@@ -46,6 +46,7 @@ import net.sf.l2j.gameserver.model.itemcontainer.Inventory;
 import net.sf.l2j.gameserver.model.location.Location;
 import net.sf.l2j.gameserver.model.zone.type.WaterZone;
 import net.sf.l2j.gameserver.network.serverpackets.AbstractNpcInfo.NpcInfo;
+import net.sf.l2j.gameserver.network.serverpackets.ActionFailed;
 import net.sf.l2j.gameserver.network.serverpackets.ChangeMoveType;
 import net.sf.l2j.gameserver.network.serverpackets.L2GameServerPacket;
 import net.sf.l2j.gameserver.network.serverpackets.Revive;
@@ -1357,6 +1358,16 @@ public abstract class Creature extends WorldObject {
 			else
 				player.getAI().tryToInteract(this, isCtrlPressed, isShiftPressed);
 		}
+	}
+
+	@Override
+	public void onActionShift(Player player) {
+		if (player.getTarget() != this)
+			player.setTarget(this);
+
+		else
+			player.sendPacket(ActionFailed.STATIC_PACKET);
+		super.onActionShift(player);
 	}
 
 	/**

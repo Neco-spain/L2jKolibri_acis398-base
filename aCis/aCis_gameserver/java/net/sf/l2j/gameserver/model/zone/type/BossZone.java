@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.commons.pool.ConnectionPool;
 import net.sf.l2j.gameserver.data.SkillTable;
 import net.sf.l2j.gameserver.data.xml.MapRegionData.TeleportType;
@@ -83,9 +84,13 @@ public class BossZone extends ZoneType {
 			// Get player and set zone info.
 			final Player player = (Player) character;
 			player.setInsideZone(ZoneId.NO_SUMMON_FRIEND, true);
+			player.setInsideZone(ZoneId.FLAG, true);
+
 			PvpFlagTaskManager.getInstance().remove(player, true);
 			noblesse.getEffects(player, player);
 			player.updatePvPFlag(1);
+			if (player.isGM() || Config.ALLOW_DIRECT_TP_TO_BOSS_ROOM)
+				return;
 			// Skip other checks for GM or if no invade time is set.
 			if (player.isGM() || _invadeTime == 0)
 				return;
@@ -112,7 +117,8 @@ public class BossZone extends ZoneType {
 		} else if (character instanceof Summon) {
 			final Player player = ((Summon) character).getOwner();
 			if (player != null) {
-				if (_allowedPlayers.contains(player.getObjectId()) || player.isGM() || _invadeTime == 0)
+				if (Config.ALLOW_DIRECT_TP_TO_BOSS_ROOM || _allowedPlayers.contains(player.getObjectId())
+						|| player.isGM() || _invadeTime == 0)
 					return;
 
 				// Remove summon.

@@ -82,6 +82,7 @@ import net.sf.l2j.gameserver.enums.skills.Stats;
 import net.sf.l2j.gameserver.geoengine.GeoEngine;
 import net.sf.l2j.gameserver.handler.IItemHandler;
 import net.sf.l2j.gameserver.handler.ItemHandler;
+import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminEditChar;
 import net.sf.l2j.gameserver.handler.skillhandlers.SummonFriend;
 import net.sf.l2j.gameserver.model.AccessLevel;
 import net.sf.l2j.gameserver.model.PetDataEntry;
@@ -670,6 +671,14 @@ public final class Player extends Playable {
 	@Override
 	public boolean denyAiAction() {
 		return super.denyAiAction() || isInStoreMode() || _operateType == OperateType.OBSERVE;
+	}
+
+	@Override
+	public void onActionShift(Player player) {
+		if (player.isGM())
+			AdminEditChar.gatherPlayerInfo(player, this);
+
+		super.onActionShift(player);
 	}
 
 	@Override
@@ -5829,7 +5838,6 @@ public final class Player extends Playable {
 			// Prevents some issues when changing between subclases that shares skills
 			getDisabledSkills().clear();
 
-			restoreEffects();
 			updateEffectIcons();
 			sendPacket(new EtcStatusUpdate(this));
 

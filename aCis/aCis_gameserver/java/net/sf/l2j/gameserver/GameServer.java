@@ -57,6 +57,7 @@ import net.sf.l2j.gameserver.data.xml.DoorData;
 import net.sf.l2j.gameserver.data.xml.FishData;
 import net.sf.l2j.gameserver.data.xml.HennaData;
 import net.sf.l2j.gameserver.data.xml.HerbDropData;
+import net.sf.l2j.gameserver.data.xml.IconTable;
 import net.sf.l2j.gameserver.data.xml.InstantTeleportData;
 import net.sf.l2j.gameserver.data.xml.ItemData;
 import net.sf.l2j.gameserver.data.xml.MapRegionData;
@@ -73,6 +74,7 @@ import net.sf.l2j.gameserver.data.xml.SpellbookData;
 import net.sf.l2j.gameserver.data.xml.StaticObjectData;
 import net.sf.l2j.gameserver.data.xml.SummonItemData;
 import net.sf.l2j.gameserver.data.xml.TeleportData;
+import net.sf.l2j.gameserver.data.xml.TeleportLocationData;
 import net.sf.l2j.gameserver.data.xml.WalkerRouteData;
 import net.sf.l2j.gameserver.geoengine.GeoEngine;
 import net.sf.l2j.gameserver.handler.AdminCommandHandler;
@@ -234,6 +236,8 @@ public class GameServer {
 		DimensionalRiftManager.getInstance();
 		NewbieBuffData.getInstance();
 		InstantTeleportData.getInstance();
+		TeleportLocationData.getInstance();
+
 		TeleportData.getInstance();
 		PartyZoneReward.getInstance();
 		class SpawnMonsters implements Runnable {
@@ -256,7 +260,7 @@ public class GameServer {
 
 		StringUtil.printSection("Four Sepulchers");
 		FourSepulchersManager.getInstance();
-
+		IconTable.getInstance();
 		StringUtil.printSection("Quests & Scripts");
 		ScriptData.getInstance();
 
@@ -291,6 +295,7 @@ public class GameServer {
 		LOGGER.info("Loaded {} user command handlers.", UserCommandHandler.getInstance().size());
 		LOGGER.info("Loaded {} user VoicedCommandHandler handlers.", VoicedCommandHandler.getInstance().size());
 		RaidBossInfoManager.getInstance();
+
 		StringUtil.printSection("Party Farm Events");
 		if ((Config.PARTY_FARM_BY_TIME_OF_DAY) && (!Config.START_PARTY)) {
 			InitialPartyFarm.getInstance().StartCalculationOfNextEventTime();
