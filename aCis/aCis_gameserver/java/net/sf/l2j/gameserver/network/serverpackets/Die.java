@@ -2,7 +2,6 @@ package net.sf.l2j.gameserver.network.serverpackets;
 
 import net.sf.l2j.gameserver.data.manager.CastleManager;
 import net.sf.l2j.gameserver.enums.SiegeSide;
-import net.sf.l2j.gameserver.enums.ZoneId;
 import net.sf.l2j.gameserver.model.actor.Creature;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.actor.instance.Monster;
@@ -18,6 +17,7 @@ public class Die extends L2GameServerPacket {
 
 	private boolean _allowFixedRes;
 	private Clan _clan;
+	private boolean _funEvent;
 
 	public Die(Creature creature) {
 		_creature = creature;
@@ -28,6 +28,7 @@ public class Die extends L2GameServerPacket {
 			Player player = (Player) creature;
 			_allowFixedRes = player.getAccessLevel().allowFixedRes();
 			_clan = player.getClan();
+			_funEvent = !player.isInFunEvent();
 
 		} else if (creature instanceof Monster)
 			_sweepable = ((Monster) creature).getSpoilState().isSweepable();
@@ -40,9 +41,10 @@ public class Die extends L2GameServerPacket {
 
 		writeC(0x06);
 		writeD(_objectId);
-		writeD(0x01); // to nearest village
+		writeD(_funEvent ? 0x01 : 0); // to nearest village
+		// writeD(0x01); // to nearest village
 
-		if (_clan != null) {
+		if (_funEvent && _clan != null) {
 			SiegeSide side = null;
 
 			final Siege siege = CastleManager.getInstance().getActiveSiege(_creature);

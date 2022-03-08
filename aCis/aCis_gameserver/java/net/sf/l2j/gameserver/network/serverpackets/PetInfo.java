@@ -5,44 +5,38 @@ import net.sf.l2j.gameserver.model.actor.Summon;
 import net.sf.l2j.gameserver.model.actor.instance.Pet;
 import net.sf.l2j.gameserver.model.actor.instance.Servitor;
 
-public class PetInfo extends L2GameServerPacket
-{
+public class PetInfo extends L2GameServerPacket {
 	private final Summon _summon;
 	private final int _val;
-	
+
 	private int _maxFed;
 	private int _curFed;
-	
-	public PetInfo(Summon summon, int val)
-	{
+
+	public PetInfo(Summon summon, int val) {
 		_summon = summon;
 		_val = val;
-		
-		if (_summon instanceof Pet)
-		{
+
+		if (_summon instanceof Pet) {
 			final Pet pet = (Pet) _summon;
-			
+
 			_curFed = pet.getCurrentFed();
 			_maxFed = pet.getPetData().getMaxMeal();
-		}
-		else if (_summon instanceof Servitor)
-		{
+		} else if (_summon instanceof Servitor) {
 			final Servitor sum = (Servitor) _summon;
-			
+
 			_curFed = sum.getTimeRemaining();
 			_maxFed = sum.getTotalLifeTime();
 		}
 	}
-	
+
 	@Override
-	protected final void writeImpl()
-	{
+	protected final void writeImpl() {
 		writeC(0xb1);
 		writeD(_summon.getSummonType());
 		writeD(_summon.getObjectId());
 		writeD(_summon.getTemplate().getIdTemplate() + 1000000);
 		writeD(0); // 1=attackable
-		
+
 		writeD(_summon.getX());
 		writeD(_summon.getY());
 		writeD(_summon.getZ());
@@ -50,10 +44,10 @@ public class PetInfo extends L2GameServerPacket
 		writeD(0);
 		writeD(_summon.getStatus().getMAtkSpd());
 		writeD(_summon.getStatus().getPAtkSpd());
-		
+
 		final int runSpd = _summon.getStatus().getBaseRunSpeed();
 		final int walkSpd = _summon.getStatus().getBaseWalkSpeed();
-		
+
 		writeD(runSpd);
 		writeD(walkSpd);
 		writeD(runSpd);
@@ -62,7 +56,7 @@ public class PetInfo extends L2GameServerPacket
 		writeD(walkSpd);
 		writeD(runSpd);
 		writeD(walkSpd);
-		
+
 		writeF(_summon.getStatus().getMovementSpeedMultiplier());
 		writeF(1);
 		writeF(_summon.getCollisionRadius());
@@ -70,7 +64,8 @@ public class PetInfo extends L2GameServerPacket
 		writeD(_summon.getWeapon());
 		writeD(_summon.getArmor());
 		writeD(0);
-		writeC((_summon.getOwner() != null) ? 1 : 0); // when pet is dead and player exit game, pet doesn't show master name
+		writeC((_summon.getOwner() != null) ? 1 : 0); // when pet is dead and player exit game, pet doesn't show master
+														// name
 		writeC(1);
 		writeC((_summon.isInCombat()) ? 1 : 0);
 		writeC((_summon.isAlikeDead()) ? 1 : 0);
@@ -103,13 +98,15 @@ public class PetInfo extends L2GameServerPacket
 		writeD((int) _summon.getStatus().getMoveSpeed());
 		writeD(_summon.getStatus().getPAtkSpd());
 		writeD(_summon.getStatus().getMAtkSpd());
-		
-		writeD((_summon.getOwner() != null && !_summon.getOwner().getAppearance().isVisible()) ? _summon.getAbnormalEffect() | AbnormalEffect.STEALTH.getMask() : _summon.getAbnormalEffect());
+
+		writeD((_summon.getOwner() != null && !_summon.getOwner().getAppearance().isVisible())
+				? _summon.getAbnormalEffect() | AbnormalEffect.STEALTH.getMask()
+				: _summon.getAbnormalEffect());
 		writeH((_summon.isMountable()) ? 1 : 0);
 		writeC(_summon.getMove().getMoveType().getId());
-		
+
 		writeH(0); // ??
-		writeC(_summon.getTeam().getId());
+		writeC(_summon.getOwner() != null ? _summon.getOwner().getTeam() : 0); // team aura (1 = blue, 2 = red)
 		writeD(_summon.getSoulShotsPerHit());
 		writeD(_summon.getSpiritShotsPerHit());
 	}

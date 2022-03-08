@@ -58,6 +58,7 @@ import net.sf.l2j.gameserver.scripting.Quest;
 import net.sf.l2j.gameserver.scripting.QuestState;
 import net.sf.l2j.gameserver.skills.L2Skill;
 import net.sf.l2j.gameserver.taskmanager.GameTimeTaskManager;
+import net.sf.l2j.mods.events.tvt.TvTEvent;
 import net.sf.l2j.mods.partyfarm.PartyFarm;
 
 public class EnterWorld extends L2GameClientPacket {
@@ -215,13 +216,14 @@ public class EnterWorld extends L2GameClientPacket {
 		if (Config.PCB_ENABLE) {
 			player.showPcBangWindow();
 		}
+
 		player.sendPacket(SevenSignsManager.getInstance().getCurrentPeriod().getMessageId());
 		AnnouncementData.getInstance().showAnnouncements(player, false);
 		if ((PartyFarm.is_started()) && (Config.PARTY_FARM_BY_TIME_OF_DAY)) {
 			player.sendPacket(
 					new CreatureSay(0, SayType.PARTY, "[System]", "" + Config.PARTY_FARM_MESSAGE_TEXT + ":."));
-
 		}
+		TvTEvent.onLogin(player, player);
 		if (player.isVip())
 			onEnterVip(player);
 

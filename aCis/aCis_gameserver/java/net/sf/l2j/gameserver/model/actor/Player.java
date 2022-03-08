@@ -60,7 +60,6 @@ import net.sf.l2j.gameserver.enums.PunishmentType;
 import net.sf.l2j.gameserver.enums.ShortcutType;
 import net.sf.l2j.gameserver.enums.SpawnType;
 import net.sf.l2j.gameserver.enums.StatusType;
-import net.sf.l2j.gameserver.enums.TeamType;
 import net.sf.l2j.gameserver.enums.TeleportMode;
 import net.sf.l2j.gameserver.enums.ZoneId;
 import net.sf.l2j.gameserver.enums.actors.ClassId;
@@ -221,6 +220,7 @@ import net.sf.l2j.gameserver.taskmanager.GameTimeTaskManager;
 import net.sf.l2j.gameserver.taskmanager.PvpFlagTaskManager;
 import net.sf.l2j.gameserver.taskmanager.ShadowItemTaskManager;
 import net.sf.l2j.gameserver.taskmanager.WaterTaskManager;
+import net.sf.l2j.mods.events.tvt.TvTEvent;
 import net.sf.l2j.mods.skins.DressMeData;
 
 /**
@@ -443,8 +443,9 @@ public final class Player extends Playable {
 
 	private final int[] _loto = new int[5];
 	private final int[] _race = new int[2];
-
-	private TeamType _team = TeamType.NONE;
+	public int _tvtkills;
+	public boolean atEvent = false;
+	private int _team = 0;
 
 	private int _alliedVarkaKetra; // lvl of alliance with ketra orcs or varka silenos, used in quests and aggro
 	// checks [-5,-1] varka, 0 neutral, [1,5] ketra
@@ -2220,6 +2221,10 @@ public final class Player extends Playable {
 
 	@Override
 	public void onAction(Player player, boolean isCtrlPressed, boolean isShiftPressed) {
+		if (!TvTEvent.onAction(player.getName(), getName())) {
+			player.sendPacket(ActionFailed.STATIC_PACKET);
+			return;
+		}
 		if (player.getTarget() != this)
 			player.setTarget(this);
 		else {
@@ -2595,7 +2600,7 @@ public final class Player extends Playable {
 
 		if (isMounted())
 			stopFeed();
-
+		_tvtkills = 0;
 		// Clean player charges on death.
 		clearCharges();
 
@@ -2603,6 +2608,7 @@ public final class Player extends Playable {
 			if (isFakeDeath())
 				stopFakeDeath(true);
 		}
+		TvTEvent.onKill(killer, this);
 
 		if (killer != null) {
 			final Player pk = killer.getActingPlayer();
@@ -2666,6 +2672,11 @@ public final class Player extends Playable {
 		updateEffectIcons();
 
 		return true;
+	}
+
+	public boolean isInFunEvent() {
+		return (atEvent || (TvTEvent.isStarted() && TvTEvent.isPlayerParticipant(getName())) && !isGM());
+
 	}
 
 	private void onDieDropItem(Creature killer) {
@@ -5609,11 +5620,11 @@ public final class Player extends Playable {
 		return _lvlJoinedAcademy > 0;
 	}
 
-	public void setTeam(TeamType team) {
+	public void setTeam(int team) {
 		_team = team;
 	}
 
-	public TeamType getTeam() {
+	public int getTeam() {
 		return _team;
 	}
 

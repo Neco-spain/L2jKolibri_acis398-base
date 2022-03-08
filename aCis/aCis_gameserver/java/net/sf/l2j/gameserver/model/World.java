@@ -213,10 +213,6 @@ public final class World {
 		toAllOnlinePlayers(new CreatureSay(SayType.CRITICAL_ANNOUNCE, null, text));
 	}
 
-	public static void announceToOnlinePlayers(String text, boolean critical) {
-		toAllOnlinePlayers(new CreatureSay((critical) ? SayType.CRITICAL_ANNOUNCE : SayType.ANNOUNCEMENT, null, text));
-	}
-
 	/**
 	 * Verify if a x/y coordinate is out of {@link World} valid coordinates.
 	 * 

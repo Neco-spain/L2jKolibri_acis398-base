@@ -9,6 +9,7 @@ import net.sf.l2j.gameserver.GameServer;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.GrandBossStatus;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Online;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Shiff_Mod;
+import net.sf.l2j.gameserver.handler.voicedcommandhandlers.TvTEventCommand;
 
 public class VoicedCommandHandler {
 	private static Logger LOGGER = Logger.getLogger(GameServer.class.getName());
@@ -32,6 +33,7 @@ public class VoicedCommandHandler {
 		if (Config.ENABLE_COMMAND_EPIC) {
 			registerVoicedCommandHandler(new GrandBossStatus());
 			registerVoicedCommandHandler(new Shiff_Mod());
+			registerVoicedCommandHandler(new TvTEventCommand());
 		}
 
 	}

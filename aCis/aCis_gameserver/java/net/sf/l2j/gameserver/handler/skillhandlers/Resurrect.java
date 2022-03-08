@@ -10,46 +10,40 @@ import net.sf.l2j.gameserver.model.actor.instance.Pet;
 import net.sf.l2j.gameserver.skills.Formulas;
 import net.sf.l2j.gameserver.skills.L2Skill;
 import net.sf.l2j.gameserver.taskmanager.DecayTaskManager;
+import net.sf.l2j.mods.events.tvt.TvTEvent;
 
-public class Resurrect implements ISkillHandler
-{
-	private static final SkillType[] SKILL_IDS =
-	{
-		SkillType.RESURRECT
-	};
-	
+public class Resurrect implements ISkillHandler {
+	private static final SkillType[] SKILL_IDS = { SkillType.RESURRECT };
+
 	@Override
-	public void useSkill(Creature activeChar, L2Skill skill, WorldObject[] targets)
-	{
-		for (WorldObject cha : targets)
-		{
+	public void useSkill(Creature activeChar, L2Skill skill, WorldObject[] targets) {
+		if (!TvTEvent.isInactive() && TvTEvent.isPlayerParticipant(activeChar.getName())) {
+			activeChar.sendMessage("You can not use this action when participating in this event.");
+			return;
+		}
+		for (WorldObject cha : targets) {
 			final Creature target = (Creature) cha;
-			if (activeChar instanceof Player)
-			{
+			if (activeChar instanceof Player) {
 				if (cha instanceof Player)
 					((Player) cha).reviveRequest((Player) activeChar, skill, false);
-				else if (cha instanceof Pet)
-				{
+				else if (cha instanceof Pet) {
 					if (((Pet) cha).getOwner() == activeChar)
 						target.doRevive(Formulas.calculateSkillResurrectRestorePercent(skill.getPower(), activeChar));
 					else
 						((Pet) cha).getOwner().reviveRequest((Player) activeChar, skill, true);
-				}
-				else
+				} else
 					target.doRevive(Formulas.calculateSkillResurrectRestorePercent(skill.getPower(), activeChar));
-			}
-			else
-			{
+			} else {
 				DecayTaskManager.getInstance().cancel(target);
 				target.doRevive(Formulas.calculateSkillResurrectRestorePercent(skill.getPower(), activeChar));
 			}
 		}
-		activeChar.setChargedShot(activeChar.isChargedShot(ShotType.BLESSED_SPIRITSHOT) ? ShotType.BLESSED_SPIRITSHOT : ShotType.SPIRITSHOT, skill.isStaticReuse());
+		activeChar.setChargedShot(activeChar.isChargedShot(ShotType.BLESSED_SPIRITSHOT) ? ShotType.BLESSED_SPIRITSHOT
+				: ShotType.SPIRITSHOT, skill.isStaticReuse());
 	}
-	
+
 	@Override
-	public SkillType[] getSkillIds()
-	{
+	public SkillType[] getSkillIds() {
 		return SKILL_IDS;
 	}
 }

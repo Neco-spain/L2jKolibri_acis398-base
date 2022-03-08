@@ -36,6 +36,7 @@ import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminSummon;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminTarget;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminTeleport;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminTest;
+import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminTvTEvent;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminZone;
 import net.sf.l2j.mods.vip.admin.AdminVip;
 
@@ -78,7 +79,7 @@ public class AdminCommandHandler {
 		registerHandler(new AdminBalancer());
 		registerHandler(new AdminVip());
 		registerHandler(new AdminPartyFarm());
-
+		registerHandler(new AdminTvTEvent());
 	}
 
 	private void registerHandler(IAdminCommandHandler handler) {

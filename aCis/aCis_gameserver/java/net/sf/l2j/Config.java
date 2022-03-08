@@ -39,8 +39,37 @@ public final class Config {
 	public static final String ENCHANT_FILE = "./config/EnchantSystem.properties";
 	public static final String PARTYFARMEVENT = "./config/PartyFarmEvent.properties";
 	public static final String PCBANGEVENT = "./config/PcBangEvent.properties";
+	public static final String TVTEVENT = "./config/TvT.properties";
 
 //=====================================================================================================================================================
+	// TvT Event Settings
+	public static boolean TVT_EVENT_ENABLED;
+	public static int TVT_EVENT_INTERVAL;
+	public static int TVT_EVENT_PARTICIPATION_TIME;
+	public static int TVT_EVENT_RUNNING_TIME;
+	public static int TVT_EVENT_PARTICIPATION_NPC_ID;
+	public static int TVT_EVENT_MIN_PLAYERS_IN_TEAMS;
+	public static int TVT_EVENT_MAX_PLAYERS_IN_TEAMS;
+	public static int TVT_EVENT_RESPAWN_TELEPORT_DELAY;
+	public static int TVT_EVENT_START_LEAVE_TELEPORT_DELAY;
+	public static String TVT_EVENT_TEAM_1_NAME;
+	public static int[] TVT_EVENT_BACK_COORDINATES = new int[3];
+	public static int[] TVT_EVENT_TEAM_1_COORDINATES = new int[3];
+	public static String TVT_EVENT_TEAM_2_NAME;
+	public static int[] TVT_EVENT_TEAM_2_COORDINATES = new int[3];
+	public static List<int[]> TVT_EVENT_REWARDS = new ArrayList<>();
+	public static boolean TVT_EVENT_TARGET_TEAM_MEMBERS_ALLOWED;
+	public static boolean TVT_EVENT_POTIONS_ALLOWED;
+	public static boolean TVT_EVENT_SUMMON_BY_ITEM_ALLOWED;
+	public static List<Integer> TVT_EVENT_DOOR_IDS = new ArrayList<>();
+	public static byte TVT_EVENT_MIN_LVL;
+	public static byte TVT_EVENT_MAX_LVL;
+	public static boolean TVT_EVENT_REMOVE_BUFFS;
+	public static boolean TVT_EVENT_HEAL_PLAYERS;
+	public static boolean TVT_KILLS_REWARD_ENABLED;
+	public static List<int[]> TVT_KILLS_REWARD = new ArrayList<>();
+	public static boolean ALLOW_DUALBOX_TVT;
+
 	// PC Bang Event
 	public static int PCB_MIN_LEVEL;
 	public static int PCB_POINT_MIN;
@@ -63,6 +92,8 @@ public final class Config {
 	public static boolean ENABLE_DUALBOX_PARTYFARM;
 	public static boolean PARTY_FARM_BY_TIME_OF_DAY;
 	public static boolean START_PARTY;
+	public static boolean PARTY_ONLY;
+	public static int MIN_PARTY_MEMBERS;
 	public static String PART_ZONE_MONSTERS_EVENT;
 	public static List<Integer> PART_ZONE_MONSTERS_EVENT_ID;
 	public static List<RewardHolder> PARTY_ZONE_REWARDS = new ArrayList<>();
@@ -112,7 +143,7 @@ public final class Config {
 	public static boolean ALT_DISABLE_HEAVY_CLASSES;
 	public static String DISABLE_HEAVY_CLASSES_STRING;
 	public static ArrayList<Integer> DISABLE_HEAVY_CLASSES = new ArrayList<>();
-
+	public static int ALT_OLY_ENCHANT_LIMIT;
 	public static boolean REMOVE_WEAPON;
 	public static boolean REMOVE_CHEST;
 	public static boolean REMOVE_LEG;
@@ -828,8 +859,135 @@ public final class Config {
 
 	// ================================================================================================================
 
+	private static final void loadTvTConfig() {
+		final ExProperties tvt = initProperties(TVTEVENT);
+		TVT_EVENT_ENABLED = tvt.getProperty("TvTEventEnabled", false);
+		TVT_EVENT_INTERVAL = tvt.getProperty("TvTEventInterval", 18000);
+		TVT_EVENT_PARTICIPATION_TIME = tvt.getProperty("TvTEventParticipationTime", 3600);
+		TVT_EVENT_RUNNING_TIME = tvt.getProperty("TvTEventRunningTime", 1800);
+		TVT_EVENT_PARTICIPATION_NPC_ID = tvt.getProperty("TvTEventParticipationNpcId", 0);
+		TVT_EVENT_REMOVE_BUFFS = tvt.getProperty("TvTEventRemoveBuffs", false);
+		TVT_KILLS_REWARD_ENABLED = tvt.getProperty("TvTKillsRewardEnable", false);
+		TVT_EVENT_HEAL_PLAYERS = tvt.getProperty("TvTHealPlayersEnable", false);
+		ALLOW_DUALBOX_TVT = Boolean.parseBoolean(tvt.getProperty("AllowDualBoxInTvT", "True"));
+
+		if (TVT_EVENT_PARTICIPATION_NPC_ID == 0) {
+			TVT_EVENT_ENABLED = false;
+			System.out.println("TvTEventEngine[Config.load()]: invalid config property -> TvTEventParticipationNpcId");
+		} else {
+			String[] propertySplit = tvt.getProperty("TvTEventParticipationNpcCoordinates", "0,0,0").split(",");
+
+			if (propertySplit.length < 3) {
+				TVT_EVENT_ENABLED = false;
+				System.out.println(
+						"TvTEventEngine[Config.load()]: invalid config property -> TvTEventParticipationNpcCoordinates");
+			} else {
+				TVT_EVENT_BACK_COORDINATES[0] = Integer.parseInt(propertySplit[0]);
+				TVT_EVENT_BACK_COORDINATES[1] = Integer.parseInt(propertySplit[1]);
+				TVT_EVENT_BACK_COORDINATES[2] = Integer.parseInt(propertySplit[2]);
+
+				TVT_EVENT_MIN_PLAYERS_IN_TEAMS = Integer.parseInt(tvt.getProperty("TvTEventMinPlayersInTeams", "1"));
+				TVT_EVENT_MAX_PLAYERS_IN_TEAMS = Integer.parseInt(tvt.getProperty("TvTEventMaxPlayersInTeams", "20"));
+				TVT_EVENT_MIN_LVL = (byte) Integer.parseInt(tvt.getProperty("TvTEventMinPlayerLevel", "1"));
+				TVT_EVENT_MAX_LVL = (byte) Integer.parseInt(tvt.getProperty("TvTEventMaxPlayerLevel", "80"));
+				TVT_EVENT_RESPAWN_TELEPORT_DELAY = Integer
+						.parseInt(tvt.getProperty("TvTEventRespawnTeleportDelay", "20"));
+				TVT_EVENT_START_LEAVE_TELEPORT_DELAY = Integer
+						.parseInt(tvt.getProperty("TvTEventStartLeaveTeleportDelay", "20"));
+
+				TVT_EVENT_TEAM_1_NAME = tvt.getProperty("TvTEventTeam1Name", "Team1");
+				propertySplit = tvt.getProperty("TvTEventTeam1Coordinates", "0,0,0").split(",");
+
+				if (propertySplit.length < 3) {
+					TVT_EVENT_ENABLED = false;
+					System.out.println(
+							"TvTEventEngine[Config.load()]: invalid config property -> TvTEventTeam1Coordinates");
+				} else {
+					TVT_EVENT_TEAM_1_COORDINATES[0] = Integer.parseInt(propertySplit[0]);
+					TVT_EVENT_TEAM_1_COORDINATES[1] = Integer.parseInt(propertySplit[1]);
+					TVT_EVENT_TEAM_1_COORDINATES[2] = Integer.parseInt(propertySplit[2]);
+
+					TVT_EVENT_TEAM_2_NAME = tvt.getProperty("TvTEventTeam2Name", "Team2");
+					propertySplit = tvt.getProperty("TvTEventTeam2Coordinates", "0,0,0").split(",");
+
+					if (propertySplit.length < 3) {
+						TVT_EVENT_ENABLED = false;
+						System.out.println(
+								"TvTEventEngine[Config.load()]: invalid config property -> TvTEventTeam2Coordinates");
+					} else {
+						TVT_EVENT_TEAM_2_COORDINATES[0] = Integer.parseInt(propertySplit[0]);
+						TVT_EVENT_TEAM_2_COORDINATES[1] = Integer.parseInt(propertySplit[1]);
+						TVT_EVENT_TEAM_2_COORDINATES[2] = Integer.parseInt(propertySplit[2]);
+						propertySplit = tvt.getProperty("TvTEventReward", "57,100000").split(";");
+
+						for (String reward : propertySplit) {
+							String[] rewardSplit = reward.split(",");
+
+							if (rewardSplit.length != 2)
+								System.out.println(
+										"TvTEventEngine[Config.load()]: invalid config property -> TvTEventReward \""
+												+ reward + "\"");
+							else {
+								try {
+									TVT_EVENT_REWARDS.add(new int[] { Integer.valueOf(rewardSplit[0]),
+											Integer.valueOf(rewardSplit[1]) });
+								} catch (NumberFormatException nfe) {
+									if (!reward.equals(""))
+										System.out.println(
+												"TvTEventEngine[Config.load()]: invalid config property -> TvTEventReward \""
+														+ reward + "\"");
+								}
+							}
+						}
+
+						propertySplit = tvt.getProperty("TvTKillsReward", "57,100000").split(";");
+
+						for (String rewardKills : propertySplit) {
+							String[] rewardSplit = rewardKills.split(",");
+
+							if (rewardSplit.length != 2)
+								System.out.println(
+										"TvTEventEngine[Config.load()]: invalid config property -> TvTEventReward \""
+												+ rewardKills + "\"");
+							else {
+								try {
+									TVT_KILLS_REWARD.add(new int[] { Integer.valueOf(rewardSplit[0]),
+											Integer.valueOf(rewardSplit[1]) });
+								} catch (NumberFormatException nfe) {
+									if (!rewardKills.equals(""))
+										System.out.println(
+												"TvTEventEngine[Config.load()]: invalid config property -> TvTEventReward \""
+														+ rewardKills + "\"");
+								}
+							}
+						}
+
+						TVT_EVENT_TARGET_TEAM_MEMBERS_ALLOWED = Boolean
+								.parseBoolean(tvt.getProperty("TvTEventTargetTeamMembersAllowed", "true"));
+						TVT_EVENT_POTIONS_ALLOWED = Boolean
+								.parseBoolean(tvt.getProperty("TvTEventPotionsAllowed", "false"));
+						TVT_EVENT_SUMMON_BY_ITEM_ALLOWED = Boolean
+								.parseBoolean(tvt.getProperty("TvTEventSummonByItemAllowed", "false"));
+						propertySplit = tvt.getProperty("TvTEventDoorsCloseOpenOnStartEnd", "").split(";");
+
+						for (String door : propertySplit) {
+							try {
+								TVT_EVENT_DOOR_IDS.add(Integer.valueOf(door));
+							} catch (NumberFormatException nfe) {
+								if (!door.equals(""))
+									System.out.println(
+											"TvTEventEngine[Config.load()]: invalid config property -> TvTEventDoorsCloseOpenOnStartEnd \""
+													+ door + "\"");
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
 	private static final void loadPcBangConfig() {
-		final ExProperties PcBanG = initProperties(PARTYFARMEVENT);
+		final ExProperties PcBanG = initProperties(PCBANGEVENT);
 		PCB_ENABLE = Boolean.parseBoolean(PcBanG.getProperty("PcBangPointEnable", "true"));
 		PCB_MIN_LEVEL = Integer.parseInt(PcBanG.getProperty("PcBangPointMinLevel", "20"));
 		PCB_POINT_MIN = Integer.parseInt(PcBanG.getProperty("PcBangPointMinCount", "20"));
@@ -855,6 +1013,9 @@ public final class Config {
 		PARTY_FARM_MONSTER_DALAY = Integer.parseInt(BestFarm.getProperty("MonsterDelay", "10"));
 		PARTY_FARM_BY_TIME_OF_DAY = Boolean.parseBoolean(BestFarm.getProperty("PartyFarmEventEnabled", "false"));
 		START_PARTY = Boolean.parseBoolean(BestFarm.getProperty("StartSpawnPartyFarm", "false"));
+		PARTY_ONLY = Boolean.parseBoolean(BestFarm.getProperty("PartyPlayersOnly", "true"));
+		MIN_PARTY_MEMBERS = Integer.parseInt(BestFarm.getProperty("MinPartyMembers", "3"));
+
 		ENABLE_DUALBOX_PARTYFARM = Boolean.parseBoolean(BestFarm.getProperty("RenewalDualBoxPTFarm", "false"));
 		EVENT_BEST_FARM_TIME = Integer.parseInt(BestFarm.getProperty("EventBestFarmTime", "1"));
 		EVENT_BEST_FARM_INTERVAL_BY_TIME_OF_DAY = BestFarm.getProperty("BestFarmStartTime", "20:00").split(",");
@@ -1185,7 +1346,7 @@ public final class Config {
 		DISABLE_HEAVY_CLASSES = new ArrayList<>();
 		for (String class_id : DISABLE_BOW_CLASSES_STRING.split(",")) {
 			if (!class_id.equals(""))
-				DISABLE_BOW_CLASSES.add(Integer.parseInt(class_id));
+				DISABLE_HEAVY_CLASSES.add(Integer.parseInt(class_id));
 		}
 
 		REMOVE_WEAPON = Boolean.parseBoolean(mods.getProperty("RemoveWeapon", "False"));
@@ -1514,6 +1675,7 @@ public final class Config {
 		OLY_DIVIDER_CLASSED = events.getProperty("OlyDividerClassed", 3);
 		OLY_DIVIDER_NON_CLASSED = events.getProperty("OlyDividerNonClassed", 5);
 		OLY_ANNOUNCE_GAMES = events.getProperty("OlyAnnounceGames", true);
+		ALT_OLY_ENCHANT_LIMIT = Integer.parseInt(events.getProperty("AltOlyEnchantLimit ", "6"));
 
 		SEVEN_SIGNS_BYPASS_PREREQUISITES = events.getProperty("SevenSignsBypassPrerequisites", false);
 		FESTIVAL_MIN_PLAYER = MathUtil.limit(events.getProperty("FestivalMinPlayer", 5), 2, 9);
@@ -2019,6 +2181,8 @@ public final class Config {
 		loadPTFarmConfig();
 		// PC Bang Event
 		loadPcBangConfig();
+		// Tvt Settings
+		loadTvTConfig();
 	}
 
 	public static final void loadLoginServer() {

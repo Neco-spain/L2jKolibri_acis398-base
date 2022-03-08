@@ -13,7 +13,6 @@ import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.actor.instance.Pet;
 import net.sf.l2j.gameserver.model.holder.IntIntHolder;
 import net.sf.l2j.gameserver.model.item.instance.ItemInstance;
-import net.sf.l2j.gameserver.model.item.kind.Armor;
 import net.sf.l2j.gameserver.model.item.kind.Item;
 import net.sf.l2j.gameserver.model.item.kind.Weapon;
 import net.sf.l2j.gameserver.network.SystemMessageId;
@@ -82,7 +81,7 @@ public final class UseItem extends L2GameClientPacket {
 		}
 
 		if (Config.ALT_DISABLE_HEAVY_CLASSES) {
-			if (item.getItem() instanceof Armor && ((Armor) item.getItem()).getItemType() == ArmorType.HEAVY) {
+			if (item.getItemType() == ArmorType.HEAVY) {
 				if (Config.DISABLE_HEAVY_CLASSES.contains(player.getClassId().getId())) {
 					player.sendMessage("This item can not be equipped by your class");
 					player.sendPacket(ActionFailed.STATIC_PACKET);
