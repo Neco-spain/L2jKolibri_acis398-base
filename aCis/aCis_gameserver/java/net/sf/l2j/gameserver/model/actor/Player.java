@@ -7326,4 +7326,138 @@ public final class Player extends Playable {
 
 		return gms;
 	}
+
+	/** The _active_boxes. */
+	public int _active_boxes = -1;
+
+	/** The active_boxes_characters. */
+	public List<String> active_boxes_characters = new ArrayList<>();
+
+	/**
+	 * check if local player can make multibox and also refresh local boxes
+	 * instances number.
+	 * 
+	 * @return true, if successful
+	 */
+	public boolean checkMultiBox() {
+
+		boolean output = true;
+
+		int boxes_number = 0; // this one
+		final List<String> active_boxes = new ArrayList<>();
+
+		if (getClient() != null && getClient().getConnection() != null && !getClient().getConnection().isClosed()
+				&& getClient().getConnection().getInetAddress() != null) {
+
+			final String thisip = getClient().getConnection().getInetAddress().getHostAddress();
+			final Collection<Player> allPlayers = World.getInstance().getPlayers();
+			for (final Player player : allPlayers) {
+				if (player != null) {
+					if (player.isOnline() && player.getClient() != null && player.getClient().getConnection() != null
+							&& !player.getClient().getConnection().isClosed()
+							&& player.getClient().getConnection().getInetAddress() != null
+							&& !player.getName().equals(this.getName())) {
+
+						final String ip = player.getClient().getConnection().getInetAddress().getHostAddress();
+						if (thisip.equals(ip) && this != player) {
+							if (!Config.ALLOW_DUALBOX) {
+
+								output = false;
+								break;
+
+							}
+
+							if (boxes_number + 1 > Config.ALLOWED_BOXES) { // actual count+actual player one
+								output = false;
+								break;
+							}
+							boxes_number++;
+							active_boxes.add(player.getName());
+						}
+					}
+				}
+			}
+		}
+
+		if (output) {
+			_active_boxes = boxes_number + 1; // current number of boxes+this one
+			if (!active_boxes.contains(this.getName())) {
+				active_boxes.add(this.getName());
+
+				this.active_boxes_characters = active_boxes;
+			}
+			refreshOtherBoxes();
+		}
+		/*
+		 * LOGGER.info("Player "+getName()+" has this boxes"); for(String
+		 * name:active_boxes_characters){ LOGGER.info("*** "+name+" ***"); }
+		 */
+		return output;
+	}
+
+	/**
+	 * descrease active boxes number for local player and other boxer for same ip.
+	 */
+	public void decreaseBoxes() {
+
+		_active_boxes = _active_boxes - 1;
+		active_boxes_characters.remove(this.getName());
+
+		refreshOtherBoxes();
+		/*
+		 * if(getClient()!=null && !getClient().getConnection().isClosed()){ String
+		 * thisip =
+		 * getClient().getConnection().getSocketChannel().socket().getInetAddress().
+		 * getHostAddress(); Collection<L2PcInstance> allPlayers =
+		 * L2World.getInstance().getAllPlayers(); L2PcInstance[] players =
+		 * allPlayers.toArray(new L2PcInstance[allPlayers.size()]); for(L2PcInstance
+		 * player : players) { if(player != null) { if(player.getClient()!=null &&
+		 * !player.getClient().getConnection().isClosed()){ String ip =
+		 * player.getClient().getConnection().getSocketChannel().socket().getInetAddress
+		 * ().getHostAddress(); if(thisip.equals(ip) && this != player && player !=
+		 * null) { player._active_boxes = _active_boxes; player.active_boxes_characters
+		 * = active_boxes_characters;
+		 * LOGGER.info("Player "+player.getName()+" has this boxes"); for(String
+		 * name:player.active_boxes_characters){ LOGGER.info("*** "+name+" ***"); } } }
+		 * } } }
+		 */
+		/*
+		 * LOGGER.info("Player "+getName()+" has this boxes"); for(String
+		 * name:active_boxes_characters){ LOGGER.info("*** "+name+" ***"); }
+		 */
+	}
+
+	/**
+	 * increase active boxes number for local player and other boxer for same ip.
+	 */
+	public void refreshOtherBoxes() {
+
+		if (getClient() != null && getClient().getConnection() != null && !getClient().getConnection().isClosed()
+				&& getClient().getConnection().getInetAddress() != null) {
+
+			final String thisip = getClient().getConnection().getInetAddress().getHostAddress();
+			final Collection<Player> allPlayers = World.getInstance().getPlayers();
+			final Player[] players = allPlayers.toArray(new Player[allPlayers.size()]);
+
+			for (final Player player : players) {
+				if (player != null && player.isOnline()) {
+					if (player.getClient() != null && player.getClient().getConnection() != null
+							&& !player.getClient().getConnection().isClosed()
+							&& !player.getName().equals(this.getName())) {
+
+						final String ip = player.getClient().getConnection().getInetAddress().getHostAddress();
+						if (thisip.equals(ip) && this != player) {
+							player._active_boxes = _active_boxes;
+							player.active_boxes_characters = active_boxes_characters;
+							/*
+							 * LOGGER.info("Player "+player.getName()+" has this boxes"); for(String
+							 * name:player.active_boxes_characters){ LOGGER.info("*** "+name+" ***"); }
+							 */
+						}
+					}
+				}
+			}
+		}
+
+	}
 }

@@ -42,6 +42,10 @@ public final class RequestRestart extends L2GameClientPacket {
 			sendPacket(RestartResponse.valueOf(false));
 			return;
 		}
+		// delete box from the world
+		if (player._active_boxes != -1) {
+			player.decreaseBoxes();
+		}
 
 		if (player.isFestivalParticipant() && FestivalOfDarknessManager.getInstance().isFestivalInitialized()) {
 			player.sendPacket(SystemMessageId.NO_RESTART_HERE);

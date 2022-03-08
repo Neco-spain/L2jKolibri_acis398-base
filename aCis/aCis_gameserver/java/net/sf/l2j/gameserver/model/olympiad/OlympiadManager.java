@@ -9,9 +9,12 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import net.sf.l2j.Config;
 import net.sf.l2j.commons.data.StatSet;
 import net.sf.l2j.gameserver.enums.OlympiadType;
+import net.sf.l2j.gameserver.enums.SayType;
+import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Npc;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.network.SystemMessageId;
+import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 import net.sf.l2j.gameserver.network.serverpackets.NpcHtmlMessage;
 import net.sf.l2j.gameserver.network.serverpackets.SystemMessage;
 import net.sf.l2j.mods.events.tvt.TvTEvent;
@@ -112,6 +115,21 @@ public class OlympiadManager {
 		if (Olympiad.getInstance().getMillisToCompEnd() < 600000) {
 			player.sendPacket(SystemMessageId.GAME_REQUEST_CANNOT_BE_MADE);
 			return false;
+		}
+		// Olympiad dualbox protection
+		if (player._active_boxes > 1 && !Config.ALLOW_DUALBOX_OLY) {
+			final List<String> players_in_boxes = player.active_boxes_characters;
+
+			if (players_in_boxes != null && players_in_boxes.size() > 1)
+				for (final String character_name : players_in_boxes) {
+					final Player activeChar = World.getInstance().getPlayer(character_name);
+					if (activeChar != null && (activeChar.getOlympiadGameId() > 0 || activeChar.isInOlympiadMode()
+							|| OlympiadManager.getInstance().isRegistered(activeChar))) {
+						activeChar.sendPacket(new CreatureSay(0, SayType.GM, "[SERVER]",
+								"You are already participating in Event with another char!"));
+						return false;
+					}
+				}
 		}
 
 		switch (type) {

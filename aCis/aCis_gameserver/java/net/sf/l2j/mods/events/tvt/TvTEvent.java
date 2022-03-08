@@ -15,6 +15,8 @@
  */
 package net.sf.l2j.mods.events.tvt;
 
+import java.util.List;
+
 import net.sf.l2j.Config;
 import net.sf.l2j.commons.random.Rnd;
 import net.sf.l2j.gameserver.data.SkillTable;
@@ -85,6 +87,7 @@ public class TvTEvent {
 	 * @return boolean<br>
 	 */
 	public static boolean startParticipation() {
+
 		NpcTemplate tmpl = NpcData.getInstance().getTemplate(Config.TVT_EVENT_PARTICIPATION_NPC_ID);
 
 		if (tmpl == null) {
@@ -149,6 +152,7 @@ public class TvTEvent {
 		setState(EventState.STARTING);
 
 		// not enought participants
+
 		if (_teams[0].getParticipatedPlayerCount() < Config.TVT_EVENT_MIN_PLAYERS_IN_TEAMS
 				|| _teams[1].getParticipatedPlayerCount() < Config.TVT_EVENT_MIN_PLAYERS_IN_TEAMS) {
 			setState(EventState.INACTIVE);
@@ -164,14 +168,29 @@ public class TvTEvent {
 
 		// teleport all participants to there team spot
 		for (TvTEventTeams team : _teams) {
+
 			for (String playerName : team.getParticipatedPlayerNames()) {
 				Player playerInstance = team.getParticipatedPlayers().get(playerName);
 
 				if (playerInstance == null)
 					continue;
+				// Olympiad dualbox protection
+				if (playerInstance._active_boxes > 1 && !Config.ALLOW_DUALBOX_TVT) {
+					final List<String> players_in_boxes = playerInstance.active_boxes_characters;
 
+					if (players_in_boxes != null && players_in_boxes.size() > 1)
+						for (final String character_name : players_in_boxes) {
+							final Player activeChar = World.getInstance().getPlayer(character_name);
+							if (activeChar != null && (activeChar.getTeam() > 0 || activeChar.isInFunEvent()
+									|| TvTEvent.isParticipating())) {
+								activeChar.sendPacket(new CreatureSay(0, SayType.GM, "[SERVER]",
+										"You are already participating in Event with another char!"));
+								return false;
+							}
+						}
+				}
 				// leave party
-				// playerInstance.leaveParty();
+				// playerInstance.getParty().disband();
 				playerInstance.removeMeFromPartyMatch();
 				// Get Noblesse effect
 				noblesse.getEffects(playerInstance, playerInstance);

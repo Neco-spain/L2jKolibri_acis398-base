@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.Map.Entry;
 
 import net.sf.l2j.Config;
+import net.sf.l2j.commons.pool.ThreadPool;
 import net.sf.l2j.gameserver.communitybbs.manager.MailBBSManager;
 import net.sf.l2j.gameserver.data.SkillTable.FrequentSkill;
 import net.sf.l2j.gameserver.data.manager.CastleManager;
@@ -235,6 +236,19 @@ public class EnterWorld extends L2GameClientPacket {
 
 		if (Config.ALT_OLY_END_ANNOUNCE) {
 			Olympiad.olympiadEnd(player);
+			// Means that it's not ok multiBox situation, so logout
+			if (!player.checkMultiBox()) {
+				player.sendPacket(new ExShowScreenMessage(
+						"I'm sorry, but multibox is not allowed here, Disconnect in 5 Seconds", 5000));
+				ThreadPool.schedule(new Runnable() {
+					@Override
+					public void run() {
+						player.logout(true);
+					}
+				}, 5000);
+
+			}
+
 		}
 		// If the Player is a Dark Elf, check for Shadow Sense at night.
 		if (player.getRace() == ClassRace.DARK_ELF && player.hasSkill(L2Skill.SKILL_SHADOW_SENSE))

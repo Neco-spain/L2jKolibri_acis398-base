@@ -143,7 +143,7 @@ public final class Config {
 	public static boolean ALT_DISABLE_HEAVY_CLASSES;
 	public static String DISABLE_HEAVY_CLASSES_STRING;
 	public static ArrayList<Integer> DISABLE_HEAVY_CLASSES = new ArrayList<>();
-	public static int ALT_OLY_ENCHANT_LIMIT;
+
 	public static boolean REMOVE_WEAPON;
 	public static boolean REMOVE_CHEST;
 	public static boolean REMOVE_LEG;
@@ -361,6 +361,10 @@ public final class Config {
 	public static int OLY_DIVIDER_CLASSED;
 	public static int OLY_DIVIDER_NON_CLASSED;
 	public static boolean OLY_ANNOUNCE_GAMES;
+	public static int ALT_OLY_ENCHANT_LIMIT;
+	public static boolean ALLOW_DUALBOX;
+	public static boolean ALLOW_DUALBOX_OLY;
+	public static int ALLOWED_BOXES;
 
 	/** SevenSigns Festival */
 	public static boolean SEVEN_SIGNS_BYPASS_PREREQUISITES;
@@ -647,6 +651,8 @@ public final class Config {
 	public static boolean ES_SP_BOOK_NEEDED;
 	public static boolean DIVINE_SP_BOOK_NEEDED;
 	public static boolean SUBCLASS_WITHOUT_QUESTS;
+	public static int MAX_SUBS;
+	public static int SUB_LEVEL;
 
 	/** Buffs */
 	public static boolean STORE_SKILL_COOLTIME;
@@ -869,7 +875,7 @@ public final class Config {
 		TVT_EVENT_REMOVE_BUFFS = tvt.getProperty("TvTEventRemoveBuffs", false);
 		TVT_KILLS_REWARD_ENABLED = tvt.getProperty("TvTKillsRewardEnable", false);
 		TVT_EVENT_HEAL_PLAYERS = tvt.getProperty("TvTHealPlayersEnable", false);
-		ALLOW_DUALBOX_TVT = Boolean.parseBoolean(tvt.getProperty("AllowDualBoxInTvT", "True"));
+		ALLOW_DUALBOX_TVT = Boolean.parseBoolean(tvt.getProperty("AllowDualBoxInTvT", "False"));
 
 		if (TVT_EVENT_PARTICIPATION_NPC_ID == 0) {
 			TVT_EVENT_ENABLED = false;
@@ -1676,6 +1682,9 @@ public final class Config {
 		OLY_DIVIDER_NON_CLASSED = events.getProperty("OlyDividerNonClassed", 5);
 		OLY_ANNOUNCE_GAMES = events.getProperty("OlyAnnounceGames", true);
 		ALT_OLY_ENCHANT_LIMIT = Integer.parseInt(events.getProperty("AltOlyEnchantLimit ", "6"));
+		ALLOW_DUALBOX_OLY = Boolean.parseBoolean(events.getProperty("AllowDualBoxInOly", "True"));
+		ALLOWED_BOXES = Integer.parseInt(events.getProperty("AllowedBoxes", "99"));
+		ALLOW_DUALBOX = Boolean.parseBoolean(events.getProperty("AllowDualBox", "True"));
 
 		SEVEN_SIGNS_BYPASS_PREREQUISITES = events.getProperty("SevenSignsBypassPrerequisites", false);
 		FESTIVAL_MIN_PLAYER = MathUtil.limit(events.getProperty("FestivalMinPlayer", 5), 2, 9);
@@ -1956,6 +1965,8 @@ public final class Config {
 		ES_SP_BOOK_NEEDED = players.getProperty("EnchantSkillSpBookNeeded", true);
 		DIVINE_SP_BOOK_NEEDED = players.getProperty("DivineInspirationSpBookNeeded", true);
 		SUBCLASS_WITHOUT_QUESTS = players.getProperty("SubClassWithoutQuests", false);
+		MAX_SUBS = players.getProperty("MaxSubs", 5);
+		SUB_LEVEL = players.getProperty("SubLevel", 76);
 
 		MAX_BUFFS_AMOUNT = players.getProperty("MaxBuffsAmount", 20);
 		STORE_SKILL_COOLTIME = players.getProperty("StoreSkillCooltime", true);
