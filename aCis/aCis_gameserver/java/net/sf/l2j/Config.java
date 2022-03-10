@@ -42,6 +42,7 @@ public final class Config {
 	public static final String TVTEVENT = "./config/TvT.properties";
 
 //=====================================================================================================================================================
+
 	// TvT Event Settings
 	public static boolean TVT_EVENT_ENABLED;
 	public static int TVT_EVENT_INTERVAL;
@@ -2194,6 +2195,7 @@ public final class Config {
 		loadPcBangConfig();
 		// Tvt Settings
 		loadTvTConfig();
+
 	}
 
 	public static final void loadLoginServer() {

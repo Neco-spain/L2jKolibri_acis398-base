@@ -303,8 +303,10 @@ public class GameServer {
 		LOGGER.info("Loaded {} user command handlers.", UserCommandHandler.getInstance().size());
 		LOGGER.info("Loaded {} user VoicedCommandHandler handlers.", VoicedCommandHandler.getInstance().size());
 		RaidBossInfoManager.getInstance();
+
 		StringUtil.printSection("TvT Event");
 		TvTEventManager.getInstance();
+
 		StringUtil.printSection("Party Farm Events");
 		if ((Config.PARTY_FARM_BY_TIME_OF_DAY) && (!Config.START_PARTY)) {
 			InitialPartyFarm.getInstance().StartCalculationOfNextEventTime();

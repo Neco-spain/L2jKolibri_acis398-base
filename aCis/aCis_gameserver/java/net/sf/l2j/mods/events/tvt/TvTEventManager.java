@@ -34,9 +34,9 @@ public class TvTEventManager implements Runnable {
 	private TvTEventManager() {
 		if (Config.TVT_EVENT_ENABLED) {
 			ThreadPool.schedule(this, 0);
-			System.out.println("TvTEventEngine[TvTManager.TvTManager()]: Started.");
+			System.out.println("TvTEventEngine: Started.");
 		} else
-			System.out.println("TvTEventEngine[TvTManager.TvTManager()]: Engine is disabled.");
+			System.out.println("TvTEventEngine: Engine is disabled.");
 	}
 
 	/**
