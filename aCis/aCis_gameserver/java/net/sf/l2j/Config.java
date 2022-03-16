@@ -43,6 +43,10 @@ public final class Config {
 	public static final String CUSTOMQUESTS = "./config/quests.properties";
 
 //=====================================================================================================================================================
+	/**
+	 * Custom Quests
+	 */
+	//Q619_RelicsOfTheOldEMpire
 	public static int IMPERIAL1;
 	public static int IMPERIAL2;
 	public static int IMPERIAL3;
@@ -58,6 +62,22 @@ public final class Config {
 	public static int STABLE_AMOUNT1;
 	public static int STABLE_AMOUNT2;
 	public static int RANDOM_AMMOUNT;
+	//Q617 GatherTheFlames
+	public static int FOG1;
+	public static int FOG2;
+	public static int FOG3;
+	public static int FOG4;
+	public static int FOG5;
+	public static int FOG6;
+	public static int FOG7;
+	public static int FOG8;
+	public static int FOG9;
+	public static int FOG10;
+	public static int FOGSTABLE1;
+	public static int FOGSTABLE2;
+	public static int FOG_STABLE_AMOUNT1;
+	public static int FOG_STABLE_AMOUNT2;
+	public static int FOG_RANDOM_AMMOUNT;
 	// TvT Event Settings
 	public static boolean TVT_EVENT_ENABLED;
 	public static int TVT_EVENT_INTERVAL;
@@ -1026,6 +1046,24 @@ private static final void loadCustomQuestConfig() {
 		RANDOM_AMMOUNT = quest.getProperty("RandomRewardAmount", 1);
 		STABLE_AMOUNT1 = quest.getProperty("StableRewardAmount1", 1);
 		STABLE_AMOUNT2 = quest.getProperty("StableRewardAmount2", 1);
+		
+		//Q617 GatheTheFlames
+		
+		FOG1 = quest.getProperty("FogReward1", 961);
+		FOG2 = quest.getProperty("FogReward2", 961);
+		FOG3 = quest.getProperty("FogReward3", 961);
+		FOG4 = quest.getProperty("FogReward4", 961);
+		FOG5 = quest.getProperty("FogReward5", 961);
+		FOG6 = quest.getProperty("FogReward6", 961);
+		FOG7 = quest.getProperty("FogReward7", 961);
+		FOG8 = quest.getProperty("FogReward8", 961);
+		FOG9 = quest.getProperty("FogReward9", 961);
+		FOG10 = quest.getProperty("FogReward10", 961);
+		FOGSTABLE1 = quest.getProperty("FogStablereward1", 961);
+		FOGSTABLE2 = quest.getProperty("FogStablereward2", 961);
+		FOG_RANDOM_AMMOUNT = quest.getProperty("FogRandomRewardAmount", 1);
+		FOG_STABLE_AMOUNT1 = quest.getProperty("FogStableRewardAmount1", 1);
+		FOG_STABLE_AMOUNT2 = quest.getProperty("FogStableRewardAmount2", 1);
 
 		}
 
