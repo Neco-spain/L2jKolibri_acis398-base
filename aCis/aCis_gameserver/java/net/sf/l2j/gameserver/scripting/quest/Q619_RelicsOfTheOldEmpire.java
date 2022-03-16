@@ -53,7 +53,7 @@ public class Q619_RelicsOfTheOldEmpire extends Quest
 
 	
 	// Drop chances, Note: when higher then 100%, more items may drop (e.g. 379% -> 79% to drop 4 items, 21% to drop 3)
-	private static final Map<Integer, Integer> FOUR_SEPULCHERS_DROPLIST = new HashMap<>(79);
+	private static final Map<Integer, Integer> FOUR_SEPULCHERS_DROPLIST = new HashMap<>(100);
 	{
 		FOUR_SEPULCHERS_DROPLIST.put(18120, 1280000); // r11_roomboss_strong
 		FOUR_SEPULCHERS_DROPLIST.put(18121, 1210000); // r11_roomboss_weak
@@ -136,7 +136,7 @@ public class Q619_RelicsOfTheOldEmpire extends Quest
 		FOUR_SEPULCHERS_DROPLIST.put(18230, 1490000); // r5_bomb
 	}
 	
-	private static final Map<Integer, Integer> IMPERIAL_TOMB_DROPLIST = new HashMap<>(45);
+	private static final Map<Integer, Integer> IMPERIAL_TOMB_DROPLIST = new HashMap<>(100);
 	{
 		IMPERIAL_TOMB_DROPLIST.put(21396, 1510000); // carrion_scarab
 		IMPERIAL_TOMB_DROPLIST.put(21397, 500000); // carrion_scarab_a
