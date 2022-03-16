@@ -6,6 +6,7 @@ import java.util.Map;
 import net.sf.l2j.commons.lang.StringUtil;
 import net.sf.l2j.commons.random.Rnd;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.enums.QuestStatus;
 import net.sf.l2j.gameserver.model.actor.Creature;
 import net.sf.l2j.gameserver.model.actor.Npc;
@@ -59,16 +60,18 @@ public class Q617_GatherTheFlames extends Quest
 	// Rewards
 	private static final int REWARDS[] =
 	{
-		6881,
-		6883,
-		6885,
-		6887,
-		6891,
-		6893,
-		6895,
-		6897,
-		6899,
-		7580
+		Config.FOG1,
+		Config.FOG2,
+		Config.FOG3,
+		Config.FOG4,
+		Config.FOG5,
+		Config.FOG6,
+		Config.FOG7,
+		Config.FOG8,
+		Config.FOG9,
+		Config.FOG10,
+		Config.FOGSTABLE1,
+		Config.FOGSTABLE2,
 	};
 	
 	public Q617_GatherTheFlames()
@@ -104,7 +107,9 @@ public class Q617_GatherTheFlames extends Quest
 			{
 				htmltext = "31539-07.htm";
 				takeItems(player, TORCH, 1000);
-				giveItems(player, Rnd.get(REWARDS), 1);
+				giveItems(player, Rnd.get(REWARDS), Config.FOG_RANDOM_AMMOUNT);
+				giveItems(player, Config.FOGSTABLE1 ,Config.FOG_STABLE_AMOUNT1 );
+				giveItems(player, Config.FOGSTABLE2 ,Config.FOG_STABLE_AMOUNT2 );
 			}
 		}
 		else if (event.equalsIgnoreCase("31539-08.htm"))
