@@ -40,9 +40,24 @@ public final class Config {
 	public static final String PARTYFARMEVENT = "./config/PartyFarmEvent.properties";
 	public static final String PCBANGEVENT = "./config/PcBangEvent.properties";
 	public static final String TVTEVENT = "./config/TvT.properties";
+	public static final String CUSTOMQUESTS = "./config/quests.properties";
 
 //=====================================================================================================================================================
-
+	public static int IMPERIAL1;
+	public static int IMPERIAL2;
+	public static int IMPERIAL3;
+	public static int IMPERIAL4;
+	public static int IMPERIAL5;
+	public static int IMPERIAL6;
+	public static int IMPERIAL7;
+	public static int IMPERIAL8;
+	public static int IMPERIAL9;
+	public static int IMPERIAL10;
+	public static int IMPERIALSTABLE1;
+	public static int IMPERIALSTABLE2;
+	public static int STABLE_AMOUNT1;
+	public static int STABLE_AMOUNT2;
+	public static int RANDOM_AMMOUNT;
 	// TvT Event Settings
 	public static boolean TVT_EVENT_ENABLED;
 	public static int TVT_EVENT_INTERVAL;
@@ -992,6 +1007,27 @@ public final class Config {
 			}
 		}
 	}
+	
+
+private static final void loadCustomQuestConfig() {
+		final ExProperties quest = initProperties(CUSTOMQUESTS);
+		IMPERIAL1 = quest.getProperty("Imperialreward1", 961);
+		IMPERIAL2 = quest.getProperty("Imperialreward2", 961);
+		IMPERIAL3 = quest.getProperty("Imperialreward3", 961);
+		IMPERIAL4 = quest.getProperty("Imperialreward4", 961);
+		IMPERIAL5 = quest.getProperty("Imperialreward5", 961);
+		IMPERIAL6 = quest.getProperty("Imperialreward6", 961);
+		IMPERIAL7 = quest.getProperty("Imperialreward7", 961);
+		IMPERIAL8 = quest.getProperty("Imperialreward8", 961);
+		IMPERIAL9 = quest.getProperty("Imperialreward9", 961);
+		IMPERIAL10 = quest.getProperty("Imperialreward10", 961);
+		IMPERIALSTABLE1 = quest.getProperty("ImperialStablereward1", 961);
+		IMPERIALSTABLE2 = quest.getProperty("ImperialStablereward2", 961);
+		RANDOM_AMMOUNT = quest.getProperty("RandomRewardAmount", 1);
+		STABLE_AMOUNT1 = quest.getProperty("StableRewardAmount1", 1);
+		STABLE_AMOUNT2 = quest.getProperty("StableRewardAmount2", 1);
+
+		}
 
 	private static final void loadPcBangConfig() {
 		final ExProperties PcBanG = initProperties(PCBANGEVENT);
@@ -2195,6 +2231,8 @@ public final class Config {
 		loadPcBangConfig();
 		// Tvt Settings
 		loadTvTConfig();
+		//custom quests
+		loadCustomQuestConfig();
 
 	}
 

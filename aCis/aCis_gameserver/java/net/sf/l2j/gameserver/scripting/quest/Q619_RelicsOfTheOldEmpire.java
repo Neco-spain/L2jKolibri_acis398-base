@@ -1,10 +1,15 @@
 package net.sf.l2j.gameserver.scripting.quest;
 
+
+
+
 import java.util.HashMap;
+
 import java.util.Map;
 
 import net.sf.l2j.commons.random.Rnd;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.enums.QuestStatus;
 import net.sf.l2j.gameserver.enums.ScriptEventType;
 import net.sf.l2j.gameserver.model.actor.Creature;
@@ -24,20 +29,28 @@ public class Q619_RelicsOfTheOldEmpire extends Quest
 	private static final int BROKEN_RELIC_PART = 7254;
 	private static final int ENTRANCE_PASS_TO_THE_SEPULCHER = 7075;
 	
+	
+	
+	
+	
 	// Rewards ; all S grade weapons recipe (60%)
 	private static final int[] REWARDS = new int[]
 	{
-		6881,
-		6883,
-		6885,
-		6887,
-		6891,
-		6893,
-		6895,
-		6897,
-		6899,
-		7580
+		
+		Config.IMPERIAL1,
+		Config.IMPERIAL2,
+		Config.IMPERIAL3,
+		Config.IMPERIAL4,
+		Config.IMPERIAL5,
+		Config.IMPERIAL6,
+		Config.IMPERIAL7,
+		Config.IMPERIAL8,
+		Config.IMPERIAL9,
+		Config.IMPERIAL10
+		
+
 	};
+
 	
 	// Drop chances, Note: when higher then 100%, more items may drop (e.g. 379% -> 79% to drop 4 items, 21% to drop 3)
 	private static final Map<Integer, Integer> FOUR_SEPULCHERS_DROPLIST = new HashMap<>(79);
@@ -205,7 +218,9 @@ public class Q619_RelicsOfTheOldEmpire extends Quest
 			{
 				htmltext = "31538-09.htm";
 				takeItems(player, BROKEN_RELIC_PART, 1000);
-				giveItems(player, Rnd.get(REWARDS), 1);
+				giveItems(player, Rnd.get(REWARDS), Config.RANDOM_AMMOUNT);
+				giveItems(player, Config.IMPERIALSTABLE1 ,Config.STABLE_AMOUNT1 );
+				giveItems(player, Config.IMPERIALSTABLE2 ,Config.STABLE_AMOUNT2 );
 			}
 			else
 				htmltext = "31538-06.htm";
