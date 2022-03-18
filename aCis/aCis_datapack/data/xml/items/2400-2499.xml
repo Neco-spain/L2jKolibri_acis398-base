@@ -160,8 +160,16 @@
 		<set name="weight" val="3600" />
 		<set name="price" val="5280000" />
 		<for>
-			<baseadd stat="pDef" val="139" />
-			<enchant stat="pDef" val="0" />
+			<mul order="0x30" stat="pDef" val="1.13"/> <!-- Atk Spd. +10% -->
+			<mul order="0x30" stat="mDef" val="1.13"/> <!-- Atk Spd. +10% -->
+			<mul order="0x30" stat="pAtkSpd" val="1.13"/> <!-- Atk Spd. +10% -->
+			<mul order="0x30" stat="mAtkSpd" val="1.13"/> <!-- Atk Spd. +10% -->
+			<mul order="0x30" stat="pAtk" val="1.13"/> <!-- Atk Spd. +10% -->
+			<mul order="0x30" stat="mAtk" val="1.13"/> <!-- Atk Spd. +10% -->
+			<mul order="0x30" stat="runSpd" val="1.15"/> <!-- Atk Spd. +10% -->
+			<mul order="0x30" stat="maxHp" val="1.13"/> <!-- Atk Spd. +10% -->
+			<mul order="0x30" stat="maxCp" val="1.13"/> <!-- Atk Spd. +10% -->
+			<enchant order="0x0C" stat="pDef" val="0" />
 		</for>
 	</item>
 	<item id="2411" type="Armor" name="Brigandine Helmet">

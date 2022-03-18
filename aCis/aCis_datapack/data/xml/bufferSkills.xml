@@ -67,4 +67,7 @@
 		<buff id="363" desc="Increases MP regeneration rate."/><!-- Song of Meditation -->
 		<buff id="364" desc="Decreases re-use time of physical skills."/><!-- Song of Champion -->
 	</category>
+	<category type="Extras">
+		<buff id="7029" desc="Super Haste"/><!-- Song of Earth -->
+	</category>
 </list>

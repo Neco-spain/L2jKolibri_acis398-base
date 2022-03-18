@@ -1681,4 +1681,24 @@
 		<loc desc="Rune Township" type="CHF_LEVEL_2" priceId="57" priceCount="500" x="43835" y="-47688" z="-792" castleId="8" />
 		<loc desc="Town of Aden" type="CHF_LEVEL_2" priceId="57" priceCount="500" x="146705" y="25840" z="-2000" castleId="5" />
 	</telPosList>
+	<telPosList npcId="50017">
+		<loc desc="Town of Aden" type="STANDARD" priceId="57" priceCount="5900" x="146705" y="25840" z="-2000" castleId="5" />
+		<loc desc="Town of Oren" type="STANDARD" priceId="57" priceCount="4100" x="82956" y="53162" z="-1470" castleId="4" />
+		<loc desc="Hardin's Private Academy" type="STANDARD" priceId="57" priceCount="3400" x="105846" y="109762" z="-3170" castleId="3" />
+		<loc desc="Enchanted Valley, Southern Region" type="STANDARD" priceId="57" priceCount="1300" x="124904" y="61992" z="-3973" />
+		<loc desc="Enchanted Valley, Northern Region" type="STANDARD" priceId="57" priceCount="3600" x="104426" y="33746" z="-3825" />
+		<loc desc="Forest of Mirrors" type="STANDARD" priceId="57" priceCount="2000" x="142065" y="81300" z="-3000" />
+		<loc desc="Gludin Arena" type="NOBLE_HUNTING_ZONE_PASS" priceId="6651" priceCount="1" x="-87328" y="142266" z="-3640" />
+		<loc desc="Giran Arena" type="NOBLE_HUNTING_ZONE_PASS" priceId="6651" priceCount="1" x="73579" y="142709" z="-3768" />
+		<loc desc="The Center of the Forest of Mirrors" type="NOBLE_HUNTING_ZONE_PASS" priceId="6651" priceCount="1" x="166080" y="75574" z="-2992" />
+		<loc desc="The Center of the Enchanted Valley" type="NOBLE_HUNTING_ZONE_PASS" priceId="6651" priceCount="1" x="114674" y="44150" z="-3376" />
+		<loc desc="Hunters Valley" type="NOBLE_HUNTING_ZONE_PASS" priceId="6651" priceCount="1" x="114306" y="86573" z="-3112" />
+		<loc desc="Coliseum" type="NOBLE_HUNTING_ZONE_PASS" priceId="6651" priceCount="1" x="146440" y="46723" z="-3400" />
+		<loc desc="Gludin Arena" type="NOBLE_HUNTING_ZONE_ADENA" priceId="57" priceCount="1000" x="-87328" y="142266" z="-3640" />
+		<loc desc="Giran Arena" type="NOBLE_HUNTING_ZONE_ADENA" priceId="57" priceCount="1000" x="73579" y="142709" z="-3768" />
+		<loc desc="The Center of the Forest of Mirrors" type="NOBLE_HUNTING_ZONE_ADENA" priceId="57" priceCount="1000" x="166080" y="75574" z="-2992" />
+		<loc desc="The Center of the Enchanted Valley" type="NOBLE_HUNTING_ZONE_ADENA" priceId="57" priceCount="1000" x="114674" y="44150" z="-3376" />
+		<loc desc="Hunters Valley" type="NOBLE_HUNTING_ZONE_ADENA" priceId="57" priceCount="1000" x="114306" y="86573" z="-3112" />
+		<loc desc="Coliseum" type="NOBLE_HUNTING_ZONE_ADENA" priceId="57" priceCount="1000" x="146440" y="46723" z="-3400" />
+	</telPosList>
 </list>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+	<item id="11002" type="EtcItem" name="Barbarian Skin">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="Skin2" />
+	</item>
+	<item id="11003" type="EtcItem" name="Nobless Skin">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="Skin3" />
+	</item>
+	<item id="11005" type="EtcItem" name="Knight Skin">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="Skin4" />
+	</item>
+	<item id="26102" type="EtcItem" name="Samurai Skin">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="Skin5" />
+	</item>
+	<item id="26101" type="EtcItem" name="Red Archer">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="Skin6" />
+	</item>
+	<item id="10011" type="EtcItem" name="Cowboy">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="Skin7" />
+	</item>
+	<item id="26104" type="EtcItem" name="Dark Assasin">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="Skin8" />
+	</item>
+	<item id="26105" type="EtcItem" name="Beleth">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="Skin9" />
+	</item>
+	<item id="26103" type="EtcItem" name="White Assasin">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="Skin10" />
+	</item>
+</list>

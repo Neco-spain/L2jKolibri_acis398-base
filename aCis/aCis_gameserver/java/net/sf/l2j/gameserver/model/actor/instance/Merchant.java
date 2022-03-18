@@ -62,7 +62,7 @@ public class Merchant extends Folk {
 				return;
 			}
 
-			player.broadcastPacket(new MagicSkillUse(player, 1410, 1, 1000, 1000));
+			player.broadcastPacket(new MagicSkillUse(player, Config.SKILL_ID_SKIN1, 1, 1000, 1000));
 			player.setDressMeEnabled(false);
 			int uniform = Integer.parseInt(command.substring(11));
 			player.setVisualTest(uniform);

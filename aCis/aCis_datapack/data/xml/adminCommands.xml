@@ -10,9 +10,11 @@
 	<aCar name="admin_link" accessLevel="7" params="file name" desc="Open the proper admin htm."/>
 	<aCar name="admin_msg" accessLevel="7" params="id" desc="Send the associated SystemMessage id."/>
 	<aCar name="admin_show" accessLevel="7" params="clear|html|move|path|walker" desc="Show visual paths. For html, show the complete folder."/>
-	<aCar name="admin_balancer" accessLevel="7" />
+	<aCar name="admin_balancer" accessLevel="7" params="[page]" desc="Open this panel."/>
 	<aCar name="admin_setvip" accessLevel="7" />
 	<aCar name="admin_removevip" accessLevel="7" />
+	<aCar name="admin_ptfarm" accessLevel="7" />
+
 
 	<!-- ANNOUNCEMENTS -->
 	<aCar name="admin_announce" accessLevel="7" params="[list|all|add|add_auto|del]" desc="Open the Announcements panel."/>

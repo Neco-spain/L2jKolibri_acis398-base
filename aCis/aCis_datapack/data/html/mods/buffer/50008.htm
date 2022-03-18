@@ -5,14 +5,11 @@
 	</head>
 	<body>
 <center>
+<img src=fButtons.emblem_dimensionalstranger width=64 height=64></td>
+
 <img src="L2UI.SquareGray" width=300 height=1>
-<table bgcolor=000000 width=300 height=37>
-<tr>
-<td align=center width=300>Welcome in <font color=3399CC>Lineage 2 "......."</font></td>
-</tr>
-</table>
 <img src="L2UI.SquareGray" width=300 height=1>
-<img src="l2ui_ch3.herotower_deco" width=256 height=32>
+
 
 
 
@@ -20,37 +17,37 @@
 
 <table border=0 bgcolor=000000 width=300 height=25>
 <tr>
-<td width=99 align=center><font color="LEVEL">Schemes</font></td>
-<td width=2 align=center><font color="505050">|</font></td><!--space-->
-<td width=99 align=center><font color="LEVEL">Restore</font></td>
+<td width=99 align=center><font color="CCCC66">Schemes</font></td>
+<td width=99 align=center><font color="CCCC66">Restore</font></td>
 </tr>
 </table>
 
 <img src="L2UI.SquareGray" width=300 height=1>
-<table border=0 bgcolor=000000 width=300 height=25>
-<tr>
-<td width=99 align=center><a action="bypass npc_%objectId%_support"><font color="3399CC">Magic Support</font></a></td>
-<td width=99 align=center><a action="bypass -h npc_%objectId%_heal"><font color="3399CC">Heal me and my Pet</font></a></td>
-<td width=2 align=center><font color="505050">|</font></a></td><!--space-->
-</tr>
-</table>
 
+   <table >
+	<tr>
+   <td align=center><button value="Magic Support" action="bypass npc_%objectId%_support" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+   <td align=center><button value="Heal me and my Pet" action="bypass -h npc_%objectId%_heal" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+
+	</tr>
+</table>
 <img src="L2UI.SquareGray" width=300 height=1>
 <br>
 <img src="L2UI.SquareGray" width=300 height=1>
 <table border=0 bgcolor=000000 width=300 height=25>
 <tr>
-<td width=300 align=center><font color="LEVEL">Full Buffs(not completed)</font></td>
+<td width=300 align=center><font color="CCCC66">Full Buffs(not completed)</font></td>
 </tr>
 </table>
 
 <img src="L2UI.SquareGray" width=300 height=1>
-<table border=0 bgcolor=000000 width=300 height=25>
-<tr>
-<td width=99 align=center><a action="bypass -h npc_%objectId%_fighterSet"><font color="3399CC">Fighter Set</font></a></td>
-<td width=2 align=center><font color="505050">|</font></a></td><!--space-->
-<td width=99 align=center><a action="bypass -h npc_%objectId%_mageSet"><font color="3399CC">Mage Set</font></a></td>
-</tr>
+
+   <table >
+	<tr>
+   <td align=center><button value="Fighter Set" action="bypass npc_%objectId%_fighterSet" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+   <td align=center><button value="Mage Set" action="bypass -h npc_%objectId%_mageSet" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+
+	</tr>
 </table>
 <img src="L2UI.SquareGray" width=300 height=1>
 
@@ -58,43 +55,41 @@
 <img src="L2UI.SquareGray" width=300 height=1>
 <table border=0 bgcolor=000000 width=300 height=25>
 <tr>
-<td width=300 align=center><font color="LEVEL">Select</font></td>
+<td width=300 align=center><font color="CCCC66">Choose the buffs of your choice!</font></td>
 </tr>
 </table>
 
-<img src="L2UI.SquareGray" width=300 height=1>
-<table border=0 bgcolor=000000 width=300 height=25>
-<tr>
-<td width=99 align=center><a action="bypass -h npc_%objectId%_chat 10"><font color="3399CC">Buffs</font></a></td>
-<td width=99 align=center><a action="bypass -h npc_%objectId%_chat 11"><font color="3399CC">Dances</font></a></td>
-<td width=99 align=center><a action="bypass -h npc_%objectId%_chat 12"><font color="3399CC">Songs</font></a></td>
-</tr>
-<tr>
-<td width=99 align=center><a action="bypass -h npc_%objectId%_chat 13"><font color="3399CC">Chant</font></a></td>
-<td width=99 align=center><a action="bypass -h npc_%objectId%_chat 14"><font color="3399CC">Prophecies</font></a></td>
-<td width=99 align=center><a action="bypass -h npc_%objectId%_chat 15"><font color="3399CC">Extra Buffs</font></a></td>
 
-</tr>
+  <table>
+	<tr>
+   <td align=center><button value="Buffs" action="bypass npc_%objectId%_chat 10" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+   <td align=center><button value="Dances" action="bypass -h npc_%objectId%_chat 11" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
 
-</table>
+	</tr>
+</table>  <table >
+	<tr>
+   <td align=center><button value="Songs" action="bypass npc_%objectId%_chat 12" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+   <td align=center><button value="Chants" action="bypass -h npc_%objectId%_chat 13" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+
+	</tr>
+</table>  <table >
+	<tr>
+   <td align=center><button value="Prophecies" action="bypass npc_%objectId%_chat 14" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+   <td align=center><button value="Extra Buffs" action="bypass -h npc_%objectId%_chat 15" width=128 height=44 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+
+	</tr>
+</table><br>
 <img src="L2UI.SquareGray" width=300 height=1>
 
-<br1>
-<img src="L2UI.SquareGray" width=300 height=1>
-<table border=0 bgcolor=000000 width=300 height=25>
-<tr>
-<td width=300 align=center><a action="bypass -h npc_%objectId%_cleanup"><font color="3399CC">Cleanup all effects on me and my pet</font></a></td>
-</tr>
-</table>
+   <table width=295 bgcolor="000000">
+   <tr>
+   <td align=center><font color="CCCC66">Cancel your buffs!</font></td><br>
+   </tr>
+   <tr>
+   <td align=center><button value="Cleanup Effects" action="bypass -h npc_%objectId%_cleanup" width=128 height=32 back="fButtons.Center_Selected" fore="fButtons.Center_Unselected_Over"></td>
+   </tr>
+   </table><br>
 <img src="L2UI.SquareGray" width=300 height=1>
 <br>
-<img src="L2UI.SquareGray" width=300 height=1>
-<table bgcolor=000000 width=300 height=37>
-<tr>
-<td align=center width=300>Vote for us : <font color=3399CC>www.....com</font></td>
-</tr>
-</table>
-<img src="L2UI.SquareGray" width=300 height=1>
-
 </body></html>
 

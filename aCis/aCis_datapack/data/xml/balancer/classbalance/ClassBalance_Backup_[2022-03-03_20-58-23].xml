@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+	<balance classId="95" targetClassId="88">
+		<set type="Magic" val="555.0"/>
+		<set type="MCrit" val="555.0"/>
+	</balance>
+</list>

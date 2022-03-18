@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+	<item id="9500" type="EtcItem" name="VIP Coin 24h">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="VipCoin" />
+		<set name="usingServerSideName" val="true"/>
+	</item>
+	<item id="9501" type="EtcItem" name="VIP Coin 7 Days">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="VipCoin" />
+	</item>
+	<item id="9502" type="EtcItem" name="VIP Coin 30 Days">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="VipCoin" />
+	</item>
+	<item id="9503" type="EtcItem" name="VIP Coin Eternal">
+		<set name="material" val="PAPER" />
+		<set name="price" val="1" />
+		<set name="is_tradable" val="false" />
+		<set name="is_dropable" val="false" />
+		<set name="is_sellable" val="false" />
+		<set name="is_depositable" val="false" />
+		<set name="is_stackable" val="true" />
+		<set name="handler" val="VipCoin" />
+	</item>
+	<item id="9504" type="EtcItem" name="Gold Scroll: Enchant Weapon (Grade S)">
+		<set name="default_action" val="skill_reduce" />
+		<set name="material" val="PAPER" />
+		<set name="weight" val="120" />
+		<set name="price" val="500000" />
+		<set name="is_oly_restricted" val="true" />
+		<set name="handler" val="EnchantScrolls" />
+	</item>
+	<item id="9505" type="EtcItem" name="Gold Scroll: Enchant Weapon (Grade S)">
+		<set name="default_action" val="skill_reduce" />
+		<set name="material" val="PAPER" />
+		<set name="weight" val="120" />
+		<set name="price" val="500000" />
+		<set name="is_oly_restricted" val="true" />
+		<set name="handler" val="EnchantScrolls" />
+	</item>
+</list>

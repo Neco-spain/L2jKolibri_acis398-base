@@ -275,7 +275,9 @@ public final class Player extends Playable {
 	private long _onlineBeginTime;
 	private long _lastAccess;
 	private long _uptime;
-
+	private boolean _isNewbies;
+	private boolean _isEquip;
+	private boolean _isWepEquip;
 	protected int _baseClass;
 	protected int _activeClass;
 	protected int _classIndex;
@@ -735,6 +737,34 @@ public final class Player extends Playable {
 
 	public void setBaseClass(ClassId classId) {
 		_baseClass = classId.ordinal();
+	}
+
+	/**
+	 * Start up system
+	 */
+
+	public boolean isNewbies() {
+		return _isNewbies;
+	}
+
+	public void setNewbies(boolean b) {
+		_isNewbies = b;
+	}
+
+	public boolean isEquip() {
+		return _isEquip;
+	}
+
+	public void setEquip(boolean b) {
+		_isEquip = b;
+	}
+
+	public boolean isWepEquip() {
+		return _isWepEquip;
+	}
+
+	public void setWepEquip(boolean b) {
+		_isWepEquip = b;
 	}
 
 	/**
@@ -7084,30 +7114,41 @@ public final class Player extends Playable {
 
 			break;
 
-		case 1: // Draconic
-			visual_test_hair = 6842;
-			visual_test_chest = 6379;
-
+		case 1:
+			visual_test_hair = Config.VISUAL_ID_1_H;
+			visual_test_chest = Config.VISUAL_ID_1;
 			break;
 		case 2:
-			visual_test_hair = 26202;
-			visual_test_chest = 26102;
+			visual_test_hair = Config.VISUAL_ID_2_H;
+			visual_test_chest = Config.VISUAL_ID_2;
 			break;
 		case 3:
-			visual_test_hair = 26203;
-			visual_test_chest = 26103;
+			visual_test_hair = Config.VISUAL_ID_3_H;
+			visual_test_chest = Config.VISUAL_ID_3;
 			break;
 		case 4:
-			visual_test_hair = 26204;
-			visual_test_chest = 26104;
+			visual_test_hair = Config.VISUAL_ID_4_H;
+			visual_test_chest = Config.VISUAL_ID_4;
 			break;
 		case 5:
-			visual_test_hair = 26205;
-			visual_test_chest = 26105;
+			visual_test_hair = Config.VISUAL_ID_5_H;
+			visual_test_chest = Config.VISUAL_ID_5;
 			break;
 		case 6:
-			visual_test_hair = 0;
-			visual_test_chest = 23881;
+			visual_test_hair = Config.VISUAL_ID_6_H;
+			visual_test_chest = Config.VISUAL_ID_6;
+			break;
+		case 7:
+			visual_test_hair = Config.VISUAL_ID_7_H;
+			visual_test_chest = Config.VISUAL_ID_7;
+			break;
+		case 8:
+			visual_test_hair = Config.VISUAL_ID_8_H;
+			visual_test_chest = Config.VISUAL_ID_8;
+			break;
+		case 9:
+			visual_test_hair = Config.VISUAL_ID_9_H;
+			visual_test_chest = Config.VISUAL_ID_9;
 			break;
 		}
 
@@ -7128,28 +7169,40 @@ public final class Player extends Playable {
 			break;
 
 		case 1:
-			visual_hair = 6842;
-			visual_chest = 6379;
+			visual_hair = Config.VISUAL_ID_1_H;
+			visual_chest = Config.VISUAL_ID_1;
 			break;
 		case 2:
-			visual_hair = 26202;
-			visual_chest = 26102;
+			visual_hair = Config.VISUAL_ID_2_H;
+			visual_chest = Config.VISUAL_ID_2;
 			break;
 		case 3:
-			visual_hair = 26203;
-			visual_chest = 26103;
+			visual_hair = Config.VISUAL_ID_3_H;
+			visual_chest = Config.VISUAL_ID_3;
 			break;
 		case 4:
-			visual_hair = 26204;
-			visual_chest = 26104;
+			visual_hair = Config.VISUAL_ID_4_H;
+			visual_chest = Config.VISUAL_ID_4;
 			break;
 		case 5:
-			visual_hair = 26205;
-			visual_chest = 26105;
+			visual_hair = Config.VISUAL_ID_5_H;
+			visual_chest = Config.VISUAL_ID_5;
 			break;
 		case 6:
-			visual_hair = 0;
-			visual_chest = 23881;
+			visual_hair = Config.VISUAL_ID_6_H;
+			visual_chest = Config.VISUAL_ID_6;
+			break;
+		case 7:
+			visual_hair = Config.VISUAL_ID_7_H;
+			visual_chest = Config.VISUAL_ID_7;
+			break;
+		case 8:
+			visual_hair = Config.VISUAL_ID_8_H;
+			visual_chest = Config.VISUAL_ID_8;
+			break;
+		case 9:
+			visual_hair = Config.VISUAL_ID_9_H;
+			visual_chest = Config.VISUAL_ID_9;
 			break;
 		}
 

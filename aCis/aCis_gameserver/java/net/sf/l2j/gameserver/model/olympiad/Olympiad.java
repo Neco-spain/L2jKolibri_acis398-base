@@ -405,8 +405,8 @@ public class Olympiad {
 				.addNumber(_currentCycle));
 
 		Calendar currentTime = Calendar.getInstance();
-		currentTime.add(Calendar.MONTH, 1);
-		currentTime.set(Calendar.DAY_OF_MONTH, 1);
+		currentTime.add(Calendar.WEEK_OF_MONTH, 1);
+		currentTime.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
 		currentTime.set(Calendar.AM_PM, Calendar.AM);
 		currentTime.set(Calendar.HOUR, 12);
 		currentTime.set(Calendar.MINUTE, 0);

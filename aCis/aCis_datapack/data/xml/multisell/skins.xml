@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<!-- S-Grade Jewels -->
+
+<list>
+  <item id="1">
+    <ingredient id="57" count="1"/>
+    <production id="11002" count="10"/>
+  </item>
+  <item id="2">
+    <ingredient id="57" count="1"/>
+    <production id="11003" count="500000000"/>
+  </item>
+   <item id="3">
+    <ingredient id="57" count="1"/>
+    <production id="11005" count="1"/>
+  </item>
+   <item id="4">
+    <ingredient id="57" count="1"/>
+    <production id="26102" count="1"/>
+  </item>
+   <item id="5">
+    <ingredient id="57" count="1"/>
+    <production id="26101" count="1"/>
+  </item>
+   <item id="6">
+    <ingredient id="57" count="1"/>
+    <production id="26103" count="1"/>
+  </item>
+   <item id="7">
+    <ingredient id="57" count="1"/>
+    <production id="26104" count="1"/>
+  </item>
+   <item id="8">
+    <ingredient id="57" count="1"/>
+    <production id="26105" count="1"/>
+  </item>
+   <item id="9">
+    <ingredient id="57" count="1"/>
+    <production id="10011" count="1"/>
+  </item>
+</list>

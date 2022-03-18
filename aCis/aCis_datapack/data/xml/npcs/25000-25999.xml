@@ -16504,7 +16504,7 @@
 		</drops>
 	</npc>
 	<npc id="25325" name="Flame of Splendor Barakiel" title="Raid Boss">
-		<set name="level" val="70"/>
+		<set name="level" val="85"/>
 		<set name="radius" val="8"/>
 		<set name="height" val="30"/>
 		<set name="rHand" val="6717"/>
@@ -16544,30 +16544,15 @@
 		</skills>
 		<drops>
 			<category id="1">
-				<drop itemid="5312" min="1" max="1" chance="90065"/>
-				<drop itemid="5315" min="1" max="1" chance="128525"/>
-				<drop itemid="5317" min="1" max="1" chance="90065"/>
+				<drop itemid="6393" min="1" max="1" chance="1000000"/>
 			</category>
 			<category id="2">
-				<drop itemid="5495" min="40" max="120" chance="225659"/>
-				<drop itemid="5527" min="81" max="243" chance="87741"/>
-				<drop itemid="5528" min="140" max="420" chance="50765"/>
-				<drop itemid="6570" min="1" max="1" chance="154111"/>
-				<drop itemid="6578" min="1" max="1" chance="61645"/>
-				<drop itemid="8172" min="1" max="3" chance="250000"/>
+				<drop itemid="4037" min="1" max="1" chance="1000000"/>
 			</category>
 			<category id="3">
-				<drop itemid="8176" min="3" max="9" chance="250000"/>
-				<drop itemid="8619" min="1" max="1" chance="250000"/>
-			</category>
-			<category id="4">
-				<drop itemid="8619" min="1" max="1" chance="750000"/>
+				<drop itemid="6673" min="1" max="1" chance="1000000"/>
 			</category>
 		</drops>
-		<minions>
-			<minion id="25326" min="1" max="1"/>
-			<minion id="25327" min="4" max="4"/>
-		</minions>
 	</npc>
 	<npc id="25326" name="Barakiel's Disciple" title="Raid Fighter">
 		<set name="level" val="69"/>

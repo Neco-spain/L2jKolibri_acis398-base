@@ -825,12 +825,6 @@
 		<node x="150952" y="46956"/>
 		<node x="150954" y="46486"/>
 	</zone>
-	<zone shape="NPoly" minZ="-2992" maxZ="-2792"><!-- gm_prison -->
-		<node x="-116390" y="-251581"/>
-		<node x="-112756" y="-251617"/>
-		<node x="-112720" y="-248199"/>
-		<node x="-116354" y="-248217"/>
-	</zone>
 	<zone shape="NPoly" minZ="-4792" maxZ="208"><!-- primeval_peace2 -->
 		<node x="4850" y="-4736"/>
 		<node x="7294" y="-4712"/>

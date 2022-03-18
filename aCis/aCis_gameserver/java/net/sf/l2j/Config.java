@@ -46,7 +46,7 @@ public final class Config {
 	/**
 	 * Custom Quests
 	 */
-	//Q619_RelicsOfTheOldEMpire
+	// Q619_RelicsOfTheOldEMpire
 	public static int IMPERIAL1;
 	public static int IMPERIAL2;
 	public static int IMPERIAL3;
@@ -62,7 +62,7 @@ public final class Config {
 	public static int STABLE_AMOUNT1;
 	public static int STABLE_AMOUNT2;
 	public static int RANDOM_AMMOUNT;
-	//Q617 GatherTheFlames
+	// Q617 GatherTheFlames
 	public static int FOG1;
 	public static int FOG2;
 	public static int FOG3;
@@ -232,6 +232,8 @@ public final class Config {
 	public static int VIP_DAYS_ID2;
 	public static int VIP_COIN_ID3;
 	public static int VIP_DAYS_ID3;
+	public static int VIP_COIN_ID4;
+	public static int VIP_DAYS_ID4;
 
 	/** Skins */
 	/** Variaveis Skin Click */
@@ -287,6 +289,24 @@ public final class Config {
 	public static String NAME13;
 	public static String NAME14;
 	public static String NAME15;
+	public static int VISUAL_ID_1_H;
+	public static int VISUAL_ID_1;
+	public static int VISUAL_ID_2_H;
+	public static int VISUAL_ID_2;
+	public static int VISUAL_ID_3_H;
+	public static int VISUAL_ID_3;
+	public static int VISUAL_ID_4_H;
+	public static int VISUAL_ID_4;
+	public static int VISUAL_ID_5_H;
+	public static int VISUAL_ID_5;
+	public static int VISUAL_ID_6_H;
+	public static int VISUAL_ID_6;
+	public static int VISUAL_ID_7_H;
+	public static int VISUAL_ID_7;
+	public static int VISUAL_ID_8_H;
+	public static int VISUAL_ID_8;
+	public static int VISUAL_ID_9_H;
+	public static int VISUAL_ID_9;
 
 	// --------------------------------------------------
 	// Clans settings
@@ -1027,9 +1047,8 @@ public final class Config {
 			}
 		}
 	}
-	
 
-private static final void loadCustomQuestConfig() {
+	private static final void loadCustomQuestConfig() {
 		final ExProperties quest = initProperties(CUSTOMQUESTS);
 		IMPERIAL1 = quest.getProperty("Imperialreward1", 961);
 		IMPERIAL2 = quest.getProperty("Imperialreward2", 961);
@@ -1046,9 +1065,9 @@ private static final void loadCustomQuestConfig() {
 		RANDOM_AMMOUNT = quest.getProperty("RandomRewardAmount", 1);
 		STABLE_AMOUNT1 = quest.getProperty("StableRewardAmount1", 1);
 		STABLE_AMOUNT2 = quest.getProperty("StableRewardAmount2", 1);
-		
-		//Q617 GatheTheFlames
-		
+
+		// Q617 GatheTheFlames
+
 		FOG1 = quest.getProperty("FogReward1", 961);
 		FOG2 = quest.getProperty("FogReward2", 961);
 		FOG3 = quest.getProperty("FogReward3", 961);
@@ -1065,7 +1084,7 @@ private static final void loadCustomQuestConfig() {
 		FOG_STABLE_AMOUNT1 = quest.getProperty("FogStableRewardAmount1", 1);
 		FOG_STABLE_AMOUNT2 = quest.getProperty("FogStableRewardAmount2", 1);
 
-		}
+	}
 
 	private static final void loadPcBangConfig() {
 		final ExProperties PcBanG = initProperties(PCBANGEVENT);
@@ -1553,6 +1572,8 @@ private static final void loadCustomQuestConfig() {
 		VIP_DAYS_ID2 = Integer.parseInt(mods.getProperty("VipCoinDays2", "2"));
 		VIP_COIN_ID3 = Integer.parseInt(mods.getProperty("VipCoin3", "5557"));
 		VIP_DAYS_ID3 = Integer.parseInt(mods.getProperty("VipCoinDays3", "3"));
+		VIP_COIN_ID4 = Integer.parseInt(mods.getProperty("VipCoin4", "5557"));
+		VIP_DAYS_ID4 = Integer.parseInt(mods.getProperty("VipCoinDays4", "3"));
 
 	}
 
@@ -1593,6 +1614,24 @@ private static final void loadCustomQuestConfig() {
 		SKIN_NAME13 = String.valueOf(Skins.getProperty("SkinName13", "SkinName"));
 		SKIN_NAME14 = String.valueOf(Skins.getProperty("SkinName14", "SkinName"));
 		SKIN_NAME15 = String.valueOf(Skins.getProperty("SkinName15", "SkinName"));
+		VISUAL_ID_1_H = Integer.parseInt(Skins.getProperty("Visualhair1", "0"));
+		VISUAL_ID_1 = Integer.parseInt(Skins.getProperty("Visual1", "0"));
+		VISUAL_ID_2_H = Integer.parseInt(Skins.getProperty("Visualhair2", "0"));
+		VISUAL_ID_2 = Integer.parseInt(Skins.getProperty("Visual2", "0"));
+		VISUAL_ID_3_H = Integer.parseInt(Skins.getProperty("Visualhair3", "0"));
+		VISUAL_ID_3 = Integer.parseInt(Skins.getProperty("Visual3", "0"));
+		VISUAL_ID_4_H = Integer.parseInt(Skins.getProperty("Visualhair4", "0"));
+		VISUAL_ID_4 = Integer.parseInt(Skins.getProperty("Visual4", "0"));
+		VISUAL_ID_5_H = Integer.parseInt(Skins.getProperty("Visualhair5", "0"));
+		VISUAL_ID_5 = Integer.parseInt(Skins.getProperty("Visual5", "0"));
+		VISUAL_ID_6_H = Integer.parseInt(Skins.getProperty("Visualhair6", "0"));
+		VISUAL_ID_6 = Integer.parseInt(Skins.getProperty("Visual6", "0"));
+		VISUAL_ID_7_H = Integer.parseInt(Skins.getProperty("Visualhair7", "0"));
+		VISUAL_ID_7 = Integer.parseInt(Skins.getProperty("Visual7", "0"));
+		VISUAL_ID_8_H = Integer.parseInt(Skins.getProperty("Visualhair8", "0"));
+		VISUAL_ID_8 = Integer.parseInt(Skins.getProperty("Visual8", "0"));
+		VISUAL_ID_9_H = Integer.parseInt(Skins.getProperty("Visualhair9", "0"));
+		VISUAL_ID_9 = Integer.parseInt(Skins.getProperty("Visual9", "0"));
 
 		String temp = Skins.getProperty("DressMeChests", "");
 		String[] temp2 = temp.split(";");
@@ -2269,7 +2308,7 @@ private static final void loadCustomQuestConfig() {
 		loadPcBangConfig();
 		// Tvt Settings
 		loadTvTConfig();
-		//custom quests
+		// custom quests
 		loadCustomQuestConfig();
 
 	}

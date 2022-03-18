@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+	<balance skillId="6" target="-2">
+		<set type="Power" val="2222.0"/>
+	</balance>
+</list>

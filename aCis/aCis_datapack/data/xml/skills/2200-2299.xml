@@ -1240,7 +1240,7 @@
 		<set name="hitTime" val="100" />
 		<set name="staticHitTime" val="true" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="2000" />
+		<set name="reuseDelay" val="500" />
 		<set name="skillType" val="MANAHEAL_PERCENT" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="isPotion" val="true" />

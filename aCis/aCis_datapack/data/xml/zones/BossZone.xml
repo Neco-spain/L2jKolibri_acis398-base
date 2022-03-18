@@ -9,14 +9,12 @@
 		<node x="50773" y="221632"/>
 	</zone>
 	<zone id="110001" shape="NPoly" minZ="-8380" maxZ="-4880"><!-- Antharas Boss -->
-		<stat name="InvadeTime" val="1800000"/>
 		<node x="173469" y="110431"/>
 		<node x="188081" y="110284"/>
 		<node x="188132" y="119249"/>
 		<node x="173386" y="119391"/>
 	</zone>
 	<zone id="110002" shape="NPoly" minZ="10061" maxZ="11061"><!-- Baium Boss -->
-		<stat name="InvadeTime" val="1800000"/>
 		<node x="111074" y="16177"/>
 		<node x="114562" y="12623"/>
 		<node x="118194" y="15790"/>

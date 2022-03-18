@@ -168,6 +168,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="5000" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="46" />
 		</cond>
@@ -176,6 +177,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="6000" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="49" />
 		</cond>
@@ -184,6 +186,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="7200" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="52" />
 		</cond>
@@ -192,6 +195,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="8640" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="55" />
 		</cond>
@@ -200,6 +204,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="10000" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="58" />
 		</cond>
@@ -208,6 +213,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="12000" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="61" />
 		</cond>
@@ -215,6 +221,7 @@
 	<item id="8729" type="EtcItem" name="Life Stone: level 64">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="15000" />
 		<cond msgId="113">
 			<player level="64" />
@@ -223,6 +230,7 @@
 	<item id="8730" type="EtcItem" name="Life Stone: level 67">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="18000" />
 		<cond msgId="113">
 			<player level="67" />
@@ -231,6 +239,7 @@
 	<item id="8731" type="EtcItem" name="Life Stone: level 70">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="21600" />
 		<cond msgId="113">
 			<player level="70" />
@@ -239,6 +248,7 @@
 	<item id="8732" type="EtcItem" name="Life Stone: level 76">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="24000" />
 		<cond msgId="113">
 			<player level="76" />
@@ -247,6 +257,7 @@
 	<item id="8733" type="EtcItem" name="Mid-Grade Life Stone: level 46">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="20000" />
 		<cond msgId="113">
 			<player level="46" />
@@ -255,6 +266,7 @@
 	<item id="8734" type="EtcItem" name="Mid-Grade Life Stone: level 49">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="24000" />
 		<cond msgId="113">
 			<player level="49" />
@@ -263,6 +275,7 @@
 	<item id="8735" type="EtcItem" name="Mid-Grade Life Stone: level 52">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="28800" />
 		<cond msgId="113">
 			<player level="52" />
@@ -272,12 +285,14 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="34560" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="55" />
 		</cond>
 	</item>
 	<item id="8737" type="EtcItem" name="Mid-Grade Life Stone: level 58">
 		<set name="material" val="LIQUID" />
+		<set name="is_stackable" val="true" />
 		<set name="weight" val="2" />
 		<set name="price" val="40000" />
 		<cond msgId="113">
@@ -286,6 +301,7 @@
 	</item>
 	<item id="8738" type="EtcItem" name="Mid-Grade Life Stone: level 61">
 		<set name="material" val="LIQUID" />
+		<set name="is_stackable" val="true" />
 		<set name="weight" val="2" />
 		<set name="price" val="48000" />
 		<cond msgId="113">
@@ -294,6 +310,7 @@
 	</item>
 	<item id="8739" type="EtcItem" name="Mid-Grade Life Stone: level 64">
 		<set name="material" val="LIQUID" />
+		<set name="is_stackable" val="true" />
 		<set name="weight" val="2" />
 		<set name="price" val="60000" />
 		<cond msgId="113">
@@ -302,6 +319,7 @@
 	</item>
 	<item id="8740" type="EtcItem" name="Mid-Grade Life Stone: level 67">
 		<set name="material" val="LIQUID" />
+		<set name="is_stackable" val="true" />
 		<set name="weight" val="2" />
 		<set name="price" val="72000" />
 		<cond msgId="113">
@@ -311,6 +329,7 @@
 	<item id="8741" type="EtcItem" name="Mid-Grade Life Stone: level 70">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="86400" />
 		<cond msgId="113">
 			<player level="70" />
@@ -320,12 +339,14 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="96000" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="76" />
 		</cond>
 	</item>
 	<item id="8743" type="EtcItem" name="High-Grade Life Stone: level 46">
 		<set name="material" val="LIQUID" />
+		<set name="is_stackable" val="true" />
 		<set name="weight" val="2" />
 		<set name="price" val="200000" />
 		<cond msgId="113">
@@ -342,6 +363,7 @@
 	</item>
 	<item id="8745" type="EtcItem" name="High-Grade Life Stone: level 52">
 		<set name="material" val="LIQUID" />
+		<set name="is_stackable" val="true" />
 		<set name="weight" val="2" />
 		<set name="price" val="288000" />
 		<cond msgId="113">
@@ -351,6 +373,7 @@
 	<item id="8746" type="EtcItem" name="High-Grade Life Stone: level 55">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="345600" />
 		<cond msgId="113">
 			<player level="55" />
@@ -358,6 +381,7 @@
 	</item>
 	<item id="8747" type="EtcItem" name="High-Grade Life Stone: level 58">
 		<set name="material" val="LIQUID" />
+		<set name="is_stackable" val="true" />
 		<set name="weight" val="2" />
 		<set name="price" val="400000" />
 		<cond msgId="113">
@@ -366,6 +390,7 @@
 	</item>
 	<item id="8748" type="EtcItem" name="High-Grade Life Stone: level 61">
 		<set name="material" val="LIQUID" />
+		<set name="is_stackable" val="true" />
 		<set name="weight" val="2" />
 		<set name="price" val="480000" />
 		<cond msgId="113">
@@ -376,6 +401,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="600000" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="64" />
 		</cond>
@@ -385,12 +411,14 @@
 		<set name="weight" val="2" />
 		<set name="price" val="720000" />
 		<cond msgId="113">
+		<set name="is_stackable" val="true" />
 			<player level="67" />
 		</cond>
 	</item>
 	<item id="8751" type="EtcItem" name="High-Grade Life Stone: level 70">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="864000" />
 		<cond msgId="113">
 			<player level="70" />
@@ -399,6 +427,7 @@
 	<item id="8752" type="EtcItem" name="High-Grade Life Stone: level 76">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="960000" />
 		<cond msgId="113">
 			<player level="76" />
@@ -407,6 +436,7 @@
 	<item id="8753" type="EtcItem" name="Top-Grade Life Stone: level 46">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="1000000" />
 		<cond msgId="113">
 			<player level="46" />
@@ -415,6 +445,7 @@
 	<item id="8754" type="EtcItem" name="Top-Grade Life Stone: level 49">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="1200000" />
 		<cond msgId="113">
 			<player level="49" />
@@ -423,6 +454,7 @@
 	<item id="8755" type="EtcItem" name="Top-Grade Life Stone: level 52">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="1440000" />
 		<cond msgId="113">
 			<player level="52" />
@@ -432,6 +464,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="1728000" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="55" />
 		</cond>
@@ -439,6 +472,7 @@
 	<item id="8757" type="EtcItem" name="Top-Grade Life Stone: level 58">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="2000000" />
 		<cond msgId="113">
 			<player level="58" />
@@ -448,6 +482,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="2400000" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="61" />
 		</cond>
@@ -455,6 +490,7 @@
 	<item id="8759" type="EtcItem" name="Top-Grade Life Stone: level 64">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="3000000" />
 		<cond msgId="113">
 			<player level="64" />
@@ -463,6 +499,7 @@
 	<item id="8760" type="EtcItem" name="Top-Grade Life Stone: level 67">
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
+		<set name="is_stackable" val="true" />
 		<set name="price" val="3600000" />
 		<cond msgId="113">
 			<player level="67" />
@@ -470,6 +507,7 @@
 	</item>
 	<item id="8761" type="EtcItem" name="Top-Grade Life Stone: level 70">
 		<set name="material" val="LIQUID" />
+		<set name="is_stackable" val="true" />
 		<set name="weight" val="2" />
 		<set name="price" val="4320000" />
 		<cond msgId="113">
@@ -480,6 +518,7 @@
 		<set name="material" val="LIQUID" />
 		<set name="weight" val="2" />
 		<set name="price" val="4800000" />
+		<set name="is_stackable" val="true" />
 		<cond msgId="113">
 			<player level="76" />
 		</cond>

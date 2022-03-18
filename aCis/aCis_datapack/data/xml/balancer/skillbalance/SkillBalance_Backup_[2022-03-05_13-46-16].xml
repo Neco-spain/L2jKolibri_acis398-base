@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<list>
+	<balance skillId="1071" target="-2">
+		<set type="CastTime" val="0.7"/>
+	</balance>
+</list>
