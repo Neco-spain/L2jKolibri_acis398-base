@@ -16,7 +16,7 @@ import net.sf.l2j.commons.logging.CLogger;
 import net.sf.l2j.commons.math.MathUtil;
 import net.sf.l2j.gameserver.enums.GeoType;
 import net.sf.l2j.gameserver.model.holder.IntIntHolder;
-import net.sf.l2j.loginserver.network.serverpackets.RewardHolder;
+import net.sf.l2j.mods.partyfarm.RewardHolder;
 
 /**
  * This class contains global server configuration.<br>
@@ -1113,15 +1113,15 @@ public final class Config {
 		PARTY_FARM_MONSTER_DALAY = Integer.parseInt(BestFarm.getProperty("MonsterDelay", "10"));
 		PARTY_FARM_BY_TIME_OF_DAY = Boolean.parseBoolean(BestFarm.getProperty("PartyFarmEventEnabled", "false"));
 		START_PARTY = Boolean.parseBoolean(BestFarm.getProperty("StartSpawnPartyFarm", "false"));
-		PARTY_ONLY = Boolean.parseBoolean(BestFarm.getProperty("PartyPlayersOnly", "true"));
-		MIN_PARTY_MEMBERS = Integer.parseInt(BestFarm.getProperty("MinPartyMembers", "3"));
 
-		ENABLE_DUALBOX_PARTYFARM = Boolean.parseBoolean(BestFarm.getProperty("RenewalDualBoxPTFarm", "false"));
+		ENABLE_DUALBOX_PARTYFARM = Boolean.parseBoolean(BestFarm.getProperty("AllowDualBoxReward", "false"));
 		EVENT_BEST_FARM_TIME = Integer.parseInt(BestFarm.getProperty("EventBestFarmTime", "1"));
 		EVENT_BEST_FARM_INTERVAL_BY_TIME_OF_DAY = BestFarm.getProperty("BestFarmStartTime", "20:00").split(",");
 		PARTY_MESSAGE_ENABLED = Boolean.parseBoolean(BestFarm.getProperty("ScreenPartyMessageEnable", "false"));
 		PARTY_FARM_MESSAGE_TEXT = BestFarm.getProperty("ScreenPartyFarmMessageText", "Welcome to l2j server!");
 		PARTY_FARM_MESSAGE_TIME = Integer.parseInt(BestFarm.getProperty("ScreenPartyFarmMessageTime", "10")) * 1000;
+		PARTY_ONLY = Boolean.parseBoolean(BestFarm.getProperty("PartyPlayersOnly", "true"));
+		MIN_PARTY_MEMBERS = Integer.parseInt(BestFarm.getProperty("MinPartyMembers", "3"));
 
 		String[] monsterLocs2 = BestFarm.getProperty("MonsterLoc", "").split(";");
 		String[] locSplit3 = null;
@@ -1160,6 +1160,7 @@ public final class Config {
 	/**
 	 * config enchant novo.
 	 */
+
 	private static final void loadEnchantSystemConfig() {
 		final ExProperties enchant = initProperties(ENCHANT_FILE);
 		DEBUG = enchant.getProperty("Debug", false);

@@ -1,4 +1,4 @@
-package net.sf.l2j.loginserver.network.serverpackets;
+package net.sf.l2j.mods.partyfarm;
 
 public class RewardHolder {
 	private int _id;

@@ -834,6 +834,7 @@ public class Monster extends Attackable {
 		final Player player = creature.getActingPlayer();
 		if (player == null)
 			return;
+
 		if (Config.PART_ZONE_MONSTERS_EVENT_ID.contains(Integer.valueOf(template.getNpcId())))
 			PartyZoneReward.addPartyZoneReward(player, this);
 		// Calculate level modifier.
