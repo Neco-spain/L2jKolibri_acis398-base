@@ -13,7 +13,6 @@ public class Ranking implements IVoicedCommandHandler {
 
 			RankingBBSManager.getInstance().parseCmd("_bbsranking", activeChar);
 		}
-
 		return true;
 	}
 
