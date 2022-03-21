@@ -214,6 +214,15 @@ public class EnterWorld extends L2GameClientPacket {
 
 		// Announcements, welcome & Seven signs period messages.
 		player.sendPacket(SystemMessageId.WELCOME_TO_LINEAGE);
+		Date rightNow = Calendar.getInstance().getTime();
+		player.sendPacket(new CreatureSay(0, SayType.PARTY, "[System]", "Current Server's  time is " + rightNow + "."));
+		if (player.isClanLeader()) {
+			int members = player.getClan().getOnlineMembersCount();
+			player.sendPacket(
+					new CreatureSay(0, SayType.CLAN, "[Clan]", "Current Online Members are  " + members + "."));
+
+		}
+
 		if (Config.PCB_ENABLE) {
 			player.showPcBangWindow();
 		}
@@ -236,6 +245,7 @@ public class EnterWorld extends L2GameClientPacket {
 
 		if (Config.ALT_OLY_END_ANNOUNCE) {
 			Olympiad.olympiadEnd(player);
+
 			// Means that it's not ok multiBox situation, so logout
 			if (!player.checkMultiBox()) {
 				player.sendPacket(new ExShowScreenMessage(

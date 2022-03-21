@@ -38,11 +38,13 @@ public class GrandBossStatus implements IVoicedCommandHandler {
 		sb.append("<td width=32><img src=Icon.etc_alphabet_o_i00 height=32 width=32></td>");
 		sb.append("<td width=32><img src=Icon.etc_alphabet_s_i00 height=32 width=32></td>");
 		sb.append("<td width=32><img src=Icon.etc_alphabet_s_i00 height=32 width=32></td>");
+		sb.append("<td width=32><img src=Icon.etc_alphabet_e_i00 height=32 width=32></td>");
+		sb.append("<td width=32><img src=Icon.etc_alphabet_s_i00 height=32 width=32></td>");
 		sb.append("</tr></table><br>");
 
 		sb.append("<img src=\"L2UI.SquareGray\" width=300 height=1>");
 		sb.append("<table bgcolor=\"000000\" width=\"318\">");
-		sb.append("<tr><td><center><font color=\"FF8C00\">Grand Boss Info</font></center></td></tr>");
+		sb.append("<tr><td><center><font color=\"FF8C00\">Raid Boss Info</font></center></td></tr>");
 		sb.append("</table>");
 		sb.append("<img src=\"L2UI.SquareGray\" width=300 height=1>");
 

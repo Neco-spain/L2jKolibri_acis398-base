@@ -15,7 +15,8 @@ import net.sf.l2j.gameserver.network.serverpackets.EtcStatusUpdate;
  *
  */
 public class VipCoin implements IItemHandler {
-	private static final int ITEM_IDS[] = { Config.VIP_COIN_ID1, Config.VIP_COIN_ID2, Config.VIP_COIN_ID3 };
+	private static final int ITEM_IDS[] = { Config.VIP_COIN_ID1, Config.VIP_COIN_ID2, Config.VIP_COIN_ID3,
+			Config.VIP_DAYS_ID4 };
 
 	@Override
 	public void useItem(Playable playable, ItemInstance item, boolean forceUse) {
@@ -30,10 +31,11 @@ public class VipCoin implements IItemHandler {
 			if (activeChar.isInOlympiadMode()) {
 				activeChar.sendMessage("This item cannot be used on Olympiad Games.");
 				return;
-			} else if (activeChar.isVip()) {
-				activeChar.sendMessage("You Are Vip!.");
-				return;
 			}
+//			else if (activeChar.isVip()) {
+//				activeChar.sendMessage("You Are Vip!.");
+//				return;
+//			}
 			if (activeChar.destroyItem("Consume", item.getObjectId(), 1, null, false)) {
 				if (activeChar.isVip()) {
 					long daysleft = (activeChar.getVipEndTime() - Calendar.getInstance().getTimeInMillis()) / 86400000L;
@@ -61,16 +63,17 @@ public class VipCoin implements IItemHandler {
 			if (activeChar.isInOlympiadMode()) {
 				activeChar.sendMessage("This item cannot be used on Olympiad Games.");
 				return;
-			} else if (activeChar.isVip()) {
-				activeChar.sendMessage("You already are Vip!.");
-				return;
 			}
+//			else if (activeChar.isVip()) {
+//				activeChar.sendMessage("You already are Vip!.");
+//				return;
+//			}
 			if (activeChar.destroyItem("Consume", item.getObjectId(), 1, null, false)) {
 				if (activeChar.isVip()) {
 					long daysleft = (activeChar.getVipEndTime() - Calendar.getInstance().getTimeInMillis()) / 86400000L;
 					activeChar.setEndTime("vip", (int) (daysleft + Config.VIP_DAYS_ID2));
 					activeChar.sendMessage(
-							"Congratulations, You just received another " + Config.VIP_DAYS_ID2 + " day of VIP.");
+							"Congratulations, You just received another " + Config.VIP_DAYS_ID2 + " days of VIP.");
 				} else {
 					activeChar.setVip(true);
 					activeChar.setEndTime("vip", Config.VIP_DAYS_ID2);
@@ -92,16 +95,17 @@ public class VipCoin implements IItemHandler {
 			if (activeChar.isInOlympiadMode()) {
 				activeChar.sendMessage("This item cannot be used on Olympiad Games.");
 				return;
-			} else if (activeChar.isVip()) {
-				activeChar.sendMessage("You already are Vip!.");
-				return;
 			}
+//			else if (activeChar.isVip()) {
+//				activeChar.sendMessage("You already are Vip!.");
+//				return;
+//			}
 			if (activeChar.destroyItem("Consume", item.getObjectId(), 1, null, false)) {
 				if (activeChar.isVip()) {
 					long daysleft = (activeChar.getVipEndTime() - Calendar.getInstance().getTimeInMillis()) / 86400000L;
 					activeChar.setEndTime("vip", (int) (daysleft + Config.VIP_DAYS_ID3));
 					activeChar.sendMessage(
-							"Congratulations, You just received another " + Config.VIP_DAYS_ID3 + " day of VIP.");
+							"Congratulations, You just received another " + Config.VIP_DAYS_ID3 + " days of VIP.");
 				} else {
 					activeChar.setVip(true);
 					activeChar.setEndTime("vip", Config.VIP_DAYS_ID3);
@@ -123,16 +127,17 @@ public class VipCoin implements IItemHandler {
 			if (activeChar.isInOlympiadMode()) {
 				activeChar.sendMessage("This item cannot be used on Olympiad Games.");
 				return;
-			} else if (activeChar.isVip()) {
-				activeChar.sendMessage("You already are Vip!.");
-				return;
 			}
+//			else if (activeChar.isVip()) {
+//				activeChar.sendMessage("You already are Vip!.");
+//				return;
+//			}
 			if (activeChar.destroyItem("Consume", item.getObjectId(), 1, null, false)) {
 				if (activeChar.isVip()) {
 					long daysleft = (activeChar.getVipEndTime() - Calendar.getInstance().getTimeInMillis()) / 86400000L;
 					activeChar.setEndTime("vip", (int) (daysleft + Config.VIP_DAYS_ID4));
 					activeChar.sendMessage(
-							"Congratulations, You just received another " + Config.VIP_DAYS_ID4 + " day of VIP.");
+							"Congratulations, You just received another " + Config.VIP_DAYS_ID4 + " days of VIP.");
 				} else {
 					activeChar.setVip(true);
 					activeChar.setEndTime("vip", Config.VIP_DAYS_ID4);

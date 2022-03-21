@@ -2826,17 +2826,20 @@ public final class Player extends Playable {
 			}
 			return;
 		}
-		if (isAutoPot(728)) {
-			sendPacket(new ExAutoSoulShot(728, 0));
-			setAutoPot(728, null, false);
+		final int MANA = Config.AUTOMANA;
+		final int HP = Config.AUTOHP;
+		final int CP = Config.AUTOCP;
+		if (isAutoPot(MANA)) {
+			sendPacket(new ExAutoSoulShot(MANA, 0));
+			setAutoPot(MANA, null, false);
 		}
-		if (isAutoPot(1539)) {
-			sendPacket(new ExAutoSoulShot(1539, 0));
-			setAutoPot(1539, null, false);
+		if (isAutoPot(HP)) {
+			sendPacket(new ExAutoSoulShot(HP, 0));
+			setAutoPot(HP, null, false);
 		}
-		if (isAutoPot(5592)) {
-			sendPacket(new ExAutoSoulShot(5592, 0));
-			setAutoPot(5592, null, false);
+		if (isAutoPot(CP)) {
+			sendPacket(new ExAutoSoulShot(CP, 0));
+			setAutoPot(CP, null, false);
 		}
 		// Check if it's pvp (cases : regular, wars, victim is PKer)
 		if (checkIfPvP(target) || (targetPlayer.getClan() != null && getClan() != null

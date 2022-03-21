@@ -1,5 +1,6 @@
 package net.sf.l2j.gameserver.model.zone.type;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.data.xml.MapRegionData.TeleportType;
 import net.sf.l2j.gameserver.enums.ZoneId;
 import net.sf.l2j.gameserver.model.actor.Creature;
@@ -31,13 +32,16 @@ public class OlympiadStadiumZone extends SpawnZoneType {
 	protected final void onEnter(Creature character) {
 		if (character instanceof Player) {
 			final Player player2 = (Player) character;
-			if (player2.isAutoPot(728) && player2.isAutoPot(1539) && player2.isAutoPot(5592)) {
-				player2.sendPacket(new ExAutoSoulShot(728, 0));
-				player2.sendPacket(new ExAutoSoulShot(1539, 0));
-				player2.sendPacket(new ExAutoSoulShot(5592, 0));
-				player2.setAutoPot(728, null, false);
-				player2.setAutoPot(1539, null, false);
-				player2.setAutoPot(5592, null, false);
+			final int MANA = Config.AUTOMANA;
+			final int HP = Config.AUTOHP;
+			final int CP = Config.AUTOCP;
+			if (player2.isAutoPot(MANA) && player2.isAutoPot(HP) && player2.isAutoPot(CP)) {
+				player2.sendPacket(new ExAutoSoulShot(MANA, 0));
+				player2.sendPacket(new ExAutoSoulShot(HP, 0));
+				player2.sendPacket(new ExAutoSoulShot(CP, 0));
+				player2.setAutoPot(MANA, null, false);
+				player2.setAutoPot(HP, null, false);
+				player2.setAutoPot(CP, null, false);
 				player2.sendMessage("Deactivated auto pots .");
 			}
 

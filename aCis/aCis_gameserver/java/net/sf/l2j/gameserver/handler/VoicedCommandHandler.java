@@ -8,6 +8,7 @@ import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.GameServer;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.GrandBossStatus;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Online;
+import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Ranking;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Shiff_Mod;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.TvTEventCommand;
 
@@ -34,6 +35,8 @@ public class VoicedCommandHandler {
 			registerVoicedCommandHandler(new GrandBossStatus());
 			registerVoicedCommandHandler(new Shiff_Mod());
 			registerVoicedCommandHandler(new TvTEventCommand());
+			registerVoicedCommandHandler(new Ranking());
+
 		}
 
 	}

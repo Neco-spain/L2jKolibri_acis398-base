@@ -172,6 +172,7 @@ public final class Config {
 	// --------------------------------------------------
 	// Mods settings
 	// --------------------------------------------------
+	public static int STARTLEVEL;
 	public static boolean ALT_DISABLE_BOW_CLASSES;
 	public static String DISABLE_BOW_CLASSES_STRING;
 	public static ArrayList<Integer> DISABLE_BOW_CLASSES = new ArrayList<>();
@@ -198,6 +199,10 @@ public final class Config {
 	public static boolean INFINITY_ARROWS;
 	public static boolean ALLOW_DIRECT_TP_TO_BOSS_ROOM;
 	public static boolean ALT_GAME_VIEWNPC;
+	/** AUTO POTS SETTINGS */
+	public static int AUTOMANA;
+	public static int AUTOHP;
+	public static int AUTOCP;
 	/** Balancer */
 	public static boolean BALANCER_ALLOW;
 	/** Buffer */
@@ -291,6 +296,7 @@ public final class Config {
 	public static String NAME15;
 	public static int VISUAL_ID_1_H;
 	public static int VISUAL_ID_1;
+
 	public static int VISUAL_ID_2_H;
 	public static int VISUAL_ID_2;
 	public static int VISUAL_ID_3_H;
@@ -1433,7 +1439,7 @@ public final class Config {
 	 */
 	private static final void loadMods() {
 		final ExProperties mods = initProperties(MODS_FILE);
-
+		STARTLEVEL = mods.getProperty("StartingLevel", 80);
 		ALT_DISABLE_BOW_CLASSES = Boolean.parseBoolean(mods.getProperty("AltDisableBow", "False"));
 		DISABLE_BOW_CLASSES_STRING = mods.getProperty("DisableBowForClasses", "");
 		DISABLE_BOW_CLASSES = new ArrayList<>();
@@ -1472,6 +1478,11 @@ public final class Config {
 			int npcId = Integer.parseInt(val);
 			LIST_RAID_BOSS_IDS.add(npcId);
 		}
+
+		AUTOMANA = Integer.parseInt(mods.getProperty("AutoManaPots", "726"));
+		AUTOHP = Integer.parseInt(mods.getProperty("AutoHpPots", "1539"));
+		AUTOCP = Integer.parseInt(mods.getProperty("AutoCpPots", "5592"));
+
 		/**
 		 * Balancer.
 		 */
