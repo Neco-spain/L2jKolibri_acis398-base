@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.stream.IntStream;
 
+import net.sf.l2j.Config;
 import net.sf.l2j.commons.lang.StringUtil;
 import net.sf.l2j.commons.pool.ConnectionPool;
 import net.sf.l2j.gameserver.data.cache.HtmCache;
@@ -85,7 +86,7 @@ public class RankingBBSManager extends BaseBBSManager {
 				LOGGER.warn("There was problem while updating ranking system.", e);
 			}
 
-			_nextUpdate = System.currentTimeMillis() + 60000L;
+			_nextUpdate = System.currentTimeMillis() + Config.RANKINGUPDATEDELAY;
 		}
 
 		String content = HtmCache.getInstance().getHtm(CB_PATH + getFolder() + "ranklist.htm");

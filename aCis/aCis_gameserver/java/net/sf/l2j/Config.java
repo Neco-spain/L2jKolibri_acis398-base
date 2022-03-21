@@ -172,6 +172,7 @@ public final class Config {
 	// --------------------------------------------------
 	// Mods settings
 	// --------------------------------------------------
+	public static long RANKINGUPDATEDELAY;
 	public static int STARTLEVEL;
 	public static boolean ALT_DISABLE_BOW_CLASSES;
 	public static String DISABLE_BOW_CLASSES_STRING;
@@ -1439,6 +1440,7 @@ public final class Config {
 	 */
 	private static final void loadMods() {
 		final ExProperties mods = initProperties(MODS_FILE);
+		RANKINGUPDATEDELAY = mods.getProperty("RankingUpdateDelay", 20000);
 		STARTLEVEL = mods.getProperty("StartingLevel", 80);
 		ALT_DISABLE_BOW_CLASSES = Boolean.parseBoolean(mods.getProperty("AltDisableBow", "False"));
 		DISABLE_BOW_CLASSES_STRING = mods.getProperty("DisableBowForClasses", "");
