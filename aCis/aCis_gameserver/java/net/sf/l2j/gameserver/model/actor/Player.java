@@ -329,6 +329,52 @@ public final class Player extends Playable {
 		}
 	}
 
+	// Custom PVP Color System - Start
+	public void updatePvPColor(int pvpKillAmount) {
+		if (Config.PVP_COLOR_SYSTEM_ENABLED) {
+			// Check if the character has GM access and if so, let them be.
+			if (isGM())
+				return;
+			{
+				if ((pvpKillAmount >= (Config.PVP_AMOUNT1)) && (pvpKillAmount <= (Config.PVP_AMOUNT2))) {
+					getAppearance().setNameColor(Config.NAME_COLOR_FOR_PVP_AMOUNT1);
+				} else if ((pvpKillAmount >= (Config.PVP_AMOUNT2)) && (pvpKillAmount <= (Config.PVP_AMOUNT3))) {
+					getAppearance().setNameColor(Config.NAME_COLOR_FOR_PVP_AMOUNT2);
+				} else if ((pvpKillAmount >= (Config.PVP_AMOUNT3)) && (pvpKillAmount <= (Config.PVP_AMOUNT4))) {
+					getAppearance().setNameColor(Config.NAME_COLOR_FOR_PVP_AMOUNT3);
+				} else if ((pvpKillAmount >= (Config.PVP_AMOUNT4)) && (pvpKillAmount <= (Config.PVP_AMOUNT5))) {
+					getAppearance().setNameColor(Config.NAME_COLOR_FOR_PVP_AMOUNT4);
+				} else if (pvpKillAmount >= (Config.PVP_AMOUNT5)) {
+					getAppearance().setNameColor(Config.NAME_COLOR_FOR_PVP_AMOUNT5);
+				}
+			}
+		}
+	}
+	// Custom PVP Color System - End
+
+	// Custom Pk Color System - Start
+	public void updatePkColor(int pkKillAmount) {
+		if (Config.PK_COLOR_SYSTEM_ENABLED) {
+			// Check if the character has GM access and if so, let them be, like above.
+			if (isGM())
+				return;
+			{
+				if ((pkKillAmount >= (Config.PK_AMOUNT1)) && (pkKillAmount <= (Config.PVP_AMOUNT2))) {
+					getAppearance().setTitleColor(Config.TITLE_COLOR_FOR_PK_AMOUNT1);
+				} else if ((pkKillAmount >= (Config.PK_AMOUNT2)) && (pkKillAmount <= (Config.PVP_AMOUNT3))) {
+					getAppearance().setTitleColor(Config.TITLE_COLOR_FOR_PK_AMOUNT2);
+				} else if ((pkKillAmount >= (Config.PK_AMOUNT3)) && (pkKillAmount <= (Config.PVP_AMOUNT4))) {
+					getAppearance().setTitleColor(Config.TITLE_COLOR_FOR_PK_AMOUNT3);
+				} else if ((pkKillAmount >= (Config.PK_AMOUNT4)) && (pkKillAmount <= (Config.PVP_AMOUNT5))) {
+					getAppearance().setTitleColor(Config.TITLE_COLOR_FOR_PK_AMOUNT4);
+				} else if (pkKillAmount >= (Config.PK_AMOUNT5)) {
+					getAppearance().setTitleColor(Config.TITLE_COLOR_FOR_PK_AMOUNT5);
+				}
+			}
+		}
+	}
+	// Custom Pk Color System - End
+
 	private boolean _canFeed;
 	protected PetTemplate _petTemplate;
 	private PetDataEntry _petData;
@@ -2886,7 +2932,9 @@ public final class Player extends Playable {
 			if (target instanceof Player) {
 				// Add PvP point to attacker.
 				setPvpKills(getPvpKills() + 1);
-
+				// Update the character's name color if they reached any of the 5 PvP levels.
+				updatePvPColor(getPvpKills());
+				broadcastUserInfo();
 				// Send UserInfo packet to attacker with its Karma and PK Coudnter
 				sendPacket(new UserInfo(this));
 			}
@@ -2896,7 +2944,9 @@ public final class Player extends Playable {
 			// PK Points are increased only if you kill a player.
 			if (target instanceof Player)
 				setPkKills(getPkKills() + 1);
-
+			// Update the character's title color if they reached any of the 5 PK levels.
+			updatePkColor(getPkKills());
+			broadcastUserInfo();
 			// Calculate new karma.
 			setKarma(getKarma() + Formulas.calculateKarmaGain(getPkKills(), target instanceof Summon));
 

@@ -243,6 +243,20 @@ public class EnterWorld extends L2GameClientPacket {
 		if (Config.ALLOW_VIP_TCOLOR && player.isVip())
 			player.getAppearance().setTitleColor(Config.VIP_TCOLOR);
 
+		// =================================================================================
+		// Color System checks - Start
+		// =====================================================
+		// Check if the custom PvP and PK color systems are enabled and if so
+		// ==============
+		// check the character's counters and apply any color changes that must be done.
+		// ===
+		if (player.getPvpKills() >= (Config.PVP_AMOUNT1) && (Config.PVP_COLOR_SYSTEM_ENABLED))
+			player.updatePvPColor(player.getPvpKills());
+		if (player.getPkKills() >= (Config.PK_AMOUNT1) && (Config.PK_COLOR_SYSTEM_ENABLED))
+			player.updatePkColor(player.getPkKills());
+		// Color System checks - End
+		// =======================================================
+		// =================================================================================
 		if (Config.ALT_OLY_END_ANNOUNCE) {
 			Olympiad.olympiadEnd(player);
 

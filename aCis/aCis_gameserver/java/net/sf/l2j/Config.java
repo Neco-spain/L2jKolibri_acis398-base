@@ -41,8 +41,35 @@ public final class Config {
 	public static final String PCBANGEVENT = "./config/PcBangEvent.properties";
 	public static final String TVTEVENT = "./config/TvT.properties";
 	public static final String CUSTOMQUESTS = "./config/quests.properties";
+	public static final String PVP = "./config/pvp.properties";
 
 //=====================================================================================================================================================
+	/**
+	 * Custom PvP ColorSystem
+	 */
+	public static boolean PVP_COLOR_SYSTEM_ENABLED;
+	public static int PVP_AMOUNT1;
+	public static int PVP_AMOUNT2;
+	public static int PVP_AMOUNT3;
+	public static int PVP_AMOUNT4;
+	public static int PVP_AMOUNT5;
+	public static int NAME_COLOR_FOR_PVP_AMOUNT1;
+	public static int NAME_COLOR_FOR_PVP_AMOUNT2;
+	public static int NAME_COLOR_FOR_PVP_AMOUNT3;
+	public static int NAME_COLOR_FOR_PVP_AMOUNT4;
+	public static int NAME_COLOR_FOR_PVP_AMOUNT5;
+	public static boolean PK_COLOR_SYSTEM_ENABLED;
+	public static int PK_AMOUNT1;
+	public static int PK_AMOUNT2;
+	public static int PK_AMOUNT3;
+	public static int PK_AMOUNT4;
+	public static int PK_AMOUNT5;
+	public static int TITLE_COLOR_FOR_PK_AMOUNT1;
+	public static int TITLE_COLOR_FOR_PK_AMOUNT2;
+	public static int TITLE_COLOR_FOR_PK_AMOUNT3;
+	public static int TITLE_COLOR_FOR_PK_AMOUNT4;
+	public static int TITLE_COLOR_FOR_PK_AMOUNT5;
+
 	/**
 	 * Custom Quests
 	 */
@@ -1436,6 +1463,38 @@ public final class Config {
 
 	}
 
+	private static final void loadPvp() {
+		final ExProperties pvp = initProperties(PVP);
+
+		// PVP Name Color System configs - Start
+		PVP_COLOR_SYSTEM_ENABLED = Boolean.parseBoolean(pvp.getProperty("EnablePvPColorSystem", "false"));
+		PVP_AMOUNT1 = Integer.parseInt(pvp.getProperty("PvpAmount1", "500"));
+		PVP_AMOUNT2 = Integer.parseInt(pvp.getProperty("PvpAmount2", "1000"));
+		PVP_AMOUNT3 = Integer.parseInt(pvp.getProperty("PvpAmount3", "1500"));
+		PVP_AMOUNT4 = Integer.parseInt(pvp.getProperty("PvpAmount4", "2500"));
+		PVP_AMOUNT5 = Integer.parseInt(pvp.getProperty("PvpAmount5", "5000"));
+		NAME_COLOR_FOR_PVP_AMOUNT1 = Integer.decode("0x" + pvp.getProperty("ColorForAmount1", "00FF00"));
+		NAME_COLOR_FOR_PVP_AMOUNT2 = Integer.decode("0x" + pvp.getProperty("ColorForAmount2", "00FF00"));
+		NAME_COLOR_FOR_PVP_AMOUNT3 = Integer.decode("0x" + pvp.getProperty("ColorForAmount3", "00FF00"));
+		NAME_COLOR_FOR_PVP_AMOUNT4 = Integer.decode("0x" + pvp.getProperty("ColorForAmount4", "00FF00"));
+		NAME_COLOR_FOR_PVP_AMOUNT5 = Integer.decode("0x" + pvp.getProperty("ColorForAmount4", "00FF00"));
+		// PvP Name Color System configs - End
+
+		// PK Title Color System configs - Start
+		PK_COLOR_SYSTEM_ENABLED = Boolean.parseBoolean(pvp.getProperty("EnablePkColorSystem", "false"));
+		PK_AMOUNT1 = Integer.parseInt(pvp.getProperty("PkAmount1", "500"));
+		PK_AMOUNT2 = Integer.parseInt(pvp.getProperty("PkAmount2", "1000"));
+		PK_AMOUNT3 = Integer.parseInt(pvp.getProperty("PkAmount3", "1500"));
+		PK_AMOUNT4 = Integer.parseInt(pvp.getProperty("PkAmount4", "2500"));
+		PK_AMOUNT5 = Integer.parseInt(pvp.getProperty("PkAmount5", "5000"));
+		TITLE_COLOR_FOR_PK_AMOUNT1 = Integer.decode("0x" + pvp.getProperty("TitleForAmount1", "00FF00"));
+		TITLE_COLOR_FOR_PK_AMOUNT2 = Integer.decode("0x" + pvp.getProperty("TitleForAmount2", "00FF00"));
+		TITLE_COLOR_FOR_PK_AMOUNT3 = Integer.decode("0x" + pvp.getProperty("TitleForAmount3", "00FF00"));
+		TITLE_COLOR_FOR_PK_AMOUNT4 = Integer.decode("0x" + pvp.getProperty("TitleForAmount4", "00FF00"));
+		TITLE_COLOR_FOR_PK_AMOUNT5 = Integer.decode("0x" + pvp.getProperty("TitleForAmount5", "00FF00"));
+		// PK Title Color System configs - End
+	}
+
 	/**
 	 * Loads mods settings.
 	 */
@@ -2325,6 +2384,7 @@ public final class Config {
 		loadTvTConfig();
 		// custom quests
 		loadCustomQuestConfig();
+		loadPvp();
 
 	}
 
