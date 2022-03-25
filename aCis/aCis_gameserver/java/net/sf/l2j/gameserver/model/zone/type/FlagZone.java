@@ -30,7 +30,7 @@ public class FlagZone extends ZoneType {
 			noblesse.getEffects(player, player);
 			player.updatePvPFlag(1);
 			((Player) character).sendPacket(SystemMessageId.ENTERED_COMBAT_ZONE);
-
+			player.getStatus().setMaxCpHpMp();
 			character.sendPacket(new CreatureSay(0, SayType.PARTYROOM_COMMANDER, "System", "Entered  PvP zone!"));
 			character.setInsideZone(ZoneId.NO_SUMMON_FRIEND, true);
 			character.setInsideZone(ZoneId.FLAG, true);

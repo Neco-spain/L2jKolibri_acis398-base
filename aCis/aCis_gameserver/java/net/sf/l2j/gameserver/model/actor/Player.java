@@ -57,6 +57,7 @@ import net.sf.l2j.gameserver.enums.LootRule;
 import net.sf.l2j.gameserver.enums.MessageType;
 import net.sf.l2j.gameserver.enums.Paperdoll;
 import net.sf.l2j.gameserver.enums.PunishmentType;
+import net.sf.l2j.gameserver.enums.SayType;
 import net.sf.l2j.gameserver.enums.ShortcutType;
 import net.sf.l2j.gameserver.enums.SpawnType;
 import net.sf.l2j.gameserver.enums.StatusType;
@@ -120,6 +121,9 @@ import net.sf.l2j.gameserver.model.actor.template.PlayerTemplate;
 import net.sf.l2j.gameserver.model.craft.ManufactureList;
 import net.sf.l2j.gameserver.model.entity.Castle;
 import net.sf.l2j.gameserver.model.entity.Duel.DuelState;
+import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
+import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
+import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
 import net.sf.l2j.gameserver.model.group.CommandChannel;
 import net.sf.l2j.gameserver.model.group.Party;
 import net.sf.l2j.gameserver.model.group.PartyMatchRoom;
@@ -154,6 +158,7 @@ import net.sf.l2j.gameserver.network.serverpackets.ChairSit;
 import net.sf.l2j.gameserver.network.serverpackets.ChangeWaitType;
 import net.sf.l2j.gameserver.network.serverpackets.CharInfo;
 import net.sf.l2j.gameserver.network.serverpackets.ConfirmDlg;
+import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 import net.sf.l2j.gameserver.network.serverpackets.DeleteObject;
 import net.sf.l2j.gameserver.network.serverpackets.EtcStatusUpdate;
 import net.sf.l2j.gameserver.network.serverpackets.ExAutoSoulShot;
@@ -222,6 +227,9 @@ import net.sf.l2j.gameserver.taskmanager.ShadowItemTaskManager;
 import net.sf.l2j.gameserver.taskmanager.WaterTaskManager;
 import net.sf.l2j.mods.events.tvt.TvTEvent;
 import net.sf.l2j.mods.skins.DressMeData;
+import net.sf.l2j.util.Mysql;
+import net.sf.l2j.util.PlayerVar;
+import net.sf.l2j.util.PlayerVariables;
 
 /**
  * This class represents a player in the world.<br>
@@ -2187,7 +2195,7 @@ public final class Player extends Playable {
 
 			return null;
 		}
-
+		item.setInstance(getInstance(), true); // True because Drop me will spawn it
 		item.dropMe(this, x, y, z);
 
 		// Send inventory update packet
@@ -2725,7 +2733,7 @@ public final class Player extends Playable {
 
 		if (killer != null) {
 			final Player pk = killer.getActingPlayer();
-
+			TournamentManager.getInstance().onKill(killer, this);
 			// Clear resurrect xp calculation
 			setExpBeforeDeath(0);
 
@@ -4403,7 +4411,8 @@ public final class Player extends Playable {
 						player.setIsDead(true);
 						player.getStatus().stopHpMpRegeneration();
 					}
-
+					PlayerVariables.loadVariables(player);
+					TournamentManager.getInstance().onPlayerEnter(player);
 					// Restore pet if it exists in the world.
 					final Pet pet = World.getInstance().getPet(player.getObjectId());
 					if (pet != null) {
@@ -6475,7 +6484,7 @@ public final class Player extends Playable {
 	@Override
 	public void deleteMe() {
 		super.deleteMe();
-
+		TournamentManager.getInstance().storeTournamentData(this);
 		cleanup();
 		store();
 	}
@@ -6823,6 +6832,11 @@ public final class Player extends Playable {
 		if (isInOlympiadMode() && target instanceof Player && ((Player) target).isInOlympiadMode()
 				&& ((Player) target).getOlympiadGameId() == getOlympiadGameId())
 			OlympiadGameManager.getInstance().notifyCompetitorDamage(this, damage);
+
+		if (isInTournamentMatch() && target instanceof Player && ((Player) target).isInTournamentMatch()
+				&& ((Player) target).getTournamentFightId() == getTournamentFightId())
+			addTournamentMatchDamage(damage);
+
 	}
 
 	public void checkItemRestriction() {
@@ -7470,6 +7484,405 @@ public final class Player extends Playable {
 		return gms;
 	}
 
+	// Rouxy: Daily Reward
+	/**
+	 * @return the nextRewardTime
+	 */
+	public long getNextRewardTime() {
+		return nextRewardTime;
+	}
+
+	/**
+	 * @param nextRewardTime the nextRewardTime to set
+	 */
+	public void setNextRewardTime(long nextRewardTime) {
+		this.nextRewardTime = nextRewardTime;
+	}
+
+	private long nextRewardTime;
+
+	// Rouxy: Tournament
+
+	private boolean tournamentTeamBeingInvited;
+	private int tournamentFightId;
+	private TournamentFightType tournamentFightType = TournamentFightType.NONE;
+	private boolean inTournamentMatch;
+	private int lastX;
+	private int lastY;
+	private int lastZ;
+	private int tournamentPoints;
+	private int tournamentMatchDamage;
+	private Map<TournamentFightType, Integer> tournamentKills = new HashMap<>();
+	private Map<TournamentFightType, Integer> tournamentVictories = new HashMap<>();
+	private Map<TournamentFightType, Integer> tournamentDefeats = new HashMap<>();
+	private Map<TournamentFightType, Integer> tournamentTies = new HashMap<>();
+	private Map<TournamentFightType, Integer> tournamentDamage = new HashMap<>();
+
+	public int getTournamentTotalDamage() {
+		int count = 0;
+		for (Map.Entry<TournamentFightType, Integer> entry : tournamentDamage.entrySet()) {
+			count += entry.getValue();
+		}
+		return count;
+	}
+
+	public int getTournamentTotalDamage(TournamentFightType type) {
+		return tournamentDamage.get(type);
+	}
+
+	public int getTotalVictories() {
+		int count = 0;
+		for (Map.Entry<TournamentFightType, Integer> entry : tournamentVictories.entrySet()) {
+			count += entry.getValue();
+		}
+		return count;
+	}
+
+	public int getTotalDefeats() {
+		int count = 0;
+		for (Map.Entry<TournamentFightType, Integer> entry : tournamentDefeats.entrySet()) {
+			count += entry.getValue();
+		}
+		return count;
+	}
+
+	public int getTotalTies() {
+		int count = 0;
+		for (Map.Entry<TournamentFightType, Integer> entry : tournamentTies.entrySet()) {
+			count += entry.getValue();
+		}
+		return count;
+	}
+
+	/**
+	 * @return Total of fights done by player
+	 */
+	public int getTotalTournamentFightsDone() {
+		return getTournamentFightsDone(TournamentFightType.F1X1) + getTournamentFightsDone(TournamentFightType.F2X2)
+				+ getTournamentFightsDone(TournamentFightType.F3X3) + getTournamentFightsDone(TournamentFightType.F4X4)
+				+ getTournamentFightsDone(TournamentFightType.F5X5) + getTournamentFightsDone(TournamentFightType.F9X9);
+	}
+
+	/**
+	 * @param type
+	 * @return Total of fights of type done by player
+	 */
+	public int getTournamentFightsDone(TournamentFightType type) {
+		return tournamentVictories.get(type) + tournamentDefeats.get(type) + tournamentTies.get(type);
+	}
+
+	/**
+	 * @return if player is in a registered team o tournament
+	 */
+	public boolean isInTournamentMode() {
+		return TournamentManager.getInstance().isInTournamentMode(this);
+	}
+
+	public TournamentTeam getTournamentTeam() {
+		return tournamentTeam;
+	}
+
+	public void setTournamentTeam(TournamentTeam tournamentTeam) {
+		this.tournamentTeam = tournamentTeam;
+	}
+
+	private TournamentTeam tournamentTeam;
+
+	public boolean isInTournamentTeam() {
+		return getTournamentTeam() != null;
+	}
+
+	/**
+	 * @return if player received a invitation to a tour team
+	 */
+	public boolean isTournamentTeamBeingInvited() {
+		return tournamentTeamBeingInvited;
+	}
+
+	public void setTournamentTeamBeingInvited(boolean tournamentTeamBeingInvited) {
+		this.tournamentTeamBeingInvited = tournamentTeamBeingInvited;
+	}
+
+	public int getTournamentFightId() {
+		return tournamentFightId;
+	}
+
+	public void setTournamentFightId(int tournamentFightId) {
+		this.tournamentFightId = tournamentFightId;
+	}
+
+	public TournamentFightType getTournamentFightType() {
+		return tournamentFightType;
+	}
+
+	public void setTournamentFightType(TournamentFightType tournamentFightType) {
+		this.tournamentFightType = tournamentFightType;
+	}
+
+	/**
+	 * @return the inTournamentMatch
+	 */
+	public boolean isInTournamentMatch() {
+		return inTournamentMatch;
+	}
+
+	/**
+	 * @param inTournamentMatch the inTournamentMatch to set
+	 */
+	public void setInTournamentMatch(boolean inTournamentMatch) {
+		this.inTournamentMatch = inTournamentMatch;
+	}
+
+	/**
+	 * @return the lastX
+	 */
+	public int getLastX() {
+		return lastX;
+	}
+
+	/**
+	 * @param lastX the lastX to set
+	 */
+	public void setLastX(int lastX) {
+		this.lastX = lastX;
+	}
+
+	/**
+	 * @return the lastY
+	 */
+	public int getLastY() {
+		return lastY;
+	}
+
+	/**
+	 * @param lastY the lastY to set
+	 */
+	public void setLastY(int lastY) {
+		this.lastY = lastY;
+	}
+
+	/**
+	 * @return the lastZ
+	 */
+	public int getLastZ() {
+		return lastZ;
+	}
+
+	/**
+	 * @param lastZ the lastZ to set
+	 */
+	public void setLastZ(int lastZ) {
+		this.lastZ = lastZ;
+	}
+
+	/**
+	 * @return the tournamentMatchDamage
+	 */
+	public int getTournamentMatchDamage() {
+		return tournamentMatchDamage;
+	}
+
+	public void addTournamentMatchDamage(int damage) {
+		tournamentMatchDamage += damage;
+	}
+
+	/**
+	 * @param tournamentMatchDamage the tournamentMatchDamage to set
+	 */
+	public void setTournamentMatchDamage(int tournamentMatchDamage) {
+		this.tournamentMatchDamage = tournamentMatchDamage;
+	}
+
+	/**
+	 * @return the tournamentKills
+	 */
+	public Map<TournamentFightType, Integer> getTournamentKills() {
+		return tournamentKills;
+	}
+
+	/**
+	 * @param tournamentKills the tournamentKills to set
+	 */
+	public void setTournamentKills(Map<TournamentFightType, Integer> tournamentKills) {
+		this.tournamentKills = tournamentKills;
+	}
+
+	public void addTournamentTie(TournamentFightType type) {
+		increment(tournamentTies, type);
+	}
+
+	public void addTournamentDefeat(TournamentFightType type) {
+		increment(tournamentDefeats, type);
+	}
+
+	public void addTournamentVictory(TournamentFightType type) {
+		increment(tournamentVictories, type);
+	}
+
+	public void addTournamentKill(TournamentFightType type) {
+		increment(tournamentKills, type);
+	}
+
+	public static <K> void increment(Map<K, Integer> map, K key) {
+		map.merge(key, 1, Integer::sum);
+
+	}
+
+	public void addTournamentDamage(TournamentFightType type, int damage) {
+		increment(tournamentDamage, type, damage);
+	}
+
+	public static <K> void increment(Map<K, Integer> map, K key, int toIncrement) {
+
+		int val = map.get(key);
+		map.put(key, val + toIncrement);
+	}
+
+	/**
+	 * @return all kills of plaer in tournament
+	 */
+	public int getTotalTournamentKills() {
+		int kills = 0;
+		for (Map.Entry<TournamentFightType, Integer> entry : tournamentKills.entrySet()) {
+			kills += entry.getValue();
+		}
+		return kills;
+	}
+
+	/**
+	 * @return the tournamentVictories
+	 */
+	public Map<TournamentFightType, Integer> getTournamentVictories() {
+		return tournamentVictories;
+	}
+
+	/**
+	 * @param tournamentVictories the tournamentVictories to set
+	 */
+	public void setTournamentVictories(Map<TournamentFightType, Integer> tournamentVictories) {
+		this.tournamentVictories = tournamentVictories;
+	}
+
+	/**
+	 * @return the tournamentDefeats
+	 */
+	public Map<TournamentFightType, Integer> getTournamentDefeats() {
+		return tournamentDefeats;
+	}
+
+	/**
+	 * @param tournamentDefeats the tournamentDefeats to set
+	 */
+	public void setTournamentDefeats(Map<TournamentFightType, Integer> tournamentDefeats) {
+		this.tournamentDefeats = tournamentDefeats;
+	}
+
+	/**
+	 * @return the tournamentTies
+	 */
+	public Map<TournamentFightType, Integer> getTournamentTies() {
+		return tournamentTies;
+	}
+
+	/**
+	 * @param tournamentTies the tournamentTies to set
+	 */
+	public void setTournamentTies(Map<TournamentFightType, Integer> tournamentTies) {
+		this.tournamentTies = tournamentTies;
+	}
+
+	public void storeTournament() {
+
+	}
+
+	/**
+	 * @return the tournamentDamage
+	 */
+	public Map<TournamentFightType, Integer> getTournamentDamage() {
+		return tournamentDamage;
+	}
+
+	/**
+	 * @param tournamentDamage the tournamentDamage to set
+	 */
+	public void setTournamentDamage(Map<TournamentFightType, Integer> tournamentDamage) {
+		this.tournamentDamage = tournamentDamage;
+	}
+
+	/**
+	 * @return the tournamentPoints
+	 */
+	public int getTournamentPoints() {
+		return tournamentPoints;
+	}
+
+	/**
+	 * @param tournamentPoints the tournamentPoints to set
+	 */
+	public void setTournamentPoints(int tournamentPoints) {
+		this.tournamentPoints = tournamentPoints;
+	}
+
+	/**
+	 * @return the tournamentTeamRequesterId
+	 */
+	public int getTournamentTeamRequesterId() {
+		return tournamentTeamRequesterId;
+	}
+
+	/**
+	 * @param tournamentTeamRequesterId the tournamentTeamRequesterId to set
+	 */
+	public void setTournamentTeamRequesterId(int tournamentTeamRequesterId) {
+		this.tournamentTeamRequesterId = tournamentTeamRequesterId;
+	}
+
+	private int tournamentTeamRequesterId;
+
+	// player variables
+	private final Map<String, PlayerVar> vars = new ConcurrentHashMap<>();
+
+	/**
+	 * @return player memos.
+	 */
+	public Map<String, PlayerVar> getVariables() {
+		return vars;
+	}
+
+	public void deleteTempItem(int itemObjectID) {
+		boolean destroyed = false;
+		if (getInventory().getItemByObjectId(itemObjectID) != null) {
+			sendMessage("Your " + ItemData.getInstance()
+					.getTemplate(getInventory().getItemByObjectId(itemObjectID).getItemId()).getName()
+					+ " has expired.");
+			destroyItem("tempItemDestroy", itemObjectID, 1, this, true);
+			getInventory().updateDatabase();
+			sendPacket(new ItemList(this, true));
+
+			destroyed = true;
+		}
+
+		if (!destroyed) {
+			Connection con = null;
+			PreparedStatement statement = null;
+			ResultSet rset = null;
+			try {
+				con = ConnectionPool.getConnection();
+				statement = con.prepareStatement("DELETE FROM items WHERE object_id=?");
+				statement.setInt(1, itemObjectID);
+				statement.execute();
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				Mysql.closeQuietly(con, statement, rset);
+			}
+		}
+	}
+
+	public void sendChatMessage(int objectId, SayType messageType, String charName, String text) {
+		sendPacket(new CreatureSay(objectId, messageType, charName, text));
+	}
+
 	/** The _active_boxes. */
 	public int _active_boxes = -1;
 
@@ -7592,10 +8005,12 @@ public final class Player extends Playable {
 						if (thisip.equals(ip) && this != player) {
 							player._active_boxes = _active_boxes;
 							player.active_boxes_characters = active_boxes_characters;
-							/*
-							 * LOGGER.info("Player "+player.getName()+" has this boxes"); for(String
-							 * name:player.active_boxes_characters){ LOGGER.info("*** "+name+" ***"); }
-							 */
+
+							LOGGER.info("Player " + player.getName() + " has this boxes");
+							for (String name : player.active_boxes_characters) {
+								LOGGER.info("*** " + name + " ***");
+							}
+
 						}
 					}
 				}

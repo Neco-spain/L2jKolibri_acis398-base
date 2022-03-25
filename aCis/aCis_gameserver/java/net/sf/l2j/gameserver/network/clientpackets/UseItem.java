@@ -65,7 +65,12 @@ public final class UseItem extends L2GameClientPacket {
 			player.sendPacket(SystemMessageId.CANNOT_USE_QUEST_ITEMS);
 			return;
 		}
-
+		if (player.getActingPlayer().isInTournamentMatch()) {
+			if (Config.TOURNAMENT_RESTRICTED_ITEM_LIST.contains(item.getItem().getItemId())) {
+				player.sendMessage("You can't use this item in Tournament.");
+				return;
+			}
+		}
 		if (player.isAlikeDead() || player.isStunned() || player.isSleeping() || player.isParalyzed()
 				|| player.isAfraid())
 			return;

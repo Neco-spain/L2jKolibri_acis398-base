@@ -1,5 +1,6 @@
 package net.sf.l2j.gameserver.network;
 
+import java.lang.System.Logger.Level;
 import java.net.InetAddress;
 import java.nio.ByteBuffer;
 import java.sql.Connection;
@@ -20,10 +21,14 @@ import net.sf.l2j.commons.pool.ThreadPool;
 import net.sf.l2j.gameserver.LoginServerThread;
 import net.sf.l2j.gameserver.data.sql.ClanTable;
 import net.sf.l2j.gameserver.data.sql.PlayerInfoTable;
+import net.sf.l2j.gameserver.data.xml.MapRegionData;
+import net.sf.l2j.gameserver.data.xml.MapRegionData.TeleportType;
 import net.sf.l2j.gameserver.enums.FloodProtector;
 import net.sf.l2j.gameserver.model.CharSelectSlot;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
+import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
+import net.sf.l2j.gameserver.model.entity.instance.InstanceManager;
 import net.sf.l2j.gameserver.model.pledge.Clan;
 import net.sf.l2j.gameserver.network.serverpackets.ActionFailed;
 import net.sf.l2j.gameserver.network.serverpackets.L2GameServerPacket;
@@ -186,8 +191,17 @@ public final class GameClient extends MMOClient<MMOConnection<GameClient>> imple
 	@Override
 	protected void onDisconnection() {
 		try {
-			ThreadPool.execute(() -> {
-				boolean fast = true;
+			ThreadPool.execute(new DisconnectTask());
+		} catch (RejectedExecutionException e) {
+		}
+	}
+
+	protected class DisconnectTask implements Runnable {
+		@Override
+		public void run() {
+			boolean fast = true;
+			try {
+
 				if (getPlayer() != null && !isDetached()) {
 					setDetached(true);
 					// Decrease boxes number
@@ -195,9 +209,22 @@ public final class GameClient extends MMOClient<MMOConnection<GameClient>> imple
 						_player.decreaseBoxes();
 					fast = !getPlayer().isInCombat() && !getPlayer().isLocked();
 				}
+
+				// Rouxy: Instance Mod
+				Player player = getPlayer();
+				if (player != null) {
+					if (player.getInstance() != null && player.getInstance().getId() != 0) {
+						player.setInstance(InstanceManager.getInstance().getInstance(0), true);
+						player.teleToLocation(
+								MapRegionData.getInstance().getLocationToTeleport(player, TeleportType.TOWN));
+					}
+				}
+				// Rouxy: Tournament
+				TournamentManager.getInstance().onDisconnect(player);
 				cleanMe(fast);
-			});
-		} catch (RejectedExecutionException e) {
+			} catch (Exception e1) {
+				LOGGER.info(Level.WARNING, "error while disconnecting client", e1);
+			}
 		}
 	}
 

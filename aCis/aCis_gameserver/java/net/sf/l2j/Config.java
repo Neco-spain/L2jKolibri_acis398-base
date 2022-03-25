@@ -15,8 +15,10 @@ import net.sf.l2j.commons.config.ExProperties;
 import net.sf.l2j.commons.logging.CLogger;
 import net.sf.l2j.commons.math.MathUtil;
 import net.sf.l2j.gameserver.enums.GeoType;
+import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
 import net.sf.l2j.gameserver.model.holder.IntIntHolder;
-import net.sf.l2j.mods.partyfarm.RewardHolder;
+import net.sf.l2j.gameserver.model.location.Location;
+import net.sf.l2j.util.RewardHolder;
 
 /**
  * This class contains global server configuration.<br>
@@ -42,8 +44,41 @@ public final class Config {
 	public static final String TVTEVENT = "./config/TvT.properties";
 	public static final String CUSTOMQUESTS = "./config/quests.properties";
 	public static final String PVP = "./config/pvp.properties";
+	public static final String TOURNAMENT = "./config/Tournament.properties";
 
 //=====================================================================================================================================================
+
+	/** Tournament */
+
+	public static int TOURNAMENT_EVENT_DURATION;
+
+	public static String[] TOURNAMENT_EVENT_INTERVAL_BY_TIME_OF_DAY;
+	public static int TOURNAMENT_NPC_ID;
+	public static Location TOURNAMENT_NPC_LOCATION;
+	public static List<Integer> TOURNAMENT_RESTRICTED_SKILL_LIST = new ArrayList<>();
+	public static List<Integer> TOURNAMENT_RESTRICTED_ITEM_LIST = new ArrayList<>();
+	public static int TOURNAMENT_TIME_SEARCH_FIGHTS;
+	public static List<RewardHolder> TOURNAMENT_FIGHT_REWARD_WINNER = new ArrayList<>();
+	public static List<RewardHolder> TOURNAMENT_FIGHT_REWARD_LOOSER = new ArrayList<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_FIGHT_START_TIME = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_FIGHT_DURATION = new HashMap<>();
+	public static int TOURNAMENT_TIME_TO_TELEPORT;
+	public static boolean TOURNAMENT_DEBUG;
+
+	public static Map<TournamentFightType, Integer> TOURNAMENT_DUELIST_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_DREADNOUGHT_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_TANKER_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_DAGGER_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_ARCHER_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_HEALER_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_ARCHMAGE_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_SOULTAKER_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_MYSTICMUSE_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_STORMSCREAMER_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_TITAN_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_DOMINATOR_ALLOWED = new HashMap<>();
+	public static Map<TournamentFightType, Integer> TOURNAMENT_DOOMCRYER_ALLOWED = new HashMap<>();
+
 	/**
 	 * Custom PvP ColorSystem
 	 */
@@ -1463,6 +1498,278 @@ public final class Config {
 
 	}
 
+	private static final void loadTournament() {
+		final ExProperties tournament = initProperties(TOURNAMENT);
+		String[] npcLoc = tournament.getProperty("TournamentNpcLocation", "150086,46733,-3412").split(",");
+		TOURNAMENT_NPC_ID = tournament.getProperty("TournamentNpcId", 50009);
+		TOURNAMENT_NPC_LOCATION = new Location(Integer.parseInt(npcLoc[0]), Integer.parseInt(npcLoc[1]),
+				Integer.parseInt(npcLoc[2]));
+		TOURNAMENT_EVENT_INTERVAL_BY_TIME_OF_DAY = tournament.getProperty("TournamentStartTime", "20:00").split(",");
+		TOURNAMENT_EVENT_DURATION = tournament.getProperty("TournamentDuration", 5);
+		for (String item : tournament.getProperty("ItemRestrictedList", "").split(",")) {
+			TOURNAMENT_RESTRICTED_ITEM_LIST.add(Integer.parseInt(item));
+		}
+		for (String skill : tournament.getProperty("SkillRestrictedList", "").split(",")) {
+			TOURNAMENT_RESTRICTED_SKILL_LIST.add(Integer.parseInt(skill));
+		}
+		TOURNAMENT_TIME_SEARCH_FIGHTS = tournament.getProperty("TimeBetweenSearchFights", 5);
+		TOURNAMENT_DEBUG = tournament.getProperty("Debug", true);
+		TOURNAMENT_TIME_TO_TELEPORT = tournament.getProperty("TeleportFightTime", 10);
+		TOURNAMENT_FIGHT_REWARD_WINNER.clear();
+		for (String s : tournament.getProperty("WinnerRewards", "57,1000;3470,10").split(";")) {
+			String[] reward = s.split(",");
+
+			RewardHolder simpleReward = new RewardHolder(Integer.parseInt(reward[0]), Integer.parseInt(reward[1]));
+			TOURNAMENT_FIGHT_REWARD_WINNER.add(simpleReward);
+		}
+		TOURNAMENT_FIGHT_REWARD_LOOSER.clear();
+		for (String s : tournament.getProperty("LooserRewards", "57,500;3470,5").split(";")) {
+			String[] reward = s.split(",");
+
+			RewardHolder simpleReward = new RewardHolder(Integer.parseInt(reward[0]), Integer.parseInt(reward[1]));
+			TOURNAMENT_FIGHT_REWARD_LOOSER.add(simpleReward);
+		}
+
+		TOURNAMENT_FIGHT_START_TIME.clear();
+		int startTime1x1 = tournament.getProperty("FightStartTime_1x1", 10);
+		int startTime2x2 = tournament.getProperty("FightStartTime_2x2", 10);
+		int startTime3x3 = tournament.getProperty("FightStartTime_3x3", 10);
+		int startTime4x4 = tournament.getProperty("FightStartTime_4x4", 10);
+		int startTime5x5 = tournament.getProperty("FightStartTime_5x5", 10);
+		int startTime9x9 = tournament.getProperty("FightStartTime_9x9", 10);
+
+		TOURNAMENT_FIGHT_START_TIME.put(TournamentFightType.F1X1, startTime1x1);
+		TOURNAMENT_FIGHT_START_TIME.put(TournamentFightType.F2X2, startTime2x2);
+		TOURNAMENT_FIGHT_START_TIME.put(TournamentFightType.F3X3, startTime3x3);
+		TOURNAMENT_FIGHT_START_TIME.put(TournamentFightType.F4X4, startTime4x4);
+		TOURNAMENT_FIGHT_START_TIME.put(TournamentFightType.F5X5, startTime5x5);
+		TOURNAMENT_FIGHT_START_TIME.put(TournamentFightType.F9X9, startTime9x9);
+
+		TOURNAMENT_FIGHT_DURATION.clear();
+		int fightTime1x1 = tournament.getProperty("FightDuration_1x1", 1);
+		int fightTime2x2 = tournament.getProperty("FightDuration_2x2", 1);
+		int fightTime3x3 = tournament.getProperty("FightDuration_3x3", 1);
+		int fightTime4x4 = tournament.getProperty("FightDuration_4x4", 1);
+		int fightTime5x5 = tournament.getProperty("FightDuration_5x5", 1);
+		int fightTime9x9 = tournament.getProperty("FightDuration_9x9", 1);
+
+		TOURNAMENT_FIGHT_DURATION.put(TournamentFightType.F1X1, fightTime1x1);
+		TOURNAMENT_FIGHT_DURATION.put(TournamentFightType.F2X2, fightTime2x2);
+		TOURNAMENT_FIGHT_DURATION.put(TournamentFightType.F3X3, fightTime3x3);
+		TOURNAMENT_FIGHT_DURATION.put(TournamentFightType.F4X4, fightTime4x4);
+		TOURNAMENT_FIGHT_DURATION.put(TournamentFightType.F5X5, fightTime5x5);
+		TOURNAMENT_FIGHT_DURATION.put(TournamentFightType.F9X9, fightTime9x9);
+
+		TOURNAMENT_DUELIST_ALLOWED.clear();
+		TOURNAMENT_DREADNOUGHT_ALLOWED.clear();
+		TOURNAMENT_TANKER_ALLOWED.clear();
+		TOURNAMENT_DAGGER_ALLOWED.clear();
+		TOURNAMENT_ARCHER_ALLOWED.clear();
+		TOURNAMENT_HEALER_ALLOWED.clear();
+		TOURNAMENT_ARCHMAGE_ALLOWED.clear();
+		TOURNAMENT_SOULTAKER_ALLOWED.clear();
+		TOURNAMENT_MYSTICMUSE_ALLOWED.clear();
+		TOURNAMENT_STORMSCREAMER_ALLOWED.clear();
+		TOURNAMENT_TITAN_ALLOWED.clear();
+		TOURNAMENT_DOMINATOR_ALLOWED.clear();
+		TOURNAMENT_DOOMCRYER_ALLOWED.clear();
+		// ARCHERS
+		int archer1x1 = tournament.getProperty("ArchersCountAllowed_1x1", 1);
+		int archer2x2 = tournament.getProperty("ArchersCountAllowed_2x2", 1);
+		int archer3x3 = tournament.getProperty("ArchersCountAllowed_3x3", 1);
+		int archer4x4 = tournament.getProperty("ArchersCountAllowed_4x4", 1);
+		int archer5x5 = tournament.getProperty("ArchersCountAllowed_5x5", 1);
+		int archer9x9 = tournament.getProperty("ArchersCountAllowed_9x9", 1);
+
+		TOURNAMENT_ARCHER_ALLOWED.put(TournamentFightType.F1X1, archer1x1);
+		TOURNAMENT_ARCHER_ALLOWED.put(TournamentFightType.F2X2, archer2x2);
+		TOURNAMENT_ARCHER_ALLOWED.put(TournamentFightType.F3X3, archer3x3);
+		TOURNAMENT_ARCHER_ALLOWED.put(TournamentFightType.F4X4, archer4x4);
+		TOURNAMENT_ARCHER_ALLOWED.put(TournamentFightType.F5X5, archer5x5);
+		TOURNAMENT_ARCHER_ALLOWED.put(TournamentFightType.F9X9, archer9x9);
+
+		// archmages
+		int archmage1X1 = tournament.getProperty("ArchmagesCountAllowed_1x1", 1);
+		int archmage2x2 = tournament.getProperty("ArchmagesCountAllowed_2x2", 1);
+		int archmage3x3 = tournament.getProperty("ArchmagesCountAllowed_3x3", 1);
+		int archmage4x4 = tournament.getProperty("ArchmagesCountAllowed_4x4", 1);
+		int archmage5x5 = tournament.getProperty("ArchmagesCountAllowed_5x5", 1);
+		int archmage9x9 = tournament.getProperty("ArchmagesCountAllowed_9x9", 1);
+
+		TOURNAMENT_ARCHMAGE_ALLOWED.put(TournamentFightType.F1X1, archmage1X1);
+		TOURNAMENT_ARCHMAGE_ALLOWED.put(TournamentFightType.F2X2, archmage2x2);
+		TOURNAMENT_ARCHMAGE_ALLOWED.put(TournamentFightType.F3X3, archmage3x3);
+		TOURNAMENT_ARCHMAGE_ALLOWED.put(TournamentFightType.F4X4, archmage4x4);
+		TOURNAMENT_ARCHMAGE_ALLOWED.put(TournamentFightType.F5X5, archmage5x5);
+		TOURNAMENT_ARCHMAGE_ALLOWED.put(TournamentFightType.F9X9, archmage9x9);
+
+		// DAGGERS
+		int dagger1x1 = tournament.getProperty("DaggersCountAllowed_1x1", 1);
+		int dagger2x2 = tournament.getProperty("DaggersCountAllowed_2x2", 1);
+		int dagger3x3 = tournament.getProperty("DaggersCountAllowed_3x3", 1);
+		int dagger4x4 = tournament.getProperty("DaggersCountAllowed_4x4", 1);
+		int dagger5x5 = tournament.getProperty("DaggersCountAllowed_5x5", 1);
+		int dagger9x9 = tournament.getProperty("DaggersCountAllowed_9x9", 1);
+
+		TOURNAMENT_DAGGER_ALLOWED.put(TournamentFightType.F1X1, dagger1x1);
+		TOURNAMENT_DAGGER_ALLOWED.put(TournamentFightType.F2X2, dagger2x2);
+		TOURNAMENT_DAGGER_ALLOWED.put(TournamentFightType.F3X3, dagger3x3);
+		TOURNAMENT_DAGGER_ALLOWED.put(TournamentFightType.F4X4, dagger4x4);
+		TOURNAMENT_DAGGER_ALLOWED.put(TournamentFightType.F5X5, dagger5x5);
+		TOURNAMENT_DAGGER_ALLOWED.put(TournamentFightType.F9X9, dagger9x9);
+
+		// DOMINATOR
+		int dominator1x1 = tournament.getProperty("DominatorsCountAllowed_1x1", 1);
+		int dominator2x2 = tournament.getProperty("DominatorsCountAllowed_2x2", 1);
+		int dominator3x3 = tournament.getProperty("DominatorsCountAllowed_3x3", 1);
+		int dominator4x4 = tournament.getProperty("DominatorsCountAllowed_4x4", 1);
+		int dominator5x5 = tournament.getProperty("DominatorsCountAllowed_5x5", 1);
+		int dominator9x9 = tournament.getProperty("DominatorsCountAllowed_9x9", 1);
+
+		TOURNAMENT_DOMINATOR_ALLOWED.put(TournamentFightType.F1X1, dominator1x1);
+		TOURNAMENT_DOMINATOR_ALLOWED.put(TournamentFightType.F2X2, dominator2x2);
+		TOURNAMENT_DOMINATOR_ALLOWED.put(TournamentFightType.F3X3, dominator3x3);
+		TOURNAMENT_DOMINATOR_ALLOWED.put(TournamentFightType.F4X4, dominator4x4);
+		TOURNAMENT_DOMINATOR_ALLOWED.put(TournamentFightType.F5X5, dominator5x5);
+		TOURNAMENT_DOMINATOR_ALLOWED.put(TournamentFightType.F9X9, dominator9x9);
+
+		// DOOMCRYER
+		int doomcryer1x1 = tournament.getProperty("DoomcryersCountAllowed_1x1", 1);
+		int doomcryer2x2 = tournament.getProperty("DoomcryersCountAllowed_2x2", 1);
+		int doomcryer3x3 = tournament.getProperty("DoomcryersCountAllowed_3x3", 1);
+		int doomcryer4x4 = tournament.getProperty("DoomcryersCountAllowed_4x4", 1);
+		int doomcryer5x5 = tournament.getProperty("DoomcryersCountAllowed_5x5", 1);
+		int doomcryer9x9 = tournament.getProperty("DoomcryersCountAllowed_9x9", 1);
+
+		TOURNAMENT_DOOMCRYER_ALLOWED.put(TournamentFightType.F1X1, doomcryer1x1);
+		TOURNAMENT_DOOMCRYER_ALLOWED.put(TournamentFightType.F2X2, doomcryer2x2);
+		TOURNAMENT_DOOMCRYER_ALLOWED.put(TournamentFightType.F3X3, doomcryer3x3);
+		TOURNAMENT_DOOMCRYER_ALLOWED.put(TournamentFightType.F4X4, doomcryer4x4);
+		TOURNAMENT_DOOMCRYER_ALLOWED.put(TournamentFightType.F5X5, doomcryer5x5);
+		TOURNAMENT_DOOMCRYER_ALLOWED.put(TournamentFightType.F9X9, doomcryer9x9);
+
+		// DREADNOUGHT
+		int dreadnought1x1 = tournament.getProperty("DreadnoughtsCountAllowed_1x1", 1);
+		int dreadnought2x2 = tournament.getProperty("DreadnoughtsCountAllowed_2x2", 1);
+		int dreadnought3x3 = tournament.getProperty("DreadnoughtsCountAllowed_3x3", 1);
+		int dreadnought4x4 = tournament.getProperty("DreadnoughtsCountAllowed_4x4", 1);
+		int dreadnought5x5 = tournament.getProperty("DreadnoughtsCountAllowed_5x5", 1);
+		int dreadnought9x9 = tournament.getProperty("DreadnoughtsCountAllowed_9x9", 1);
+
+		TOURNAMENT_DREADNOUGHT_ALLOWED.put(TournamentFightType.F1X1, dreadnought1x1);
+		TOURNAMENT_DREADNOUGHT_ALLOWED.put(TournamentFightType.F2X2, dreadnought2x2);
+		TOURNAMENT_DREADNOUGHT_ALLOWED.put(TournamentFightType.F3X3, dreadnought3x3);
+		TOURNAMENT_DREADNOUGHT_ALLOWED.put(TournamentFightType.F4X4, dreadnought4x4);
+		TOURNAMENT_DREADNOUGHT_ALLOWED.put(TournamentFightType.F5X5, dreadnought5x5);
+		TOURNAMENT_DREADNOUGHT_ALLOWED.put(TournamentFightType.F9X9, dreadnought9x9);
+
+		// DUELIST
+		int duelist1x1 = tournament.getProperty("DuelistsCountAllowed_1x1", 1);
+		int duelist2x2 = tournament.getProperty("DuelistsCountAllowed_2x2", 1);
+		int duelist3x3 = tournament.getProperty("DuelistsCountAllowed_3x3", 1);
+		int duelist4x4 = tournament.getProperty("DuelistsCountAllowed_4x4", 1);
+		int duelist5x5 = tournament.getProperty("DuelistsCountAllowed_5x5", 1);
+		int duelist9x9 = tournament.getProperty("DuelistsCountAllowed_9x9", 1);
+
+		TOURNAMENT_DUELIST_ALLOWED.put(TournamentFightType.F1X1, duelist1x1);
+		TOURNAMENT_DUELIST_ALLOWED.put(TournamentFightType.F2X2, duelist2x2);
+		TOURNAMENT_DUELIST_ALLOWED.put(TournamentFightType.F3X3, duelist3x3);
+		TOURNAMENT_DUELIST_ALLOWED.put(TournamentFightType.F4X4, duelist4x4);
+		TOURNAMENT_DUELIST_ALLOWED.put(TournamentFightType.F5X5, duelist5x5);
+		TOURNAMENT_DUELIST_ALLOWED.put(TournamentFightType.F9X9, duelist9x9);
+
+		// HEALER
+		int healer1x1 = tournament.getProperty("HealersCountAllowed_1x1", 1);
+		int healer2x2 = tournament.getProperty("HealersCountAllowed_2x2", 1);
+		int healer3x3 = tournament.getProperty("HealersCountAllowed_3x3", 1);
+		int healer4x4 = tournament.getProperty("HealersCountAllowed_4x4", 1);
+		int healer5x5 = tournament.getProperty("HealersCountAllowed_5x5", 1);
+		int healer9x9 = tournament.getProperty("HealersCountAllowed_9x9", 1);
+
+		TOURNAMENT_HEALER_ALLOWED.put(TournamentFightType.F1X1, healer1x1);
+		TOURNAMENT_HEALER_ALLOWED.put(TournamentFightType.F2X2, healer2x2);
+		TOURNAMENT_HEALER_ALLOWED.put(TournamentFightType.F3X3, healer3x3);
+		TOURNAMENT_HEALER_ALLOWED.put(TournamentFightType.F4X4, healer4x4);
+		TOURNAMENT_HEALER_ALLOWED.put(TournamentFightType.F5X5, healer5x5);
+		TOURNAMENT_HEALER_ALLOWED.put(TournamentFightType.F9X9, healer9x9);
+
+		// MYSTIC MUSE
+		int mysticmuse1x1 = tournament.getProperty("MysticMusesCountAllowed_1x1", 1);
+		int mysticmuse2x2 = tournament.getProperty("MysticMusesCountAllowed_2x2", 1);
+		int mysticmuse3x3 = tournament.getProperty("MysticMusesCountAllowed_3x3", 1);
+		int mysticmuse4x4 = tournament.getProperty("MysticMusesCountAllowed_4x4", 1);
+		int mysticmuse5x5 = tournament.getProperty("MysticMusesCountAllowed_5x5", 1);
+		int mysticmuse9x9 = tournament.getProperty("MysticMusesCountAllowed_9x9", 1);
+
+		TOURNAMENT_MYSTICMUSE_ALLOWED.put(TournamentFightType.F1X1, mysticmuse1x1);
+		TOURNAMENT_MYSTICMUSE_ALLOWED.put(TournamentFightType.F2X2, mysticmuse2x2);
+		TOURNAMENT_MYSTICMUSE_ALLOWED.put(TournamentFightType.F3X3, mysticmuse3x3);
+		TOURNAMENT_MYSTICMUSE_ALLOWED.put(TournamentFightType.F4X4, mysticmuse4x4);
+		TOURNAMENT_MYSTICMUSE_ALLOWED.put(TournamentFightType.F5X5, mysticmuse5x5);
+		TOURNAMENT_MYSTICMUSE_ALLOWED.put(TournamentFightType.F9X9, mysticmuse9x9);
+
+		// SOUL TAKER
+		int soulTaker1x1 = tournament.getProperty("SoulTakersCountAllowed_1x1", 1);
+		int soulTaker2x2 = tournament.getProperty("SoulTakersCountAllowed_2x2", 1);
+		int soulTaker3x3 = tournament.getProperty("SoulTakersCountAllowed_3x3", 1);
+		int soulTaker4x4 = tournament.getProperty("SoulTakersCountAllowed_4x4", 1);
+		int soulTaker5x5 = tournament.getProperty("SoulTakersCountAllowed_5x5", 1);
+		int soulTaker9x9 = tournament.getProperty("SoulTakersCountAllowed_9x9", 1);
+
+		TOURNAMENT_SOULTAKER_ALLOWED.put(TournamentFightType.F1X1, soulTaker1x1);
+		TOURNAMENT_SOULTAKER_ALLOWED.put(TournamentFightType.F2X2, soulTaker2x2);
+		TOURNAMENT_SOULTAKER_ALLOWED.put(TournamentFightType.F3X3, soulTaker3x3);
+		TOURNAMENT_SOULTAKER_ALLOWED.put(TournamentFightType.F4X4, soulTaker4x4);
+		TOURNAMENT_SOULTAKER_ALLOWED.put(TournamentFightType.F5X5, soulTaker5x5);
+		TOURNAMENT_SOULTAKER_ALLOWED.put(TournamentFightType.F9X9, soulTaker9x9);
+
+		// TITAN
+		int titan1x1 = tournament.getProperty("TitansCountAllowed_1x1", 1);
+		int titan2x2 = tournament.getProperty("TitansCountAllowed_2x2", 1);
+		int titan3x3 = tournament.getProperty("TitansCountAllowed_3x3", 1);
+		int titan4x4 = tournament.getProperty("TitansCountAllowed_4x4", 1);
+		int titan5x5 = tournament.getProperty("TitansCountAllowed_5x5", 1);
+		int titan9x9 = tournament.getProperty("TitansCountAllowed_9x9", 1);
+
+		TOURNAMENT_TITAN_ALLOWED.put(TournamentFightType.F1X1, titan1x1);
+		TOURNAMENT_TITAN_ALLOWED.put(TournamentFightType.F2X2, titan2x2);
+		TOURNAMENT_TITAN_ALLOWED.put(TournamentFightType.F3X3, titan3x3);
+		TOURNAMENT_TITAN_ALLOWED.put(TournamentFightType.F4X4, titan4x4);
+		TOURNAMENT_TITAN_ALLOWED.put(TournamentFightType.F5X5, titan5x5);
+		TOURNAMENT_TITAN_ALLOWED.put(TournamentFightType.F9X9, titan9x9);
+
+		// STORM SCREAMER
+		int stormScreamer1x1 = tournament.getProperty("StormScreamersCountAllowed_1x1", 1);
+		int stormScreamer2x2 = tournament.getProperty("StormScreamersCountAllowed_2x2", 1);
+		int stormScreamer3x3 = tournament.getProperty("StormScreamersCountAllowed_3x3", 1);
+		int stormScreamer4x4 = tournament.getProperty("StormScreamersCountAllowed_4x4", 1);
+		int stormScreamer5x5 = tournament.getProperty("StormScreamersCountAllowed_5x5", 1);
+		int stormScreamer9x9 = tournament.getProperty("StormScreamersCountAllowed_9x9", 1);
+
+		TOURNAMENT_STORMSCREAMER_ALLOWED.put(TournamentFightType.F1X1, stormScreamer1x1);
+		TOURNAMENT_STORMSCREAMER_ALLOWED.put(TournamentFightType.F2X2, stormScreamer2x2);
+		TOURNAMENT_STORMSCREAMER_ALLOWED.put(TournamentFightType.F3X3, stormScreamer3x3);
+		TOURNAMENT_STORMSCREAMER_ALLOWED.put(TournamentFightType.F4X4, stormScreamer4x4);
+		TOURNAMENT_STORMSCREAMER_ALLOWED.put(TournamentFightType.F5X5, stormScreamer5x5);
+		TOURNAMENT_STORMSCREAMER_ALLOWED.put(TournamentFightType.F9X9, stormScreamer9x9);
+
+		// TANKERS
+		int tanker1x1 = tournament.getProperty("TankersCountAllowed_1x1", 1);
+		int tanker2x2 = tournament.getProperty("TankersCountAllowed_2x2", 1);
+		int tanker3x3 = tournament.getProperty("TankersCountAllowed_3x3", 1);
+		int tanker4x4 = tournament.getProperty("TankersCountAllowed_4x4", 1);
+		int tanker5x5 = tournament.getProperty("TankersCountAllowed_5x5", 1);
+		int tanker9x9 = tournament.getProperty("TankersCountAllowed_9x9", 1);
+
+		TOURNAMENT_TANKER_ALLOWED.put(TournamentFightType.F1X1, tanker1x1);
+		TOURNAMENT_TANKER_ALLOWED.put(TournamentFightType.F2X2, tanker2x2);
+		TOURNAMENT_TANKER_ALLOWED.put(TournamentFightType.F3X3, tanker3x3);
+		TOURNAMENT_TANKER_ALLOWED.put(TournamentFightType.F4X4, tanker4x4);
+		TOURNAMENT_TANKER_ALLOWED.put(TournamentFightType.F5X5, tanker5x5);
+		TOURNAMENT_TANKER_ALLOWED.put(TournamentFightType.F9X9, tanker9x9);
+
+	}
+
 	private static final void loadPvp() {
 		final ExProperties pvp = initProperties(PVP);
 
@@ -2385,6 +2692,7 @@ public final class Config {
 		// custom quests
 		loadCustomQuestConfig();
 		loadPvp();
+		loadTournament();
 
 	}
 

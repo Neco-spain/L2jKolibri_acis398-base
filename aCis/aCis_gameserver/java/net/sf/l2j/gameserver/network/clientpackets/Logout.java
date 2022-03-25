@@ -3,6 +3,7 @@ package net.sf.l2j.gameserver.network.clientpackets;
 import net.sf.l2j.gameserver.data.manager.FestivalOfDarknessManager;
 import net.sf.l2j.gameserver.enums.ZoneId;
 import net.sf.l2j.gameserver.model.actor.Player;
+import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
 import net.sf.l2j.gameserver.network.SystemMessageId;
 import net.sf.l2j.gameserver.network.serverpackets.ActionFailed;
 import net.sf.l2j.gameserver.taskmanager.AttackStanceTaskManager;
@@ -44,7 +45,7 @@ public final class Logout extends L2GameClientPacket {
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return;
 		}
-
+		TournamentManager.getInstance().onDisconnect(player);
 		player.removeFromBossZone();
 		player.logout(true);
 	}

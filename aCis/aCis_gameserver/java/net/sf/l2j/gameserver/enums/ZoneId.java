@@ -23,7 +23,8 @@ public enum ZoneId
 	SCRIPT(18),
 	BOSS(19),
 	FLAG(20),
-	PARTY(21);
+	PARTY(21),
+	TOURNAMENT(22);
 	
 	private final int _id;
 	

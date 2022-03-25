@@ -10,7 +10,9 @@ import net.sf.l2j.gameserver.data.xml.AdminData;
 import net.sf.l2j.gameserver.enums.FloodProtector;
 import net.sf.l2j.gameserver.enums.Paperdoll;
 import net.sf.l2j.gameserver.handler.AdminCommandHandler;
+import net.sf.l2j.gameserver.handler.BypassHandler;
 import net.sf.l2j.gameserver.handler.IAdminCommandHandler;
+import net.sf.l2j.gameserver.handler.IBypassHandler;
 import net.sf.l2j.gameserver.handler.IVoicedCommandHandler;
 import net.sf.l2j.gameserver.handler.VoicedCommandHandler;
 import net.sf.l2j.gameserver.model.World;
@@ -93,7 +95,19 @@ public final class RequestBypassToServer extends L2GameClientPacket {
 			}
 			html.disableValidation();
 			player.sendPacket(html);
-		} else if (_command.startsWith("voiced_")) {
+		}
+
+		else if (_command.startsWith("bp_")) {
+			String command = _command.split(" ")[0];
+			IBypassHandler bh = BypassHandler.getInstance().getBypassHandler(command);
+			if (bh == null) {
+				GMAUDIT_LOG.warning("No handler registered for bypass '" + command + "'");
+				return;
+			}
+			bh.handleBypass(_command, player);
+		}
+
+		else if (_command.startsWith("voiced_")) {
 			String command = _command.split(" ")[0];
 
 			IVoicedCommandHandler ach = VoicedCommandHandler.getInstance()

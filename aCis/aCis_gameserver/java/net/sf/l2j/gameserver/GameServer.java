@@ -78,6 +78,7 @@ import net.sf.l2j.gameserver.data.xml.TeleportLocationData;
 import net.sf.l2j.gameserver.data.xml.WalkerRouteData;
 import net.sf.l2j.gameserver.geoengine.GeoEngine;
 import net.sf.l2j.gameserver.handler.AdminCommandHandler;
+import net.sf.l2j.gameserver.handler.BypassHandler;
 import net.sf.l2j.gameserver.handler.ChatHandler;
 import net.sf.l2j.gameserver.handler.ItemHandler;
 import net.sf.l2j.gameserver.handler.SkillHandler;
@@ -91,6 +92,8 @@ import net.sf.l2j.gameserver.model.boat.BoatGludinRune;
 import net.sf.l2j.gameserver.model.boat.BoatInnadrilTour;
 import net.sf.l2j.gameserver.model.boat.BoatRunePrimeval;
 import net.sf.l2j.gameserver.model.boat.BoatTalkingGludin;
+import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
+import net.sf.l2j.gameserver.model.entity.instance.InstanceManager;
 import net.sf.l2j.gameserver.model.olympiad.Olympiad;
 import net.sf.l2j.gameserver.model.olympiad.OlympiadGameManager;
 import net.sf.l2j.gameserver.network.GameClient;
@@ -245,7 +248,11 @@ public class GameServer {
 			ThreadPool.scheduleAtFixedRate(PcBang.getInstance(), Config.PCB_INTERVAL * 1000,
 					Config.PCB_INTERVAL * 1000);
 		}
+		StringUtil.printSection("Instance Manager");
+		InstanceManager.getInstance();
 
+		StringUtil.printSection("Tournament Manager");
+		TournamentManager.getInstance();
 		TeleportData.getInstance();
 		PartyZoneReward.getInstance();
 		class SpawnMonsters implements Runnable {
@@ -302,6 +309,7 @@ public class GameServer {
 		LOGGER.info("Loaded {} target handlers.", TargetHandler.getInstance().size());
 		LOGGER.info("Loaded {} user command handlers.", UserCommandHandler.getInstance().size());
 		LOGGER.info("Loaded {} user VoicedCommandHandler handlers.", VoicedCommandHandler.getInstance().size());
+		LOGGER.info("Loaded {} bypass command handlers.", BypassHandler.getInstance().size());
 		RaidBossInfoManager.getInstance();
 
 		StringUtil.printSection("TvT Event");

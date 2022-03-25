@@ -16,6 +16,7 @@ import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminEnchant;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminFind;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminGeoEngine;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminInfo;
+import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminInstance;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminItem;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminKnownlist;
 import net.sf.l2j.gameserver.handler.admincommandhandlers.AdminMaintenance;
@@ -82,9 +83,11 @@ public class AdminCommandHandler {
 		registerHandler(new AdminPartyFarm());
 		registerHandler(new AdminTvTEvent());
 		registerHandler(new AdminZoneCreation());
+
+		registerHandler(new AdminInstance());
 	}
 
-	private void registerHandler(IAdminCommandHandler handler) {
+	public void registerHandler(IAdminCommandHandler handler) {
 		for (String id : handler.getAdminCommandList())
 			_entries.put(id.hashCode(), handler);
 	}

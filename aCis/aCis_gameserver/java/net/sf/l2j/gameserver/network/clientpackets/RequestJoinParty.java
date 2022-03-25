@@ -61,7 +61,10 @@ public final class RequestJoinParty extends L2GameClientPacket {
 					SystemMessage.getSystemMessage(SystemMessageId.S1_IS_ALREADY_IN_PARTY).addCharName(target));
 			return;
 		}
-
+		if (requestor.isInTournamentMatch()) {
+			requestor.sendMessage("You can't invite players in Tournament.");
+			return;
+		}
 		if (target.getClient().isDetached()) {
 			requestor.sendMessage("The player you tried to invite is in offline mode.");
 			return;

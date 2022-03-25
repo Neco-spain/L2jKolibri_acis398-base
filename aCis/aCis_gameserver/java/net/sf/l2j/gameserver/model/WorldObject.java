@@ -13,6 +13,9 @@ import net.sf.l2j.gameserver.idfactory.IdFactory;
 import net.sf.l2j.gameserver.model.actor.Creature;
 import net.sf.l2j.gameserver.model.actor.Playable;
 import net.sf.l2j.gameserver.model.actor.Player;
+import net.sf.l2j.gameserver.model.actor.instance.Fence;
+import net.sf.l2j.gameserver.model.entity.instance.Instance;
+import net.sf.l2j.gameserver.model.entity.instance.InstanceManager;
 import net.sf.l2j.gameserver.model.location.Location;
 import net.sf.l2j.gameserver.model.location.SpawnLocation;
 import net.sf.l2j.gameserver.model.zone.type.subtype.ZoneType;
@@ -344,7 +347,8 @@ public abstract class WorldObject {
 
 				// Update all objects.
 				for (WorldObject obj : region.getObjects()) {
-					if (obj == this)
+					// if (obj == this)
+					if (obj == this || obj.getInstance().getId() != getInstance().getId())
 						continue;
 
 					obj.removeKnownObject(this);
@@ -446,7 +450,8 @@ public abstract class WorldObject {
 			for (WorldObject obj : reg.getObjects()) {
 				if (obj == this || !type.isAssignableFrom(obj.getClass()))
 					continue;
-
+				if (obj.getInstance().getId() != getInstance().getId() && !(obj instanceof Fence))
+					continue;
 				result.add((A) obj);
 			}
 		}
@@ -512,6 +517,41 @@ public abstract class WorldObject {
 		return result;
 	}
 
+	// Rouxy: Instance
+	private Instance _instance = InstanceManager.getInstance().getInstance(0);
+
+	public void setInstance(Instance instance, boolean silent) {
+		_instance = instance;
+
+		if (!silent) {
+			decayMe();
+			spawnMe();
+		}
+	}
+
+	public Instance getInstance() {
+		return _instance;
+	}
+
+	private final List<WorldObject> getDifferentInstanceObjects() {
+		final WorldRegion region = _region;
+		if (region == null)
+			return Collections.emptyList();
+
+		final List<WorldObject> result = new ArrayList<>();
+
+		for (WorldRegion reg : region.getSurroundingRegions()) {
+			for (WorldObject obj : reg.getObjects()) {
+				if (obj == this || obj.getInstance().getId() == getInstance().getId() || obj instanceof Fence)
+					continue;
+
+				result.add(obj);
+			}
+		}
+
+		return result;
+	}
+
 	/**
 	 * Return the knownlist of this {@link WorldObject} for a given object type
 	 * within specified radius.
@@ -535,7 +575,8 @@ public abstract class WorldObject {
 				if (obj == this || !type.isAssignableFrom(obj.getClass())
 						|| !MathUtil.checkIfInRange(radius, this, obj, true) || !predicate.test((A) obj))
 					continue;
-
+				if (obj.getInstance().getId() != getInstance().getId() && !(obj instanceof Fence))
+					continue;
 				result.add((A) obj);
 			}
 		}

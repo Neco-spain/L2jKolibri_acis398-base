@@ -14,7 +14,7 @@ public class Die extends L2GameServerPacket {
 	private final boolean _fake;
 
 	private boolean _sweepable;
-
+	private boolean _canTeleport;
 	private boolean _allowFixedRes;
 	private Clan _clan;
 	private boolean _funEvent;
@@ -29,7 +29,7 @@ public class Die extends L2GameServerPacket {
 			_allowFixedRes = player.getAccessLevel().allowFixedRes();
 			_clan = player.getClan();
 			_funEvent = !player.isInFunEvent();
-
+			_canTeleport = !creature.getActingPlayer().isInTournamentMatch();
 		} else if (creature instanceof Monster)
 			_sweepable = ((Monster) creature).getSpoilState().isSweepable();
 	}
@@ -41,7 +41,8 @@ public class Die extends L2GameServerPacket {
 
 		writeC(0x06);
 		writeD(_objectId);
-		writeD(_funEvent ? 0x01 : 0); // to nearest village
+		writeD(_funEvent ? 0x01 : 0); // to nearest village ; // to nearest village
+		writeD(_canTeleport ? 0x01 : 0); // to nearest village
 		// writeD(0x01); // to nearest village
 
 		if (_funEvent && _clan != null) {
