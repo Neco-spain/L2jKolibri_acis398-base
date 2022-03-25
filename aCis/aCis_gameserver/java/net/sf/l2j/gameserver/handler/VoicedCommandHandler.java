@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.GameServer;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.GrandBossStatus;
+import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Menu;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Online;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Ranking;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Shiff_Mod;
@@ -31,11 +32,14 @@ public class VoicedCommandHandler {
 		_datatable = new HashMap<>();
 		// registrar comando aqui exemplo abaixo
 		registerVoicedCommandHandler(new Online());
+
+		registerVoicedCommandHandler(new Shiff_Mod());
+		registerVoicedCommandHandler(new TvTEventCommand());
+		registerVoicedCommandHandler(new Ranking());
+		registerVoicedCommandHandler(new Menu());
+//		registerVoicedCommandHandler(new SiegeManager());
 		if (Config.ENABLE_COMMAND_EPIC) {
 			registerVoicedCommandHandler(new GrandBossStatus());
-			registerVoicedCommandHandler(new Shiff_Mod());
-			registerVoicedCommandHandler(new TvTEventCommand());
-			registerVoicedCommandHandler(new Ranking());
 
 		}
 

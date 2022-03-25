@@ -25,7 +25,7 @@ public class GrandBossStatus implements IVoicedCommandHandler {
 		return true;
 	}
 
-	public void showMainPage(Player player) {
+	public static void showMainPage(Player player) {
 		List<Integer> infos = new ArrayList<>();
 		infos.addAll(Config.LIST_RAID_BOSS_IDS);
 

@@ -117,6 +117,19 @@ public abstract class Creature extends WorldObject {
 
 	private final Map<Integer, Long> _disabledSkills = new ConcurrentHashMap<>();
 	private boolean _allSkillsDisabled;
+	// protect From Debuffs
+
+	private boolean _isBuffProtected = false;
+
+	public void setIsBuffProtected(boolean value) {
+		_isBuffProtected = value;
+	}
+
+	public boolean isBuffProtected()
+
+	{
+		return _isBuffProtected;
+	}
 
 	public Creature(int objectId, CreatureTemplate template) {
 		super(objectId);

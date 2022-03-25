@@ -62,6 +62,7 @@ public final class Config {
 	public static int STABLE_AMOUNT1;
 	public static int STABLE_AMOUNT2;
 	public static int RANDOM_AMMOUNT;
+	public static final boolean ENABLE_GNU_PANEL = true;
 	// Q617 GatherTheFlames
 	public static int FOG1;
 	public static int FOG2;

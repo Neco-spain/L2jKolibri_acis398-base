@@ -1200,6 +1200,43 @@ public final class Player extends Playable {
 		}
 	}
 
+	private boolean _isInTradeProt = false;
+
+	private boolean _isPartyInRefuse = false; // Party Refusal Mode
+	private boolean _isInRefusal = false;
+
+	public boolean isInTradeProt() {
+		return _isInTradeProt;
+	}
+
+	public void setIsInTradeProt(boolean value) {
+		_isInTradeProt = value;
+	}
+
+	public void setInRefusalMode(boolean b) {
+		_isInRefusal = b;
+	}
+
+	public boolean isInRefusalMode() {
+		return _isInRefusal;
+	}
+
+	public boolean isPartyInRefuse()
+
+	{
+
+		return _isPartyInRefuse;
+
+	}
+
+	public void setIsPartyInRefuse(boolean value)
+
+	{
+
+		_isPartyInRefuse = value;
+
+	}
+
 	/**
 	 * Equip or unequip the item.
 	 * <UL>
