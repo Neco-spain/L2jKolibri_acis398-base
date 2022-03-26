@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.itopz.com.command;
+package net.sf.l2j.itopz.command;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -35,15 +35,15 @@ import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.item.kind.Item;
 import net.sf.l2j.gameserver.network.serverpackets.ActionFailed;
 import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
-import net.sf.l2j.itopz.itopz.com.Configurations;
-import net.sf.l2j.itopz.itopz.com.gui.Gui;
-import net.sf.l2j.itopz.itopz.com.model.IndividualResponse;
-import net.sf.l2j.itopz.itopz.com.util.Random;
-import net.sf.l2j.itopz.itopz.com.util.Rewards;
-import net.sf.l2j.itopz.itopz.com.util.Url;
-import net.sf.l2j.itopz.itopz.com.util.Utilities;
-import net.sf.l2j.itopz.itopz.com.util.VDSThreadPool;
-import net.sf.l2j.itopz.itopz.com.vote.VDSystem;
+import net.sf.l2j.itopz.Configurations;
+import net.sf.l2j.itopz.gui.Gui;
+import net.sf.l2j.itopz.model.IndividualResponse;
+import net.sf.l2j.itopz.util.Random;
+import net.sf.l2j.itopz.util.Rewards;
+import net.sf.l2j.itopz.util.Url;
+import net.sf.l2j.itopz.util.Utilities;
+import net.sf.l2j.itopz.util.VDSThreadPool;
+import net.sf.l2j.itopz.vote.VDSystem;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE

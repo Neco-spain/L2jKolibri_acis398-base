@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.itopz.com.donate;
+package net.sf.l2j.itopz.donate;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -34,9 +34,9 @@ import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.item.kind.Item;
 import net.sf.l2j.gameserver.network.serverpackets.ActionFailed;
-import net.sf.l2j.itopz.itopz.com.gui.Gui;
-import net.sf.l2j.itopz.itopz.com.util.Logs;
-import net.sf.l2j.itopz.itopz.com.util.Utilities;
+import net.sf.l2j.itopz.gui.Gui;
+import net.sf.l2j.itopz.util.Logs;
+import net.sf.l2j.itopz.util.Utilities;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE

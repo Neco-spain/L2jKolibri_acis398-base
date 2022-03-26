@@ -19,11 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.itopz.com.util;
+package net.sf.l2j.itopz.util;
 
 import java.util.Arrays;
 
-import net.sf.l2j.itopz.itopz.com.Configurations;
+import net.sf.l2j.itopz.Configurations;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE

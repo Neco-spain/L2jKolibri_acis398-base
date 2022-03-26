@@ -19,9 +19,10 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.itopz.com.util;
+package net.sf.l2j.itopz.util;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE
@@ -34,16 +35,57 @@ import java.util.concurrent.ThreadLocalRandom;
  *         Personal Donate Panels: https://www.denart-designs.com/ Free Donate
  *         panel: https://itopz.com/
  */
-public final class Random {
-	public static int nextInt(int n) {
-		return ThreadLocalRandom.current().nextInt(n);
+public class Logs {
+	private final Logger _logger;
+
+	public Logs(String name) {
+		_logger = Logger.getLogger(name);
 	}
 
-	public static int get(int n) {
-		return nextInt(n);
+	private void log0(Level level, StackTraceElement caller, Object message, Throwable exception) {
+		if (!_logger.isLoggable(level))
+			return;
+
+		if (caller == null)
+			caller = new Throwable().getStackTrace()[2];
+
+		_logger.logp(level, caller.getClassName(), caller.getMethodName(), String.valueOf(message), exception);
 	}
 
-	public static int get(int min, int max) {
-		return ThreadLocalRandom.current().nextInt(min, max == Integer.MAX_VALUE ? max : max + 1);
+	/**
+	 * Logs a message with Level.INFO.
+	 *
+	 * @param message : The object to log.
+	 */
+	public void info(Object message) {
+		log0(Level.INFO, null, message, null);
+	}
+
+	/**
+	 * Logs a message with Level.WARNING.
+	 *
+	 * @param message : The object to log.
+	 */
+	public void warn(Object message) {
+		log0(Level.WARNING, null, message, null);
+	}
+
+	/**
+	 * Logs a message with Level.SEVERE.
+	 *
+	 * @param message : The object to log.
+	 */
+	public void error(Object message) {
+		log0(Level.SEVERE, null, message, null);
+	}
+
+	/**
+	 * Logs a message with Level.SEVERE.
+	 *
+	 * @param message   : The object to log.
+	 * @param exception : Log the caught exception.
+	 */
+	public void error(Object message, Throwable exception) {
+		log0(Level.SEVERE, null, message, exception);
 	}
 }

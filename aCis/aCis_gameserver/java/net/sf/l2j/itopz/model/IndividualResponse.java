@@ -19,13 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.itopz.com.model;
+package net.sf.l2j.itopz.model;
 
-import net.sf.l2j.itopz.itopz.com.gui.Gui;
-import net.sf.l2j.itopz.itopz.com.model.base.IResponse;
-import net.sf.l2j.itopz.itopz.com.util.Json;
-import net.sf.l2j.itopz.itopz.com.util.Utilities;
-import net.sf.l2j.itopz.itopz.com.vote.VDSystem;
+import net.sf.l2j.itopz.gui.Gui;
+import net.sf.l2j.itopz.model.base.IResponse;
+import net.sf.l2j.itopz.util.Json;
+import net.sf.l2j.itopz.util.Utilities;
+import net.sf.l2j.itopz.vote.VDSystem;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE

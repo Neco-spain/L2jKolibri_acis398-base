@@ -19,15 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.itopz.com.vote;
+package net.sf.l2j.itopz.vote;
 
 import net.sf.l2j.gameserver.handler.VoicedCommandHandler;
-import net.sf.l2j.itopz.itopz.com.Configurations;
-import net.sf.l2j.itopz.itopz.com.command.VoteCMD;
-import net.sf.l2j.itopz.itopz.com.donate.DonateTaskManager;
-import net.sf.l2j.itopz.itopz.com.global.Global;
-import net.sf.l2j.itopz.itopz.com.util.Logs;
-import net.sf.l2j.itopz.itopz.com.util.VDSThreadPool;
+import net.sf.l2j.itopz.Configurations;
+import net.sf.l2j.itopz.command.VoteCMD;
+import net.sf.l2j.itopz.donate.DonateTaskManager;
+import net.sf.l2j.itopz.global.Global;
+import net.sf.l2j.itopz.util.Logs;
+import net.sf.l2j.itopz.util.VDSThreadPool;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE
