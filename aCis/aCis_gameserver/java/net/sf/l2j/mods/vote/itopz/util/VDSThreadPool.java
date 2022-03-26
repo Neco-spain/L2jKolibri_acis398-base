@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.util;
+package net.sf.l2j.mods.vote.itopz.util;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ScheduledFuture;

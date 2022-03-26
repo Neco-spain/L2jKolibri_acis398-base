@@ -106,13 +106,13 @@ import net.sf.l2j.gameserver.taskmanager.PvpFlagTaskManager;
 import net.sf.l2j.gameserver.taskmanager.RandomAnimationTaskManager;
 import net.sf.l2j.gameserver.taskmanager.ShadowItemTaskManager;
 import net.sf.l2j.gameserver.taskmanager.WaterTaskManager;
-import net.sf.l2j.itopz.VDSystemManager;
 import net.sf.l2j.mods.epicinfo.RaidBossInfoManager;
 import net.sf.l2j.mods.events.tvt.TvTEventManager;
 import net.sf.l2j.mods.partyfarm.InitialPartyFarm;
 import net.sf.l2j.mods.partyfarm.PartyFarm;
 import net.sf.l2j.mods.partyfarm.PartyZoneReward;
 import net.sf.l2j.mods.pcbang.PcBang;
+import net.sf.l2j.mods.vote.itopz.VDSystemManager;
 import net.sf.l2j.util.DeadLockDetector;
 import net.sf.l2j.util.IPv4Filter;
 

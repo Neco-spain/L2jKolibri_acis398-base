@@ -19,9 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.util;
+package net.sf.l2j.mods.vote.itopz.vote;
 
-import java.util.concurrent.ThreadLocalRandom;
+import net.sf.l2j.gameserver.handler.VoicedCommandHandler;
+import net.sf.l2j.mods.vote.itopz.Configurations;
+import net.sf.l2j.mods.vote.itopz.command.VoteCMD;
+import net.sf.l2j.mods.vote.itopz.donate.DonateTaskManager;
+import net.sf.l2j.mods.vote.itopz.global.Global;
+import net.sf.l2j.mods.vote.itopz.util.Logs;
+import net.sf.l2j.mods.vote.itopz.util.VDSThreadPool;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE
@@ -34,16 +40,48 @@ import java.util.concurrent.ThreadLocalRandom;
  *         Personal Donate Panels: https://www.denart-designs.com/ Free Donate
  *         panel: https://itopz.com/
  */
-public final class Random {
-	public static int nextInt(int n) {
-		return ThreadLocalRandom.current().nextInt(n);
+public class VDSystem {
+	// logger
+	private static final Logs _log = new Logs(VDSystem.class.getSimpleName());
+
+	public enum VoteType {
+		GLOBAL, INDIVIDUAL;
 	}
 
-	public static int get(int n) {
-		return nextInt(n);
+	/**
+	 * Constructor
+	 */
+	public VDSystem() {
+		onLoad();
 	}
 
-	public static int get(int min, int max) {
-		return ThreadLocalRandom.current().nextInt(min, max == Integer.MAX_VALUE ? max : max + 1);
+	/**
+	 * Vod function on load
+	 */
+	public void onLoad() {
+		// check if allowed the donation system to run
+		if (Configurations.ITOPZ_DONATE_MANAGER) {
+			// start donation manager
+			VDSThreadPool.scheduleAtFixedRate(new DonateTaskManager(), 100, 5000);
+
+			// initiate Donation reward
+			_log.info(DonateTaskManager.class.getSimpleName() + ": started.");
+		}
+
+		// register individual reward command
+		VoicedCommandHandler.getInstance().registerVoicedCommandHandler(new VoteCMD());
+
+		// load global system rewards
+		Global.getInstance();
+
+		_log.info(VDSystem.class.getSimpleName() + ": System initialized.");
+	}
+
+	public static VDSystem getInstance() {
+		return SingletonHolder._instance;
+	}
+
+	private static class SingletonHolder {
+		protected static final VDSystem _instance = new VDSystem();
 	}
 }

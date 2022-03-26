@@ -19,15 +19,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.vote;
+package net.sf.l2j.mods.vote.itopz;
 
-import net.sf.l2j.gameserver.handler.VoicedCommandHandler;
-import net.sf.l2j.itopz.Configurations;
-import net.sf.l2j.itopz.command.VoteCMD;
-import net.sf.l2j.itopz.donate.DonateTaskManager;
-import net.sf.l2j.itopz.global.Global;
-import net.sf.l2j.itopz.util.Logs;
-import net.sf.l2j.itopz.util.VDSThreadPool;
+import net.sf.l2j.commons.lang.StringUtil;
+import net.sf.l2j.mods.vote.itopz.gui.Gui;
+import net.sf.l2j.mods.vote.itopz.util.VDSThreadPool;
+import net.sf.l2j.mods.vote.itopz.vote.VDSystem;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE
@@ -40,48 +37,28 @@ import net.sf.l2j.itopz.util.VDSThreadPool;
  *         Personal Donate Panels: https://www.denart-designs.com/ Free Donate
  *         panel: https://itopz.com/
  */
-public class VDSystem {
-	// logger
-	private static final Logs _log = new Logs(VDSystem.class.getSimpleName());
+public class VDSystemManager {
+	public VDSystemManager() {
+		StringUtil.printSection("VDS Manager");
 
-	public enum VoteType {
-		GLOBAL, INDIVIDUAL;
+		// thread initiator
+		VDSThreadPool.init();
+
+		// load configurations
+		Configurations.load();
+
+		// load gui console
+		Gui.getInstance();
+
+		// load iTopz
+		VDSystem.getInstance();
 	}
 
-	/**
-	 * Constructor
-	 */
-	public VDSystem() {
-		onLoad();
-	}
-
-	/**
-	 * Vod function on load
-	 */
-	public void onLoad() {
-		// check if allowed the donation system to run
-		if (Configurations.ITOPZ_DONATE_MANAGER) {
-			// start donation manager
-			VDSThreadPool.scheduleAtFixedRate(new DonateTaskManager(), 100, 5000);
-
-			// initiate Donation reward
-			_log.info(DonateTaskManager.class.getSimpleName() + ": started.");
-		}
-
-		// register individual reward command
-		VoicedCommandHandler.getInstance().registerVoicedCommandHandler(new VoteCMD());
-
-		// load global system rewards
-		Global.getInstance();
-
-		_log.info(VDSystem.class.getSimpleName() + ": System initialized.");
-	}
-
-	public static VDSystem getInstance() {
-		return SingletonHolder._instance;
+	public static VDSystemManager getInstance() {
+		return VDSystemManager.SingletonHolder._instance;
 	}
 
 	private static class SingletonHolder {
-		protected static final VDSystem _instance = new VDSystem();
+		protected static final VDSystemManager _instance = new VDSystemManager();
 	}
 }

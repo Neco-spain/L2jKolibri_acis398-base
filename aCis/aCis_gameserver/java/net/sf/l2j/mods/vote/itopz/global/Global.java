@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.global;
+package net.sf.l2j.mods.vote.itopz.global;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,16 +31,16 @@ import net.sf.l2j.gameserver.data.xml.ItemData;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.item.kind.Item;
-import net.sf.l2j.itopz.Configurations;
-import net.sf.l2j.itopz.gui.Gui;
-import net.sf.l2j.itopz.model.GlobalResponse;
-import net.sf.l2j.itopz.util.Logs;
-import net.sf.l2j.itopz.util.Random;
-import net.sf.l2j.itopz.util.Rewards;
-import net.sf.l2j.itopz.util.Url;
-import net.sf.l2j.itopz.util.Utilities;
-import net.sf.l2j.itopz.util.VDSThreadPool;
-import net.sf.l2j.itopz.vote.VDSystem;
+import net.sf.l2j.mods.vote.itopz.Configurations;
+import net.sf.l2j.mods.vote.itopz.gui.Gui;
+import net.sf.l2j.mods.vote.itopz.model.GlobalResponse;
+import net.sf.l2j.mods.vote.itopz.util.Logs;
+import net.sf.l2j.mods.vote.itopz.util.Random;
+import net.sf.l2j.mods.vote.itopz.util.Rewards;
+import net.sf.l2j.mods.vote.itopz.util.Url;
+import net.sf.l2j.mods.vote.itopz.util.Utilities;
+import net.sf.l2j.mods.vote.itopz.util.VDSThreadPool;
+import net.sf.l2j.mods.vote.itopz.vote.VDSystem;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE

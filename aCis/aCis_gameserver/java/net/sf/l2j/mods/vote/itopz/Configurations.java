@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz;
+package net.sf.l2j.mods.vote.itopz;
 
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 import net.sf.l2j.commons.config.ExProperties;
-import net.sf.l2j.itopz.util.Logs;
+import net.sf.l2j.mods.vote.itopz.util.Logs;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE

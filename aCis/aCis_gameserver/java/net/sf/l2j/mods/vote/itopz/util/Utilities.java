@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.util;
+package net.sf.l2j.mods.vote.itopz.util;
 
 import java.awt.Desktop;
 import java.io.BufferedReader;
@@ -43,7 +43,7 @@ import java.util.Locale;
 
 import net.sf.l2j.commons.pool.ConnectionPool;
 import net.sf.l2j.gameserver.model.World;
-import net.sf.l2j.itopz.gui.Gui;
+import net.sf.l2j.mods.vote.itopz.gui.Gui;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE

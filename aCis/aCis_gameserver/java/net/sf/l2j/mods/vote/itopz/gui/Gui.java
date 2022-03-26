@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.gui;
+package net.sf.l2j.mods.vote.itopz.gui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -41,11 +41,11 @@ import javax.swing.JTextArea;
 import javax.swing.JWindow;
 import javax.swing.SwingConstants;
 
-import net.sf.l2j.itopz.Configurations;
-import net.sf.l2j.itopz.global.Global;
-import net.sf.l2j.itopz.util.Url;
-import net.sf.l2j.itopz.util.Utilities;
-import net.sf.l2j.itopz.util.VDSThreadPool;
+import net.sf.l2j.mods.vote.itopz.Configurations;
+import net.sf.l2j.mods.vote.itopz.global.Global;
+import net.sf.l2j.mods.vote.itopz.util.Url;
+import net.sf.l2j.mods.vote.itopz.util.Utilities;
+import net.sf.l2j.mods.vote.itopz.util.VDSThreadPool;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE

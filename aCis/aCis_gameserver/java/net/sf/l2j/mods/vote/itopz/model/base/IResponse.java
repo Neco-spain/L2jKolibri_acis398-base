@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.model.base;
+package net.sf.l2j.mods.vote.itopz.model.base;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -32,10 +32,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import net.sf.l2j.itopz.Configurations;
-import net.sf.l2j.itopz.util.Json;
-import net.sf.l2j.itopz.util.Logs;
-import net.sf.l2j.itopz.vote.VDSystem;
+import net.sf.l2j.mods.vote.itopz.Configurations;
+import net.sf.l2j.mods.vote.itopz.util.Json;
+import net.sf.l2j.mods.vote.itopz.util.Logs;
+import net.sf.l2j.mods.vote.itopz.vote.VDSystem;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE

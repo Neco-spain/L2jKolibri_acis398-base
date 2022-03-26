@@ -19,14 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package net.sf.l2j.itopz.util;
+package net.sf.l2j.mods.vote.itopz.util;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sf.l2j.itopz.Configurations;
-import net.sf.l2j.itopz.gui.Gui;
-import net.sf.l2j.itopz.vote.VDSystem;
+import net.sf.l2j.mods.vote.itopz.Configurations;
+import net.sf.l2j.mods.vote.itopz.gui.Gui;
+import net.sf.l2j.mods.vote.itopz.vote.VDSystem;
 
 /**
  * @Author Nightwolf iToPz Discord: https://discord.gg/KkPms6B5aE
