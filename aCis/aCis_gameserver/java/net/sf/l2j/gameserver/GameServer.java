@@ -106,6 +106,7 @@ import net.sf.l2j.gameserver.taskmanager.PvpFlagTaskManager;
 import net.sf.l2j.gameserver.taskmanager.RandomAnimationTaskManager;
 import net.sf.l2j.gameserver.taskmanager.ShadowItemTaskManager;
 import net.sf.l2j.gameserver.taskmanager.WaterTaskManager;
+import net.sf.l2j.itopz.itopz.com.VDSystemManager;
 import net.sf.l2j.mods.epicinfo.RaidBossInfoManager;
 import net.sf.l2j.mods.events.tvt.TvTEventManager;
 import net.sf.l2j.mods.partyfarm.InitialPartyFarm;
@@ -297,7 +298,7 @@ public class GameServer {
 
 		if (Config.ALLOW_FISH_CHAMPIONSHIP)
 			FishingChampionshipManager.getInstance();
-
+		VDSystemManager.getInstance();
 		StringUtil.printSection("Balancer");
 		ClassBalanceManager.getInstance();
 		SkillBalanceManager.getInstance();

@@ -29,6 +29,7 @@ import net.sf.l2j.gameserver.model.clanhall.ClanHall;
 import net.sf.l2j.gameserver.model.clanhall.SiegableHall;
 import net.sf.l2j.gameserver.model.entity.Castle;
 import net.sf.l2j.gameserver.model.entity.Siege;
+import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
 import net.sf.l2j.gameserver.model.holder.IntIntHolder;
 import net.sf.l2j.gameserver.model.olympiad.Olympiad;
 import net.sf.l2j.gameserver.model.pledge.Clan;
@@ -214,12 +215,12 @@ public class EnterWorld extends L2GameClientPacket {
 
 		// Announcements, welcome & Seven signs period messages.
 		player.sendPacket(SystemMessageId.WELCOME_TO_LINEAGE);
-		Date rightNow = Calendar.getInstance().getTime();
-		player.sendPacket(new CreatureSay(0, SayType.PARTY, "[System]", "Current Server's  time is " + rightNow + "."));
+
 		if (player.isClanLeader()) {
 			int members = player.getClan().getOnlineMembersCount();
+
 			player.sendPacket(
-					new CreatureSay(0, SayType.CLAN, "[Clan]", "Current Online Members are  " + members + "."));
+					new CreatureSay(0, SayType.CLAN, "[Clan]", "Current  Members Online :  " + members + "."));
 
 		}
 
@@ -233,6 +234,12 @@ public class EnterWorld extends L2GameClientPacket {
 			player.sendPacket(
 					new CreatureSay(0, SayType.PARTY, "[System]", "" + Config.PARTY_FARM_MESSAGE_TEXT + ":."));
 		}
+
+		if (TournamentManager.getInstance().isRunning()) {
+			player.sendPacket(
+					new CreatureSay(0, SayType.HERO_VOICE, "[System]", "Tournament Event is active join now" + "."));
+		}
+
 		TvTEvent.onLogin(player, player);
 		if (player.isVip())
 			onEnterVip(player);

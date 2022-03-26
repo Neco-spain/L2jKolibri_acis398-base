@@ -64,7 +64,7 @@ public final class Say2 extends L2GameClientPacket {
 			}
 
 			final CreatureSay cs = new CreatureSay(player.getObjectId(), SayType.PARTYROOM_ALL, player.getName(),
-					_text.substring(1) + "[VIP]");
+					_text.substring(1));
 			World.getInstance().getPlayers().forEach(knownPlayer -> knownPlayer.sendPacket(cs));
 			return;
 		}

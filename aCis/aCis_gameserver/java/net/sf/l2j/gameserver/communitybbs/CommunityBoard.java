@@ -19,6 +19,7 @@ import net.sf.l2j.gameserver.communitybbs.manager.MailBBSManager;
 import net.sf.l2j.gameserver.communitybbs.manager.PostBBSManager;
 import net.sf.l2j.gameserver.communitybbs.manager.RankingBBSManager;
 import net.sf.l2j.gameserver.communitybbs.manager.RegionBBSManager;
+import net.sf.l2j.gameserver.communitybbs.manager.RepairBBSManager;
 import net.sf.l2j.gameserver.communitybbs.manager.TopBBSManager;
 import net.sf.l2j.gameserver.communitybbs.manager.TopicBBSManager;
 import net.sf.l2j.gameserver.communitybbs.model.Forum;
@@ -121,7 +122,9 @@ public class CommunityBoard {
 			PostBBSManager.getInstance().parseCmd(command, player);
 		else if (command.startsWith("_bbsranking"))
 			RankingBBSManager.getInstance().parseCmd(command, player);
-		else
+		else if ((command.equals("_bbsShowRepair")) || (command.startsWith("_bbsRepair"))) {
+			RepairBBSManager.getInstance().parseCmd(command, player);
+		} else
 			BaseBBSManager.separateAndSend("<html><body><br><br><center>The command: " + command
 					+ " isn't implemented.</center></body></html>", player);
 	}

@@ -14,15 +14,21 @@
  */
 package net.sf.l2j.gameserver.handler.voicedcommandhandlers;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import net.sf.l2j.Config;
 import net.sf.l2j.commons.pool.ThreadPool;
 import net.sf.l2j.gameserver.communitybbs.manager.RankingBBSManager;
+import net.sf.l2j.gameserver.communitybbs.manager.RepairBBSManager;
 import net.sf.l2j.gameserver.data.manager.CastleManager;
 import net.sf.l2j.gameserver.enums.SayType;
 import net.sf.l2j.gameserver.handler.IVoicedCommandHandler;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.entity.Castle;
+import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
+import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
 import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 import net.sf.l2j.gameserver.network.serverpackets.MagicSkillUse;
 import net.sf.l2j.gameserver.network.serverpackets.NpcHtmlMessage;
@@ -45,7 +51,7 @@ public class Menu implements IVoicedCommandHandler
 					"menu", "setPartyRefuse", "setTradeRefuse", "setbuffsRefuse", "setMessageRefuse", "raid", "rank",
 					"visualTest", "skins", "skin", "castlemanager", "siege_of_gludio", "siege_of_dion",
 					"siege_of_giran", "siege_of_oren", "siege_of_aden", "siege_of_innadril", "siege_of_goddard",
-					"siege_of_rune", "siege_of_schuttgart", "siege_of_",
+					"siege_of_rune", "siege_of_schuttgart", "siege_of_", "repair", "time", "mytour",
 
 			};
 //TODO FIX HTMLS AND BUTTONS ???
@@ -152,6 +158,18 @@ public class Menu implements IVoicedCommandHandler
 
 			RankingBBSManager.getInstance().parseCmd("_bbsranking", activeChar);
 			showHtml(activeChar);
+		} else if (command.equals("repair")) {
+
+			RepairBBSManager.getInstance().parseCmd("_bbsShowRepair", activeChar);
+			showHtml(activeChar);
+		} else if (command.equals("time")) {
+
+			Date rightNow = Calendar.getInstance().getTime();
+			activeChar.sendPacket(
+					new CreatureSay(0, SayType.PARTY, "[System]", "Current Server's  time is " + rightNow + "."));
+			showHtml(activeChar);
+		} else if (command.startsWith("mytour")) {
+			TournamentManager.getInstance().showHtml(activeChar, "myTour", TournamentFightType.NONE);
 		}
 		if (Config.ENABLE_GNU_PANEL) {
 			if (command.startsWith("castlemanager")) {
