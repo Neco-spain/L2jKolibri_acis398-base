@@ -1,4 +1,4 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.tasks;
+package net.sf.l2j.mods.Tournament.tasks;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,13 +7,13 @@ import net.sf.l2j.commons.random.Rnd;
 
 import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.idfactory.IdFactory;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
-import net.sf.l2j.gameserver.model.entity.Tournament.Data.TournamentArenaParser;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentArena;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
 import net.sf.l2j.gameserver.model.entity.instance.Instance;
 import net.sf.l2j.gameserver.model.entity.instance.InstanceManager;
+import net.sf.l2j.mods.Tournament.TournamentManager;
+import net.sf.l2j.mods.Tournament.Data.TournamentArenaParser;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
+import net.sf.l2j.mods.Tournament.model.TournamentArena;
+import net.sf.l2j.mods.Tournament.model.TournamentTeam;
 
 public class TournamentSearchFights implements Runnable
 {

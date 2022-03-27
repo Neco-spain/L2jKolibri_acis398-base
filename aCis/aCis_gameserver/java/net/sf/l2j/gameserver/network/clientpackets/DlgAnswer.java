@@ -4,11 +4,11 @@ import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.enums.LootRule;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
 import net.sf.l2j.gameserver.model.group.Party;
 import net.sf.l2j.gameserver.network.SystemMessageId;
 import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
+import net.sf.l2j.mods.Tournament.TournamentManager;
+import net.sf.l2j.mods.Tournament.model.TournamentTeam;
 
 public final class DlgAnswer extends L2GameClientPacket {
 	private int _messageId;

@@ -1,17 +1,17 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.tasks;
+package net.sf.l2j.mods.Tournament.tasks;
 
 import java.util.concurrent.ScheduledFuture;
 
 import net.sf.l2j.Config;
 import net.sf.l2j.commons.pool.ThreadPool;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentArena;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
 import net.sf.l2j.gameserver.model.entity.instance.Instance;
 import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
 import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage.SMPOS;
+import net.sf.l2j.mods.Tournament.TournamentManager;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
+import net.sf.l2j.mods.Tournament.model.TournamentArena;
+import net.sf.l2j.mods.Tournament.model.TournamentTeam;
 
 /**
  * @author Zaun

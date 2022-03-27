@@ -21,7 +21,7 @@ import net.sf.l2j.gameserver.data.xml.TeleportData;
 import net.sf.l2j.gameserver.data.xml.WalkerRouteData;
 import net.sf.l2j.gameserver.handler.IAdminCommandHandler;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.entity.Tournament.Data.TournamentArenaParser;
+import net.sf.l2j.mods.Tournament.Data.TournamentArenaParser;
 import net.sf.l2j.mods.partyfarm.InitialPartyFarm;
 
 public class AdminReload implements IAdminCommandHandler {

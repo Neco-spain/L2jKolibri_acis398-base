@@ -27,12 +27,12 @@ import net.sf.l2j.gameserver.enums.FloodProtector;
 import net.sf.l2j.gameserver.model.CharSelectSlot;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
 import net.sf.l2j.gameserver.model.entity.instance.InstanceManager;
 import net.sf.l2j.gameserver.model.pledge.Clan;
 import net.sf.l2j.gameserver.network.serverpackets.ActionFailed;
 import net.sf.l2j.gameserver.network.serverpackets.L2GameServerPacket;
 import net.sf.l2j.gameserver.network.serverpackets.ServerClose;
+import net.sf.l2j.mods.Tournament.TournamentManager;
 
 /**
  * Represents a client connected on Game Server.<br>

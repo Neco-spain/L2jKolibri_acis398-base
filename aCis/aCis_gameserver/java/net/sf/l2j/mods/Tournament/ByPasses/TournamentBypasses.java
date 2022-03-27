@@ -1,4 +1,4 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.ByPasses;
+package net.sf.l2j.mods.Tournament.ByPasses;
 
 import java.util.StringTokenizer;
 
@@ -6,15 +6,15 @@ import net.sf.l2j.gameserver.data.sql.PlayerInfoTable;
 import net.sf.l2j.gameserver.handler.IBypassHandler;
 import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
-import net.sf.l2j.gameserver.model.entity.Tournament.matches.TournamentMatch1x1;
-import net.sf.l2j.gameserver.model.entity.Tournament.matches.TournamentMatch2x2;
-import net.sf.l2j.gameserver.model.entity.Tournament.matches.TournamentMatch3x3;
-import net.sf.l2j.gameserver.model.entity.Tournament.matches.TournamentMatch4x4;
-import net.sf.l2j.gameserver.model.entity.Tournament.matches.TournamentMatch5x5;
-import net.sf.l2j.gameserver.model.entity.Tournament.matches.TournamentMatch9x9;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
+import net.sf.l2j.mods.Tournament.TournamentManager;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
+import net.sf.l2j.mods.Tournament.matches.TournamentMatch1x1;
+import net.sf.l2j.mods.Tournament.matches.TournamentMatch2x2;
+import net.sf.l2j.mods.Tournament.matches.TournamentMatch3x3;
+import net.sf.l2j.mods.Tournament.matches.TournamentMatch4x4;
+import net.sf.l2j.mods.Tournament.matches.TournamentMatch5x5;
+import net.sf.l2j.mods.Tournament.matches.TournamentMatch9x9;
+import net.sf.l2j.mods.Tournament.model.TournamentTeam;
 
 public class TournamentBypasses implements IBypassHandler
 {

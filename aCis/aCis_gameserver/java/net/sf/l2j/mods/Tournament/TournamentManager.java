@@ -1,4 +1,4 @@
-package net.sf.l2j.gameserver.model.entity.Tournament;
+package net.sf.l2j.mods.Tournament;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,13 +28,6 @@ import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.actor.Creature;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.actor.template.NpcTemplate;
-import net.sf.l2j.gameserver.model.entity.Tournament.Commands.AdminTournament;
-import net.sf.l2j.gameserver.model.entity.Tournament.Commands.VoiceTournament;
-import net.sf.l2j.gameserver.model.entity.Tournament.Data.TournamentArenaParser;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
-import net.sf.l2j.gameserver.model.entity.Tournament.tasks.TournamentFight;
-import net.sf.l2j.gameserver.model.entity.Tournament.tasks.TournamentSearchFights;
 import net.sf.l2j.gameserver.model.location.Location;
 import net.sf.l2j.gameserver.model.spawn.Spawn;
 import net.sf.l2j.gameserver.network.SystemMessageId;
@@ -42,6 +35,13 @@ import net.sf.l2j.gameserver.network.serverpackets.ConfirmDlg;
 import net.sf.l2j.gameserver.network.serverpackets.L2GameServerPacket;
 import net.sf.l2j.gameserver.network.serverpackets.MagicSkillUse;
 import net.sf.l2j.gameserver.network.serverpackets.NpcHtmlMessage;
+import net.sf.l2j.mods.Tournament.Commands.AdminTournament;
+import net.sf.l2j.mods.Tournament.Commands.VoiceTournament;
+import net.sf.l2j.mods.Tournament.Data.TournamentArenaParser;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
+import net.sf.l2j.mods.Tournament.model.TournamentTeam;
+import net.sf.l2j.mods.Tournament.tasks.TournamentFight;
+import net.sf.l2j.mods.Tournament.tasks.TournamentSearchFights;
 import net.sf.l2j.util.Mysql;
 import net.sf.l2j.util.PlayerVariables;
 

@@ -1,8 +1,8 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.Commands;
+package net.sf.l2j.mods.Tournament.Commands;
 
 import net.sf.l2j.gameserver.handler.IAdminCommandHandler;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
+import net.sf.l2j.mods.Tournament.TournamentManager;
 
 /**
  * @author Rouxy

@@ -2,8 +2,8 @@ package net.sf.l2j.gameserver.model.actor.instance;
 
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.actor.template.NpcTemplate;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
+import net.sf.l2j.mods.Tournament.TournamentManager;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
 
 /**
  * @author Rouxy

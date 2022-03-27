@@ -1,6 +1,6 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.matches;
+package net.sf.l2j.mods.Tournament.matches;
 
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
+import net.sf.l2j.mods.Tournament.model.TournamentTeam;
 
 /**
  * @author Rouxy

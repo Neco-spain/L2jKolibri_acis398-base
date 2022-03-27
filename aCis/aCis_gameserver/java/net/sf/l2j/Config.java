@@ -15,9 +15,9 @@ import net.sf.l2j.commons.config.ExProperties;
 import net.sf.l2j.commons.logging.CLogger;
 import net.sf.l2j.commons.math.MathUtil;
 import net.sf.l2j.gameserver.enums.GeoType;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
 import net.sf.l2j.gameserver.model.holder.IntIntHolder;
 import net.sf.l2j.gameserver.model.location.Location;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
 import net.sf.l2j.util.RewardHolder;
 
 /**
@@ -45,9 +45,28 @@ public final class Config {
 	public static final String CUSTOMQUESTS = "./config/quests.properties";
 	public static final String PVP = "./config/pvp.properties";
 	public static final String TOURNAMENT = "./config/Tournament.properties";
-
+	public static final String MULTI_FILE = "./config/multishop.properties";
 //=====================================================================================================================================================
+	/** Multi Shop Manager */
+	public static int DONATE_ITEM;
+	public static int NOBL_ITEM_COUNT;
+	public static int SEX_ITEM_COUNT;
+	public static int PK_ITEM_COUNT;
+	public static int PK_CLEAN;
+	public static int CLAN_ITEM_COUNT;
+	public static int CLAN_REP_ITEM_COUNT;
+	public static int CLAN_REPS;
+	public static int AUGM_ITEM_COUNT;
+	public static int CLAN_SKILL_ITEM_COUNT;
+	public static int REC_ITEM_COUNT;
+	public static int PASSWORD_ITEM_COUNT;
 
+	public static int NAME_ITEM_COUNT;
+
+	public static int CLASS_ITEM_COUNT;
+	public static int VIP7_ITEM_COUNT;
+	public static int VIP15_ITEM_COUNT;
+	public static int VIP30_ITEM_COUNT;
 	/** Tournament */
 
 	public static int TOURNAMENT_EVENT_DURATION;
@@ -1116,6 +1135,32 @@ public final class Config {
 				}
 			}
 		}
+	}
+
+	/**
+	 * Load Multishop settings.
+	 */
+	private static final void loadMultiShop() {
+		final ExProperties multi = initProperties(MULTI_FILE);
+		DONATE_ITEM = multi.getProperty("DonateItemId", 57);
+		NOBL_ITEM_COUNT = multi.getProperty("NoblesseItemCount", 100);
+		SEX_ITEM_COUNT = multi.getProperty("SexItemCount", 100);
+		PK_ITEM_COUNT = multi.getProperty("PkItemCount", 100);
+		PK_CLEAN = multi.getProperty("PkCleanValue", 50);
+		CLAN_ITEM_COUNT = multi.getProperty("ClanItemCount", 100);
+		CLAN_REP_ITEM_COUNT = multi.getProperty("ClanRepsCount", 100);
+		CLAN_REPS = multi.getProperty("ClanReps", 20000);
+		AUGM_ITEM_COUNT = multi.getProperty("AugmentionItemCount", 100);
+		NOBL_ITEM_COUNT = multi.getProperty("ClanSkillsItemCount", 100);
+		REC_ITEM_COUNT = multi.getProperty("RecItemCount", 100);
+		PASSWORD_ITEM_COUNT = multi.getProperty("PasswordItemCount", 100);
+
+		NAME_ITEM_COUNT = multi.getProperty("NameItemCount", 100);
+
+		CLASS_ITEM_COUNT = multi.getProperty("ClassItemCount", 100);
+		VIP7_ITEM_COUNT = multi.getProperty("Vip7DaysItemCount", 100);
+		VIP15_ITEM_COUNT = multi.getProperty("Vip15DaysItemCount", 100);
+		VIP30_ITEM_COUNT = multi.getProperty("Vip30DaysItemCount", 100);
 	}
 
 	private static final void loadCustomQuestConfig() {
@@ -2693,6 +2738,9 @@ public final class Config {
 		loadCustomQuestConfig();
 		loadPvp();
 		loadTournament();
+
+		// Mulishop settings
+		loadMultiShop();
 
 	}
 

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import net.sf.l2j.Config;
-import net.sf.l2j.gameserver.model.entity.Tournament.ByPasses.TournamentBypasses;
+import net.sf.l2j.mods.Tournament.ByPasses.TournamentBypasses;
 
 /**
  * @author Anarchy

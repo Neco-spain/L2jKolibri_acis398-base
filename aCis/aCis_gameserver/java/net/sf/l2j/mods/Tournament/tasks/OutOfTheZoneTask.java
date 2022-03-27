@@ -1,9 +1,9 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.tasks;
+package net.sf.l2j.mods.Tournament.tasks;
 
 import net.sf.l2j.gameserver.enums.ZoneId;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
+import net.sf.l2j.mods.Tournament.TournamentManager;
+import net.sf.l2j.mods.Tournament.model.TournamentTeam;
 
 /**
  * @author Rouxy

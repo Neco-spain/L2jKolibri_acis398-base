@@ -1,11 +1,11 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.model;
+package net.sf.l2j.mods.Tournament.model;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.l2j.commons.data.StatSet;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
 import net.sf.l2j.gameserver.model.location.Location;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
 
 /**
  * @author Rouxy

@@ -1,4 +1,4 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.enums;
+package net.sf.l2j.mods.Tournament.enums;
 
 /**
  * @author Rouxy

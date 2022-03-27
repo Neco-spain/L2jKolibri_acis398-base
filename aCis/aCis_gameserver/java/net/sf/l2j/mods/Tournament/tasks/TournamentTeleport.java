@@ -1,4 +1,4 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.tasks;
+package net.sf.l2j.mods.Tournament.tasks;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import net.sf.l2j.commons.pool.ThreadPool;
 
 import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentArena;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
 import net.sf.l2j.gameserver.model.location.Location;
+import net.sf.l2j.mods.Tournament.model.TournamentArena;
+import net.sf.l2j.mods.Tournament.model.TournamentTeam;
 
 public class TournamentTeleport implements Runnable
 {

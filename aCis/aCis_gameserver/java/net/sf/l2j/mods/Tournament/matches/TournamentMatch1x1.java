@@ -1,4 +1,4 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.matches;
+package net.sf.l2j.mods.Tournament.matches;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.concurrent.ScheduledFuture;
 
 import net.sf.l2j.Config;
 import net.sf.l2j.gameserver.enums.actors.ClassId;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentTeam;
+import net.sf.l2j.mods.Tournament.TournamentManager;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
+import net.sf.l2j.mods.Tournament.model.TournamentTeam;
 
 /**
  * @author Rouxy

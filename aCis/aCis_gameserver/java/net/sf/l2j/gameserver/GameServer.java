@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.logging.LogManager;
 
+import net.sf.l2j.Chronos;
 import net.sf.l2j.Config;
 import net.sf.l2j.commons.lang.StringUtil;
 import net.sf.l2j.commons.logging.CLogger;
@@ -92,7 +93,6 @@ import net.sf.l2j.gameserver.model.boat.BoatGludinRune;
 import net.sf.l2j.gameserver.model.boat.BoatInnadrilTour;
 import net.sf.l2j.gameserver.model.boat.BoatRunePrimeval;
 import net.sf.l2j.gameserver.model.boat.BoatTalkingGludin;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
 import net.sf.l2j.gameserver.model.entity.instance.InstanceManager;
 import net.sf.l2j.gameserver.model.olympiad.Olympiad;
 import net.sf.l2j.gameserver.model.olympiad.OlympiadGameManager;
@@ -106,6 +106,7 @@ import net.sf.l2j.gameserver.taskmanager.PvpFlagTaskManager;
 import net.sf.l2j.gameserver.taskmanager.RandomAnimationTaskManager;
 import net.sf.l2j.gameserver.taskmanager.ShadowItemTaskManager;
 import net.sf.l2j.gameserver.taskmanager.WaterTaskManager;
+import net.sf.l2j.mods.Tournament.TournamentManager;
 import net.sf.l2j.mods.epicinfo.RaidBossInfoManager;
 import net.sf.l2j.mods.events.tvt.TvTEventManager;
 import net.sf.l2j.mods.partyfarm.InitialPartyFarm;
@@ -128,6 +129,9 @@ public class GameServer {
 	}
 
 	public GameServer() throws Exception {
+
+		final long serverLoadStart = Chronos.currentTimeMillis();
+
 		// Create log folder
 		new File("./log").mkdir();
 		new File("./log/chat").mkdir();
@@ -340,6 +344,8 @@ public class GameServer {
 		LOGGER.info("Gameserver has started, used memory: {} / {} Mo.", SysUtil.getUsedMemory(),
 				SysUtil.getMaxMemory());
 		LOGGER.info("Maximum allowed players: {}.", Config.MAXIMUM_ONLINE_USERS);
+		LOGGER.info(getClass().getSimpleName() + ": Server loaded in "
+				+ ((Chronos.currentTimeMillis() - serverLoadStart) / 1000) + " seconds.");
 
 		StringUtil.printSection("Login");
 		LoginServerThread.getInstance().start();

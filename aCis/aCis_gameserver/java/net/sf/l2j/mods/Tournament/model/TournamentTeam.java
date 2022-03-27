@@ -1,4 +1,4 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.model;
+package net.sf.l2j.mods.Tournament.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,11 +8,11 @@ import net.sf.l2j.gameserver.enums.LootRule;
 import net.sf.l2j.gameserver.enums.MessageType;
 import net.sf.l2j.gameserver.enums.actors.ClassId;
 import net.sf.l2j.gameserver.model.actor.Player;
-import net.sf.l2j.gameserver.model.entity.Tournament.TournamentManager;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
 import net.sf.l2j.gameserver.model.entity.instance.InstanceManager;
 import net.sf.l2j.gameserver.model.group.Party;
 import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
+import net.sf.l2j.mods.Tournament.TournamentManager;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
 import net.sf.l2j.util.RewardHolder;
 
 /**

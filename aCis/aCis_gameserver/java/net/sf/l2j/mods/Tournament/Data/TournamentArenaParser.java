@@ -1,4 +1,4 @@
-package net.sf.l2j.gameserver.model.entity.Tournament.Data;
+package net.sf.l2j.mods.Tournament.Data;
 
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -10,9 +10,9 @@ import org.w3c.dom.NamedNodeMap;
 import net.sf.l2j.commons.data.StatSet;
 import net.sf.l2j.commons.data.xml.IXmlReader;
 import net.sf.l2j.commons.random.Rnd;
-import net.sf.l2j.gameserver.model.entity.Tournament.enums.TournamentFightType;
-import net.sf.l2j.gameserver.model.entity.Tournament.model.TournamentArena;
 import net.sf.l2j.gameserver.model.location.Location;
+import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
+import net.sf.l2j.mods.Tournament.model.TournamentArena;
 
 public class TournamentArenaParser implements IXmlReader
 {

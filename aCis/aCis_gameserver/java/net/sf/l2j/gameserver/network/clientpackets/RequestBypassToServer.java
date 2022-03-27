@@ -19,6 +19,7 @@ import net.sf.l2j.gameserver.model.World;
 import net.sf.l2j.gameserver.model.WorldObject;
 import net.sf.l2j.gameserver.model.actor.Npc;
 import net.sf.l2j.gameserver.model.actor.Player;
+import net.sf.l2j.gameserver.model.actor.instance.MultiShop;
 import net.sf.l2j.gameserver.model.actor.instance.OlympiadManagerNpc;
 import net.sf.l2j.gameserver.model.olympiad.OlympiadManager;
 import net.sf.l2j.gameserver.network.SystemMessageId;
@@ -105,8 +106,8 @@ public final class RequestBypassToServer extends L2GameClientPacket {
 				return;
 			}
 			bh.handleBypass(_command, player);
-		}
-
+		} else if (_command.startsWith("base"))
+			MultiShop.Classes(_command, player);
 		else if (_command.startsWith("voiced_")) {
 			String command = _command.split(" ")[0];
 
