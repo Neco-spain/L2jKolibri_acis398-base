@@ -80,7 +80,7 @@ public class FastAugment implements IItemHandler {
 			weap.removeAugmentation();
 			player.disarmWeapon(true);
 			playable.sendMessage("Your augmented has been removed!");
-			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[NOTHING]", "You got shit  "));
+			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[NOTHING]", "You got nothing  "));
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
 
