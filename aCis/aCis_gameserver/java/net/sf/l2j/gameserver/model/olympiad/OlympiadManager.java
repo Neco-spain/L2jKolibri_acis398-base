@@ -116,6 +116,13 @@ public class OlympiadManager {
 			player.sendPacket(SystemMessageId.GAME_REQUEST_CANNOT_BE_MADE);
 			return false;
 		}
+
+		if (player.getPvpKills() < Config.PVP_REQUIRED) {
+			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System",
+					"You need at least " + Config.PVP_REQUIRED + " PvP's to enter Olympiad"));
+			return false;
+		}
+
 		// Olympiad dualbox protection
 		if (player._active_boxes > 1 && !Config.ALLOW_DUALBOX_OLY) {
 			final List<String> players_in_boxes = player.active_boxes_characters;

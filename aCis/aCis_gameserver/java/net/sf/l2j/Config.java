@@ -212,6 +212,7 @@ public final class Config {
 	public static boolean START_PARTY;
 	public static boolean PARTY_ONLY;
 	public static int MIN_PARTY_MEMBERS;
+	public static int PVP_REQUIRED;
 	public static String PART_ZONE_MONSTERS_EVENT;
 	public static List<Integer> PART_ZONE_MONSTERS_EVENT_ID;
 	public static List<RewardHolder> PARTY_ZONE_REWARDS = new ArrayList<>();
@@ -1237,6 +1238,7 @@ public final class Config {
 		PARTY_FARM_MESSAGE_TIME = Integer.parseInt(BestFarm.getProperty("ScreenPartyFarmMessageTime", "10")) * 1000;
 		PARTY_ONLY = Boolean.parseBoolean(BestFarm.getProperty("PartyPlayersOnly", "true"));
 		MIN_PARTY_MEMBERS = Integer.parseInt(BestFarm.getProperty("MinPartyMembers", "3"));
+		PVP_REQUIRED = BestFarm.getProperty("MinPvPRequired", 25);
 
 		String[] monsterLocs2 = BestFarm.getProperty("MonsterLoc", "").split(";");
 		String[] locSplit3 = null;

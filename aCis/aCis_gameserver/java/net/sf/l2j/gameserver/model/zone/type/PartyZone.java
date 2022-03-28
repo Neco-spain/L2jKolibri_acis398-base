@@ -30,25 +30,32 @@ public class PartyZone extends ZoneType {
 
 			final Player player = (Player) character;
 
-			if (Config.PARTY_ONLY
-					|| player.isInParty() && player.getParty().getMembersCount() < Config.MIN_PARTY_MEMBERS) {
+			if (Config.PARTY_ONLY) {
+				if (!player.isInParty() || player.getParty().getMembersCount() < Config.MIN_PARTY_MEMBERS) {
 
-				player.teleportTo(TeleportType.TOWN);
-				player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System",
-						"You can't access party zone without being in a party of " + Config.MIN_PARTY_MEMBERS
-								+ " members !"));
+					player.teleportTo(TeleportType.TOWN);
+					player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System",
+							"You can't access party zone without being in a party of at least  "
+									+ Config.MIN_PARTY_MEMBERS + " members !"));
+				}
 			}
+
 			PvpFlagTaskManager.getInstance().remove(player, true);
 			noblesse.getEffects(player, player);
 			player.updatePvPFlag(1);
 			character.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System", "Entered Party Zone!"));
 			character.setInsideZone(ZoneId.NO_SUMMON_FRIEND, true);
 			character.setInsideZone(ZoneId.PARTY, true);
+			if (player.getPvpKills() < Config.PVP_REQUIRED) {
+				player.teleportTo(TeleportType.TOWN);
 
+				player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System",
+						"You need at least " + Config.PVP_REQUIRED + " PvP's to enter PartyZone"));
+			}
 		} else {
 			character.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System",
 					"Party zone not active yet! Check opening hours!"));
-			
+
 		}
 
 	}

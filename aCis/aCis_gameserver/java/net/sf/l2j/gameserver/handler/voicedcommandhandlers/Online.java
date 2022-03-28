@@ -23,12 +23,13 @@ import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 
 public class Online implements IVoicedCommandHandler {
-	private static final String[] VOICED_COMMANDS = { "online" };
+	private static final String[] _voicedCommands = { "online" };
 
 	@Override
+
 	public boolean useVoicedCommand(String command, Player activeChar, String target) {
-		if (command.equalsIgnoreCase("online")) {
-			activeChar.sendPacket(new CreatureSay(0, SayType.PARTYROOM_COMMANDER, "[SERVER]",
+		if (command.equals("online")) {
+			activeChar.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[SERVER]",
 					"There are  " + World.getInstance().getPlayers().size() + " players online now!"));
 
 		}
@@ -36,7 +37,13 @@ public class Online implements IVoicedCommandHandler {
 	}
 
 	@Override
-	public String[] getVoicedCommandList() {
-		return VOICED_COMMANDS;
+
+	public String[] getVoicedCommandList()
+
+	{
+
+		return _voicedCommands;
+
 	}
+
 }

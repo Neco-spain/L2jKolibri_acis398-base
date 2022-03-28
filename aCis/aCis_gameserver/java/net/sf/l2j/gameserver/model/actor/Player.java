@@ -2942,6 +2942,8 @@ public final class Player extends Playable {
 				setPvpKills(getPvpKills() + 1);
 				// Update the character's name color if they reached any of the 5 PvP levels.
 				updatePvPColor(getPvpKills());
+//TODO Add Killing Spree System
+
 				broadcastUserInfo();
 				// Send UserInfo packet to attacker with its Karma and PK Coudnter
 				sendPacket(new UserInfo(this));

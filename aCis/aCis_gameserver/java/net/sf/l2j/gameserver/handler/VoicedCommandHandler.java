@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import net.sf.l2j.gameserver.GameServer;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Menu;
+import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Online;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Ranking;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Shiff_Mod;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.TvTEventCommand;
@@ -33,6 +34,7 @@ public class VoicedCommandHandler {
 		registerVoicedCommandHandler(new TvTEventCommand());
 		registerVoicedCommandHandler(new Ranking());
 		registerVoicedCommandHandler(new Menu());
+		registerVoicedCommandHandler(new Online());
 
 		LOGGER.info("VoicedCommandHandler: Loaded " + _datatable.size() + " handlers.");
 	}
