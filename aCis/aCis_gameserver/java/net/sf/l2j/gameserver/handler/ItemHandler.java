@@ -11,7 +11,10 @@ import net.sf.l2j.gameserver.handler.itemhandlers.Books;
 import net.sf.l2j.gameserver.handler.itemhandlers.Calculators;
 import net.sf.l2j.gameserver.handler.itemhandlers.Elixirs;
 import net.sf.l2j.gameserver.handler.itemhandlers.EnchantScrolls;
-import net.sf.l2j.gameserver.handler.itemhandlers.FastAugment;
+import net.sf.l2j.gameserver.handler.itemhandlers.FastAugmentHighGrade;
+import net.sf.l2j.gameserver.handler.itemhandlers.FastAugmentMidGrade;
+import net.sf.l2j.gameserver.handler.itemhandlers.FastAugmentNoGrade;
+import net.sf.l2j.gameserver.handler.itemhandlers.FastAugmentTopGrade;
 import net.sf.l2j.gameserver.handler.itemhandlers.FishShots;
 import net.sf.l2j.gameserver.handler.itemhandlers.Harvesters;
 import net.sf.l2j.gameserver.handler.itemhandlers.ItemSkills;
@@ -96,7 +99,10 @@ public class ItemHandler {
 		registerHandler(new Skin15());
 		registerHandler(new VipCoin());
 		registerHandler(new Visual());
-		registerHandler(new FastAugment());
+		registerHandler(new FastAugmentTopGrade());
+		registerHandler(new FastAugmentHighGrade());
+		registerHandler(new FastAugmentMidGrade());
+		registerHandler(new FastAugmentNoGrade());
 
 	}
 

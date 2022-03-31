@@ -3,6 +3,7 @@ package net.sf.l2j.gameserver.handler.itemhandlers;
 import net.sf.l2j.Config;
 import net.sf.l2j.commons.pool.ThreadPool;
 import net.sf.l2j.commons.random.Rnd;
+import net.sf.l2j.gameserver.enums.SayType;
 import net.sf.l2j.gameserver.enums.items.ShotType;
 import net.sf.l2j.gameserver.handler.IItemHandler;
 import net.sf.l2j.gameserver.model.actor.Playable;
@@ -11,6 +12,7 @@ import net.sf.l2j.gameserver.model.holder.IntIntHolder;
 import net.sf.l2j.gameserver.model.item.instance.ItemInstance;
 import net.sf.l2j.gameserver.model.item.kind.Weapon;
 import net.sf.l2j.gameserver.network.SystemMessageId;
+import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 import net.sf.l2j.gameserver.network.serverpackets.ExAutoSoulShot;
 import net.sf.l2j.gameserver.network.serverpackets.MagicSkillUse;
 
@@ -35,15 +37,17 @@ public class SoulShots implements IItemHandler {
 
 			if (player.isAutoPot(MANA)) {
 				player.sendPacket(new ExAutoSoulShot(MANA, 0));
-				player.sendMessage("Deactivated auto mana potions.");
+				player.sendPacket(new CreatureSay(0, SayType.PARTY, "[AUTOPOTS]", "Deactivated mana Potions"));
+
 				player.setAutoPot(MANA, null, false);
 
 			} else {
 				if (player.getInventory().getItemByItemId(MANA) != null) {
 					if (player.getInventory().getItemByItemId(MANA).getCount() > 1) {
 						player.sendPacket(new ExAutoSoulShot(MANA, 1));
-						player.sendMessage("Activated auto mana potions.");
-						player.setAutoPot(728,
+						player.sendPacket(new CreatureSay(0, SayType.PARTY, "[AUTOPOTS]", "Activated mana Potions"));
+
+						player.setAutoPot(MANA,
 								ThreadPool.scheduleAtFixedRate(new AutoPot(MANA, player), 1000, MANA_POT_CD * 1000),
 								true);
 					} else {
@@ -63,15 +67,17 @@ public class SoulShots implements IItemHandler {
 		{
 			if (player.isAutoPot(HP)) {
 				player.sendPacket(new ExAutoSoulShot(HP, 0));
-				player.sendMessage("Deactivated auto healing potions.");
+				player.sendPacket(new CreatureSay(0, SayType.PARTY, "[AUTOPOTS]", "Deactivated healing Potions"));
+
 				player.setAutoPot(HP, null, false);
 
 			} else {
 				if (player.getInventory().getItemByItemId(HP) != null) {
 					if (player.getInventory().getItemByItemId(HP).getCount() > 1) {
 						player.sendPacket(new ExAutoSoulShot(HP, 1));
-						player.sendMessage("Activated auto healing potions.");
-						player.setAutoPot(1539,
+
+						player.sendPacket(new CreatureSay(0, SayType.PARTY, "[AUTOPOTS]", "Activated healing Potions"));
+						player.setAutoPot(HP,
 								ThreadPool.scheduleAtFixedRate(new AutoPot(HP, player), 1000, HEALING_POT_CD * 1000),
 								true);
 					} else {
@@ -89,15 +95,17 @@ public class SoulShots implements IItemHandler {
 		if (itemId == CP) {
 			if (player.isAutoPot(5592)) {
 				player.sendPacket(new ExAutoSoulShot(5592, 0));
-				player.sendMessage("Deactivated auto cp potions.");
+				player.sendPacket(new CreatureSay(0, SayType.PARTY, "[AUTOPOTS]", "Deactivated CP Potions"));
+
 				player.setAutoPot(5592, null, false);
 
 			} else {
 				if (player.getInventory().getItemByItemId(5592) != null) {
 					if (player.getInventory().getItemByItemId(5592).getCount() > 1) {
 						player.sendPacket(new ExAutoSoulShot(5592, 1));
-						player.sendMessage("Activated auto cp potions.");
-						player.setAutoPot(5592,
+						player.sendPacket(new CreatureSay(0, SayType.PARTY, "[AUTOPOTS]", "Activated CP Potions"));
+
+						player.setAutoPot(CP,
 								ThreadPool.scheduleAtFixedRate(new AutoPot(5592, player), 1000, CP_POT_CD * 1000),
 								true);
 					} else {
