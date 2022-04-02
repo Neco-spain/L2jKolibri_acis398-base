@@ -10,6 +10,7 @@ import net.sf.l2j.gameserver.model.actor.Playable;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.item.instance.ItemInstance;
 import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
+import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
 import net.sf.l2j.gameserver.network.serverpackets.InventoryUpdate;
 
 public class FastAugmentTopGrade implements IItemHandler {
@@ -28,7 +29,7 @@ public class FastAugmentTopGrade implements IItemHandler {
 			player.sendMessage("You can't fast augment on " + weap.getItem().getCrystalType() + " Grade Weapons!");
 			return;
 		} else if (weap.isHeroItem()) {
-			player.sendMessage("You can't add Augment On " + weap.getItemName() + " !");
+			player.sendMessage("You can't add Augment on " + weap.getItemName() + " !");
 			return;
 
 		} else if (weap.isAugmented()) {
@@ -78,28 +79,34 @@ public class FastAugmentTopGrade implements IItemHandler {
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
+			player.sendPacket(new ExShowScreenMessage("[CHANCE] " + "You got " + name, 10));
+
 			break;
 		}
 
 		while (isactive == true) {
 
 			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[ACTIVE]", "You got " + name));
+
 			player.disarmWeapon(true);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
+			player.sendPacket(new ExShowScreenMessage("[ACTIVE] " + "You got " + name, 10));
 			break;
 		}
 
 		while (isPassive == true) {
 
 			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[PASSIVE]", "You got " + name));
+
 			player.disarmWeapon(true);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
+			player.sendPacket(new ExShowScreenMessage("[PASSIVE] " + "You got " + name, 10));
 			break;
 
 		}
