@@ -10,6 +10,7 @@ import net.sf.l2j.gameserver.model.actor.Playable;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.item.instance.ItemInstance;
 import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
+import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
 import net.sf.l2j.gameserver.network.serverpackets.InventoryUpdate;
 
 public class FastAugmentMidGrade implements IItemHandler {
@@ -23,18 +24,16 @@ public class FastAugmentMidGrade implements IItemHandler {
 		if (weap == null) {
 			player.sendMessage(player.getName() + " have to equip a weapon.");
 
-		} else if (weap.getItem().getCrystalType().getId() == 0 || weap.getItem().getCrystalType().getId() == 1
-				|| weap.getItem().getCrystalType().getId() == 2) {
-			player.sendMessage("You can't fast augment on " + weap.getItem().getCrystalType() + " Grade Weapons!");
+		} else if (weap.getItem().getCrystalType().getId() <= 3) {
+			player.sendMessage("You can only fast augment on A and S grade  Weapons!");
 			return;
 		} else if (weap.isHeroItem()) {
-			player.sendMessage("You can't add Augment On " + weap.getItemName() + " !");
-			return;
+			player.sendMessage("You can't add Augment on " + weap.getItemName() + " !");
 
 		} else if (weap.isAugmented()) {
 			weap.getAugmentation().removeBonus(player);
 			weap.removeAugmentation();
-
+//			askRemove(player, forceUse);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
@@ -47,7 +46,11 @@ public class FastAugmentMidGrade implements IItemHandler {
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
-			checkaugment(playable, weap);
+
+			if (weap.getAugmentation().getSkill() == null) {
+				player.sendMessage("No luck try again!");
+			} else
+				checkaugment(playable, weap);
 
 		}
 
@@ -58,43 +61,44 @@ public class FastAugmentMidGrade implements IItemHandler {
 
 		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
 		String name = weap.getAugmentation().getSkill().getName();
-//		int level = weap.getAugmentation().getSkill().getLevel();
-//		Augmentation aug = AugmentationData.getInstance().generateRandomAugmentation(76, 3);
 		boolean isPassive = weap.getAugmentation().getSkill().isPassive()
 				&& !weap.getAugmentation().getSkill().isChance();
 		boolean isactive = weap.getAugmentation().getSkill().isActive();
 		boolean isChance = weap.getAugmentation().getSkill().isChance();
-//		L2Skill isnone = weap.getAugmentation().getSkill();
-//		while (isnone == true) {
-//		break;   + name + level
-		// (((L2Skill) player.getAllAvailableSkills().getname()
-//	}
 
 		while (isChance == true) {
 
 			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[CHANCE]", "You got " + name));
+			sendMsg(player, "CHANCE : " + "You got " + name);
+
 			player.disarmWeapon(true);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
+
 			break;
 		}
 
 		while (isactive == true) {
 
 			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[ACTIVE]", "You got " + name));
+			sendMsg(player, "ACTIVE : " + "You got " + name);
+
 			player.disarmWeapon(true);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
+
 			break;
 		}
 
 		while (isPassive == true) {
 
 			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[PASSIVE]", "You got " + name));
+			sendMsg(player, "PASSIVE : " + "You got " + name);
+
 			player.disarmWeapon(true);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
@@ -108,4 +112,8 @@ public class FastAugmentMidGrade implements IItemHandler {
 
 	}
 
+	private void sendMsg(final Player player, final String s) {
+		player.sendPacket(new ExShowScreenMessage(s, 3000, ExShowScreenMessage.SMPOS.TOP_CENTER, true));
+		player.sendMessage(s);
+	}
 }
