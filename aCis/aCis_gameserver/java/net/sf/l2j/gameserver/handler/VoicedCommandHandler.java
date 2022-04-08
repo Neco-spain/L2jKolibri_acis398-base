@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import net.sf.l2j.gameserver.GameServer;
+import net.sf.l2j.gameserver.handler.voicedcommandhandlers.GrandBossStatus;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Menu;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Online;
 import net.sf.l2j.gameserver.handler.voicedcommandhandlers.Ranking;
@@ -35,6 +36,7 @@ public class VoicedCommandHandler {
 		registerVoicedCommandHandler(new Ranking());
 		registerVoicedCommandHandler(new Menu());
 		registerVoicedCommandHandler(new Online());
+		registerVoicedCommandHandler(new GrandBossStatus());
 
 		LOGGER.info("VoicedCommandHandler: Loaded " + _datatable.size() + " handlers.");
 	}

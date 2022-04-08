@@ -7,6 +7,7 @@ import net.sf.l2j.gameserver.handler.itemhandlers.BeastSoulShots;
 import net.sf.l2j.gameserver.handler.itemhandlers.BeastSpices;
 import net.sf.l2j.gameserver.handler.itemhandlers.BeastSpiritShots;
 import net.sf.l2j.gameserver.handler.itemhandlers.BlessedSpiritShots;
+import net.sf.l2j.gameserver.handler.itemhandlers.Bog;
 import net.sf.l2j.gameserver.handler.itemhandlers.Books;
 import net.sf.l2j.gameserver.handler.itemhandlers.Calculators;
 import net.sf.l2j.gameserver.handler.itemhandlers.Elixirs;
@@ -103,7 +104,7 @@ public class ItemHandler {
 		registerHandler(new FastAugmentHighGrade());
 		registerHandler(new FastAugmentMidGrade());
 		registerHandler(new FastAugmentNoGrade());
-
+		registerHandler(new Bog());
 	}
 
 	private void registerHandler(IItemHandler handler) {

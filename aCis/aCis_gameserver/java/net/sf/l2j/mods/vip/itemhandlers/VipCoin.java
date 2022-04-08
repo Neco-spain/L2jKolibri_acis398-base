@@ -136,8 +136,7 @@ public class VipCoin implements IItemHandler {
 				if (activeChar.isVip()) {
 					long daysleft = (activeChar.getVipEndTime() - Calendar.getInstance().getTimeInMillis()) / 86400000L;
 					activeChar.setEndTime("vip", (int) (daysleft + Config.VIP_DAYS_ID4));
-					activeChar.sendMessage(
-							"Congratulations, You just received another " + Config.VIP_DAYS_ID4 + " days of VIP.");
+					activeChar.sendMessage("Congratulations, You just received infinite days of VIP.");
 				} else {
 					activeChar.setVip(true);
 					activeChar.setEndTime("vip", Config.VIP_DAYS_ID4);
