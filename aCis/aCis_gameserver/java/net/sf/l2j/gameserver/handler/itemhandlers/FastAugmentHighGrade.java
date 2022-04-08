@@ -22,7 +22,7 @@ public class FastAugmentHighGrade implements IItemHandler {
 		Augmentation aug = AugmentationData.getInstance().generateRandomAugmentation(76, 2);
 
 		if (weap == null) {
-			player.sendMessage(player.getName() + " have to equip a weapon.");
+			player.sendMessage(player.getName() + " you have to equip a weapon.");
 
 		} else if (weap.getItem().getCrystalType().getId() <= 3) {
 			player.sendMessage("You can only fast augment on A and S grade  Weapons!");
