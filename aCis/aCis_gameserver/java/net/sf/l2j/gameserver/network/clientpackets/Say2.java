@@ -57,13 +57,13 @@ public final class Say2 extends L2GameClientPacket {
 			return;
 		}
 
-		if (_text.startsWith(">")) {
+		if (_text.startsWith("-")) {
 			if (!player.isVip()) {
 				player.sendPacket(new CreatureSay(0, SayType.PARTYROOM_ALL, "[VIP]", "You cannot use Vip chat!"));
 				return;
 			}
 
-			final CreatureSay cs = new CreatureSay(player.getObjectId(), SayType.PARTYROOM_ALL, player.getName(),
+			final CreatureSay cs = new CreatureSay(player.getObjectId(), SayType.PARTYROOM_ALL,"[VIP]"+ player.getName(),
 					_text.substring(1));
 			World.getInstance().getPlayers().forEach(knownPlayer -> knownPlayer.sendPacket(cs));
 			return;
