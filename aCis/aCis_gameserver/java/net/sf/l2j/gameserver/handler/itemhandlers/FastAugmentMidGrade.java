@@ -56,7 +56,7 @@ public class FastAugmentMidGrade implements IItemHandler {
 
 	}
 
-	private void checkaugment(Playable playable, ItemInstance item) {
+	private static void checkaugment(Playable playable, ItemInstance item) {
 		Player player = (Player) playable;
 
 		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
@@ -112,7 +112,7 @@ public class FastAugmentMidGrade implements IItemHandler {
 
 	}
 
-	private void sendMsg(final Player player, final String s) {
+	private static void sendMsg(final Player player, final String s) {
 		player.sendPacket(new ExShowScreenMessage(s, 3000, ExShowScreenMessage.SMPOS.TOP_CENTER, true));
 		player.sendMessage(s);
 	}

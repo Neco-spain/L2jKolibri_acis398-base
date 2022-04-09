@@ -1,6 +1,6 @@
 package net.sf.l2j.gameserver.handler.itemhandlers;
 
-//
+
 import net.sf.l2j.gameserver.data.xml.AugmentationData;
 import net.sf.l2j.gameserver.enums.Paperdoll;
 import net.sf.l2j.gameserver.enums.SayType;
@@ -26,6 +26,7 @@ public class FastAugmentTopGrade implements IItemHandler {
 
 		} else if (weap.getItem().getCrystalType().getId() <= 3) {
 			player.sendMessage("You can only fast augment on A and S grade  Weapons!");
+//
 			return;
 		} else if (weap.isHeroItem()) {
 			player.sendMessage("You can't add Augment on " + weap.getItemName() + " !");
@@ -55,7 +56,7 @@ public class FastAugmentTopGrade implements IItemHandler {
 
 	}
 
-	private void checkaugment(Playable playable, ItemInstance item) {
+	private static void checkaugment(Playable playable, ItemInstance item) {
 		Player player = (Player) playable;
 
 		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
@@ -111,7 +112,7 @@ public class FastAugmentTopGrade implements IItemHandler {
 
 	}
 
-	private void sendMsg(final Player player, final String s) {
+	private static void sendMsg(final Player player, final String s) {
 		player.sendPacket(new ExShowScreenMessage(s, 3000, ExShowScreenMessage.SMPOS.TOP_CENTER, true));
 		player.sendMessage(s);
 	}
