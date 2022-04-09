@@ -43,7 +43,7 @@ public class TeleportLocationData implements IXmlReader {
 	public TeleportLocation getTeleportLocation(int id) {
 		return _teleports.get(id);
 	}
-
+	
 	public static TeleportLocationData getInstance() {
 		return SingletonHolder.INSTANCE;
 	}

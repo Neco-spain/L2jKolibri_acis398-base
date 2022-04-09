@@ -463,7 +463,7 @@ public final class Player extends Playable {
 	private int _pledgeClass;
 	private int _pledgeType;
 	private int _lvlJoinedAcademy;
-
+	
 	private boolean _wantsPeace;
 
 	private int _deathPenaltyBuffLevel;
@@ -6607,6 +6607,7 @@ public final class Player extends Playable {
 			// friends & blocklist update
 			notifyFriends(false);
 			getBlockList().playerLogout();
+
 		} catch (final Exception e) {
 			LOGGER.error("Couldn't disconnect correctly the player.", e);
 		}
