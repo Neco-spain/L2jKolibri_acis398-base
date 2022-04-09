@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <list>
 	<!-- PVP Zones -->
-	<zone shape="NPoly" minZ="-4290" maxZ="-1290"><!-- Primeval Isle (Town Zone) -->
-		<node x="10408" y="-27395"/>
-		<node x="12065" y="-25334"/>
-		<node x="12223" y="-23159"/>
-		<node x="10424" y="-22340"/>
-		<node x="9566" y="-23131"/>
-		<node x="9290" y="-24261"/>
-	</zone>
-	<zone shape="NPoly" minZ="-2992" maxZ="-2792"><!-- gm_prison -->
-		<node x="-116390" y="-251581"/>
-		<node x="-112756" y="-251617"/>
-		<node x="-112720" y="-248199"/>
-		<node x="-116354" y="-248217"/>
-	</zone>
+
+	
+<zone shape='Cylinder' minZ='-4672' maxZ='-1290' rad='6000'>
+	<node x="10155" y="-24100" />
+</zone>
 </list>

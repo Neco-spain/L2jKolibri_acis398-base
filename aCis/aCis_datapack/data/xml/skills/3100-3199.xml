@@ -330,14 +330,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<add stat="maxHp" val="#maxHp" />
 			</effect>
 		</for>
@@ -351,14 +351,14 @@
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="power" val="#maxHp" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="180000" />
+		<set name="reuseDelay" val="1000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="1500" />
 		<set name="skillType" val="HEAL_STATIC" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="#stackOrder" stackType="abnormal_item" >
+			<effect name="Buff" time="3600" val="0" stackOrder="#stackOrder" stackType="abnormal_item" >
 				<add stat="maxHp" val="#maxHp" />
 			</effect>
 		</for>
@@ -372,14 +372,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<mul stat="gainHp" val="#gainHp" />
 			</effect>
 		</for>
@@ -412,14 +412,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<add stat="maxMp" val="#maxMp" />
 			</effect>
 		</for>
@@ -471,14 +471,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<add stat="maxCp" val="#maxCp" />
 			</effect>
 		</for>
@@ -492,14 +492,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<mul stat="pAtk" val="#pAtk" />
 			</effect>
 		</for>
@@ -513,14 +513,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<mul stat="mAtk" val="#mAtk" />
 			</effect>
 		</for>
@@ -534,14 +534,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="1500" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<mul stat="pvpPhysDmg" val="#pvpBonus" />
 				<mul stat="pvpPhysSkillsDmg" val="#pvpBonus" />
 			</effect>
@@ -556,14 +556,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<mul stat="pDef" val="#pDef" />
 			</effect>
 		</for>
@@ -577,14 +577,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<mul stat="mDef" val="#mDef" />
 			</effect>
 		</for>
@@ -625,14 +625,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<add stat="giveHp" val="#giveHp" />
 			</effect>
 		</for>
@@ -646,14 +646,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<add stat="rEvas" val="#rEvas" />
 			</effect>
 		</for>
@@ -667,14 +667,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<add stat="accCombat" val="#accCombat" />
 			</effect>
 		</for>
@@ -688,14 +688,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<basemul stat="rCrit" val="#rCrit" />
 			</effect>
 		</for>
@@ -709,14 +709,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<basemul stat="mCritRate" val="#mCritRate" />
 			</effect>
 		</for>
@@ -815,14 +815,14 @@
 		<set name="mpInitialConsume" val="#mpInitialConsume" />
 		<set name="mpConsume" val="#mpConsume" />
 		<set name="target" val="SELF" />
-		<set name="reuseDelay" val="300000" />
+		<set name="reuseDelay" val="3000" />
 		<set name="staticReuse" val="true" />
 		<set name="hitTime" val="4000" />
 		<set name="skillType" val="BUFF" />
 		<set name="operateType" val="ACTIVE" />
 		<set name="staticHitTime" val="true" />
 		<for>
-			<effect name="Buff" time="120" val="0" stackOrder="1" stackType="abnormal_item">
+			<effect name="Buff" time="3600" val="0" stackOrder="1" stackType="abnormal_item">
 				<add stat="absorbDam" val="#absorbDam" /> <!-- absorb HP from damage inflicted on enemies -->
 			</effect>
 		</for>

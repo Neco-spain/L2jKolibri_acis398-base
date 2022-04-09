@@ -276,7 +276,6 @@
 		<set name="is_sellable" val="false" />
 		<set name="is_depositable" val="false" />
 		<set name="is_stackable" val="true" />
-		<set name="handler" val="Skin2" />
 	</item>
 	<item id="4038" type="EtcItem" name="Food For Hatchling">
 		<set name="default_action" val="skill_reduce" />

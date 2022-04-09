@@ -166,4 +166,7 @@
 		<node x="-20310" y="182673"/> 
 		<node x="-20762" y="179129"/> 
 	</zone> 
+	<zone shape='Cylinder' minZ='-7304' maxZ='-5304' rad='3000'> <!-- Ember --> 
+	<node x="185987" y="-106297" />
+	</zone>
 </list>

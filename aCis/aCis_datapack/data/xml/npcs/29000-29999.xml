@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <list>
 	<npc id="29001" name="Queen Ant" title="">
-		<set name="level" val="40"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="45"/>
 		<set name="height" val="53"/>
 		<set name="rHand" val="0"/>
@@ -103,7 +103,7 @@
 		</minions> 
 	</npc>
 	<npc id="29002" name="Queen Ant Larva" title="">
-		<set name="level" val="38"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="12"/>
 		<set name="height" val="8"/>
 		<set name="rHand" val="0"/>
@@ -138,7 +138,7 @@
 		</skills>
 	</npc>
 	<npc id="29003" name="Nurse Ant" title="">
-		<set name="level" val="35"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="26"/>
 		<set name="height" val="15"/>
 		<set name="rHand" val="0"/>
@@ -173,7 +173,7 @@
 		</skills>
 	</npc>
 	<npc id="29004" name="Guard Ant" title="">
-		<set name="level" val="37"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="26"/>
 		<set name="height" val="15"/>
 		<set name="rHand" val="0"/>
@@ -208,7 +208,7 @@
 		</skills>
 	</npc>
 	<npc id="29005" name="Royal Guard Ant" title="">
-		<set name="level" val="39"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="26"/>
 		<set name="height" val="15"/>
 		<set name="rHand" val="0"/>
@@ -243,7 +243,7 @@
 		</skills>
 	</npc>
 	<npc id="29006" name="Core" title="">
-		<set name="level" val="50"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="140"/>
 		<set name="height" val="75"/>
 		<set name="rHand" val="0"/>
@@ -334,7 +334,7 @@
 		</drops>
 	</npc>
 	<npc id="29007" name="Death Knight" title="">
-		<set name="level" val="50"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="12"/>
 		<set name="height" val="30"/>
 		<set name="rHand" val="75"/>
@@ -371,7 +371,7 @@
 		</skills>
 	</npc>
 	<npc id="29008" name="Doom Wraith" title="">
-		<set name="level" val="55"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="15"/>
 		<set name="height" val="45"/>
 		<set name="rHand" val="1472"/>
@@ -409,7 +409,7 @@
 		</skills>
 	</npc>
 	<npc id="29009" name="Dicor" title="">
-		<set name="level" val="47"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="12"/>
 		<set name="height" val="25.5"/>
 		<set name="rHand" val="0"/>
@@ -445,7 +445,7 @@
 		</skills>
 	</npc>
 	<npc id="29010" name="Validus" title="">
-		<set name="level" val="46"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="15"/>
 		<set name="height" val="29"/>
 		<set name="rHand" val="0"/>
@@ -480,7 +480,7 @@
 		</skills>
 	</npc>
 	<npc id="29011" name="Susceptor" title="">
-		<set name="level" val="49"/>
+		<set name="level" val="80"/>
 		<set name="radius" val="20"/>
 		<set name="height" val="35"/>
 		<set name="rHand" val="0"/>

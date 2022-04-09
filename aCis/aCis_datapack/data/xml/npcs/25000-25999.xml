@@ -11467,17 +11467,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="2238750"/>
 		<set name="sp" val="1054472"/>
-		<set name="hp" val="794874.502880181"/>
-		<set name="mp" val="1507.8"/>
-		<set name="hpRegen" val="308.04072385958"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
 		<set name="mpRegen" val="3"/>
-		<set name="pAtk" val="4902.4469608376"/>
-		<set name="pDef" val="957.73869"/>
-		<set name="mAtk" val="3475.50410725631"/>
-		<set name="mDef" val="467.22"/>
-		<set name="crit" val="4"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
+		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -11493,7 +11493,6 @@
 			<skill id="4170" level="8"/>
 			<skill id="4172" level="8"/>
 			<skill id="4175" level="8"/>
-			<skill id="4177" level="8"/>
 			<skill id="4416" level="10"/>
 			<skill id="4494" level="1"/>
 			<skill id="4871" level="1"/>
@@ -12341,17 +12340,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="4671563"/>
 		<set name="sp" val="943547"/>
-		<set name="hp" val="410600.548543185"/>
-		<set name="mp" val="1607.4"/>
-		<set name="hpRegen" val="126.536105676163"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
 		<set name="mpRegen" val="3"/>
-		<set name="pAtk" val="2592.71886885803"/>
-		<set name="pDef" val="998.10183"/>
-		<set name="mAtk" val="929.620860138406"/>
-		<set name="mDef" val="486.92"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
 		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -12481,17 +12480,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="4362668"/>
 		<set name="sp" val="764172"/>
-		<set name="hp" val="766919.841979224"/>
-		<set name="mp" val="1410"/>
-		<set name="hpRegen" val="299.92321639468"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
 		<set name="mpRegen" val="3"/>
-		<set name="pAtk" val="4561.13268672246"/>
-		<set name="pDef" val="916.07841"/>
-		<set name="mAtk" val="3254.54886115175"/>
-		<set name="mDef" val="446.9"/>
-		<set name="crit" val="4"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
+		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -12506,7 +12505,6 @@
 			<skill id="4045" level="1"/>
 			<skill id="4172" level="7"/>
 			<skill id="4175" level="7"/>
-			<skill id="4177" level="7"/>
 			<skill id="4273" level="3"/>
 			<skill id="4274" level="1"/>
 			<skill id="4275" level="2"/>
@@ -12554,17 +12552,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="4832156"/>
 		<set name="sp" val="847950"/>
-		<set name="hp" val="397437.25144009"/>
-		<set name="mp" val="1507.8"/>
-		<set name="hpRegen" val="123.216289543832"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
 		<set name="mpRegen" val="3"/>
-		<set name="pAtk" val="2451.2234804188"/>
-		<set name="pDef" val="957.73869"/>
-		<set name="mAtk" val="868.876026814078"/>
-		<set name="mDef" val="467.22"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
 		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -13951,17 +13949,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="2238750"/>
 		<set name="sp" val="1054472"/>
-		<set name="hp" val="794874.502880181"/>
-		<set name="mp" val="1507.8"/>
-		<set name="hpRegen" val="308.04072385958"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
 		<set name="mpRegen" val="3"/>
-		<set name="pAtk" val="4902.4469608376"/>
-		<set name="pDef" val="957.73869"/>
-		<set name="mAtk" val="3475.50410725631"/>
-		<set name="mDef" val="467.22"/>
-		<set name="crit" val="4"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
+		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -13977,7 +13975,6 @@
 			<skill id="4168" level="8"/>
 			<skill id="4172" level="8"/>
 			<skill id="4176" level="8"/>
-			<skill id="4177" level="8"/>
 			<skill id="4273" level="3"/>
 			<skill id="4274" level="1"/>
 			<skill id="4275" level="2"/>
@@ -14310,17 +14307,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="2238750"/>
 		<set name="sp" val="1054472"/>
-		<set name="hp" val="794874.502880181"/>
-		<set name="mp" val="1507.8"/>
-		<set name="hpRegen" val="308.04072385958"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
 		<set name="mpRegen" val="3"/>
-		<set name="pAtk" val="4902.4469608376"/>
-		<set name="pDef" val="957.73869"/>
-		<set name="mAtk" val="3475.50410725631"/>
-		<set name="mDef" val="467.22"/>
-		<set name="crit" val="4"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
+		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -14336,7 +14333,6 @@
 			<skill id="4170" level="8"/>
 			<skill id="4172" level="8"/>
 			<skill id="4174" level="8"/>
-			<skill id="4177" level="8"/>
 			<skill id="4273" level="3"/>
 			<skill id="4274" level="1"/>
 			<skill id="4275" level="2"/>
@@ -15182,13 +15178,13 @@
 		<set name="mp" val="1674.8"/>
 		<set name="hpRegen" val="92.3387631310317"/>
 		<set name="mpRegen" val="3"/>
-		<set name="pAtk" val="1445.33274686674"/>
-		<set name="pDef" val="1024.125"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
 		<set name="mAtk" val="280.52213944732"/>
-		<set name="mDef" val="499.6"/>
+		<set name="mDef" val="1200.6"/>
 		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -16195,17 +16191,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="2246400"/>
 		<set name="sp" val="1356048"/>
-		<set name="hp" val="462603.417571805"/>
-		<set name="mp" val="1939.14"/>
-		<set name="hpRegen" val="142.22332528493"/>
-		<set name="mpRegen" val="3.15"/>
-		<set name="pAtk" val="2807.84035814098"/>
-		<set name="pDef" val="1139.632641"/>
-		<set name="mAtk" val="1145.14415159579"/>
-		<set name="mDef" val="555.954"/>
-		<set name="crit" val="4"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
+		<set name="mpRegen" val="3"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
+		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -16512,17 +16508,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="4135551"/>
 		<set name="sp" val="777993"/>
-		<set name="hp" val="373386.071242416"/>
-		<set name="mp" val="1345.8"/>
-		<set name="hpRegen" val="117.68436242886"/>
-		<set name="mpRegen" val="2.7"/>
-		<set name="pAtk" val="2154.88111713047"/>
-		<set name="pDef" val="887.74791"/>
-		<set name="mAtk" val="717.403871261232"/>
-		<set name="mDef" val="433.08"/>
-		<set name="crit" val="4"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
+		<set name="mpRegen" val="3"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
+		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -23046,17 +23042,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="2377821"/>
 		<set name="sp" val="1136977"/>
-		<set name="hp" val="414903.39163531"/>
-		<set name="mp" val="1641"/>
-		<set name="hpRegen" val="127.691727959173"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
 		<set name="mpRegen" val="3"/>
-		<set name="pAtk" val="2633.52325550856"/>
-		<set name="pDef" val="1011.21024"/>
-		<set name="mAtk" val="947.573725160725"/>
-		<set name="mDef" val="493.3"/>
-		<set name="crit" val="4"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
+		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -26491,17 +26487,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="440000"/>
 		<set name="sp" val="40000"/>
-		<set name="hp" val="776489.863367776"/>
-		<set name="mp" val="1442.4"/>
-		<set name="hpRegen" val="302.659981219819"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
 		<set name="mpRegen" val="3"/>
-		<set name="pAtk" val="4680.09940116917"/>
-		<set name="pDef" val="930.08877"/>
-		<set name="mAtk" val="3338.16498534774"/>
-		<set name="mDef" val="453.74"/>
-		<set name="crit" val="4"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
+		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -26516,7 +26512,6 @@
 			<skill id="4045" level="1"/>
 			<skill id="4172" level="1"/>
 			<skill id="4173" level="1"/>
-			<skill id="4177" level="1"/>
 			<skill id="4416" level="2"/>
 			<skill id="4494" level="1"/>
 			<skill id="4730" level="1"/>
@@ -26685,17 +26680,17 @@
 		<set name="type" val="RaidBoss"/>
 		<set name="exp" val="3051180"/>
 		<set name="sp" val="952059"/>
-		<set name="hp" val="675862.82488359"/>
-		<set name="mp" val="203.52"/>
-		<set name="hpRegen" val="259.751563024682"/>
-		<set name="mpRegen" val="3.18"/>
-		<set name="pAtk" val="3068.49967024509"/>
-		<set name="pDef" val="1162.672236"/>
-		<set name="mAtk" val="1381.13520659718"/>
-		<set name="mDef" val="567.1848"/>
+		<set name="hp" val="300327.053710865"/>
+		<set name="mp" val="1674.8"/>
+		<set name="hpRegen" val="92.3387631310317"/>
+		<set name="mpRegen" val="3"/>
+		<set name="pAtk" val="2500.33274686674"/>
+		<set name="pDef" val="3000.125"/>
+		<set name="mAtk" val="280.52213944732"/>
+		<set name="mDef" val="1200.6"/>
 		<set name="crit" val="1"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="60"/>
+		<set name="str" val="80"/>
 		<set name="int" val="76"/>
 		<set name="dex" val="73"/>
 		<set name="wit" val="70"/>
@@ -26710,7 +26705,6 @@
 			<skill id="4045" level="1"/>
 			<skill id="4172" level="5"/>
 			<skill id="4173" level="4"/>
-			<skill id="4177" level="3"/>
 			<skill id="4416" level="6"/>
 			<skill id="4494" level="1"/>
 			<skill id="4721" level="5"/>

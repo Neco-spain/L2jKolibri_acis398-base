@@ -1,0 +1,117 @@
+<html>
+<body>
+<title>Services Menu</title>
+<center>
+<img src=fButtons.emblem_blackbird width=64 height=64>
+</center>
+
+<center><font color=F2F5A9>Player Services:</font>
+<center><img src="L2UI.SquareWhite" width=290 height=1> <img src="L2UI.SquareBlank" width=1 height=2></center><table >
+
+
+	<tr>
+		                             <td><button value="Noblesse" action="bypass -h npc_%objectId%_donate $dona Noblesse" width=128 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected">
+<br></td>                             
+									 <td><button value="ChangeSex" action="bypass -h npc_%objectId%_donate $dona ChangeSex" width=128 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected"></td>
+		                             <td></td>                                                                                                                          
+
+	</tr>
+</table></center>
+<center><table >
+	<tr>
+		                             <td><button value="CleanPk" action="bypass -h npc_%objectId%_donate $dona CleanPk" width=128 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected">
+<br></td>                             
+									 <td><button value="ChangeClass" action="bypass -h npc_%objectId%_donate $dona ChangeClass" width=128 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected"></td>
+		                             <td></td>                                                                                                                          
+
+	</tr>
+</table></center>
+
+
+
+<center><img src="L2UI.SquareWhite" width=290 height=1> <img src="L2UI.SquareBlank" width=1 height=2></center>
+<br>
+<center><font color=F2F5A9>Augmentation Services:</font>
+<br>
+<table width=300 height=32 bgcolor=000000>
+<tr>
+<td fixwidth=5>
+</td>
+<td>
+		<center>
+<button value="Apply augment" action="bypass -h npc_%objectId%_active $active" width=128 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected"></td>
+<td>
+<br>
+<center><font color=F2F5A9>Augment Skills [Active]</font>
+		<center><combobox width=120 height=17 var="active" list=Might;Empower;DuelMight;Shield;MagicBarrier;WildMagic;Focus;BattleRoad;SolarFlare;Guidance;BlessedBody;Agility;Heal;HydroBlast;AuraFlare;Hurricane;ReflectDamage;Prominence;
+</td>
+<td fixwidth=50>
+</td>
+</tr>
+</table>
+<br>
+<center><img src="L2UI.SquareWhite" width=290 height=1> <img src="L2UI.SquareBlank" width=1 height=2></center>
+<br>
+<table width=300 height=32 bgcolor=000000>
+<tr>
+<td fixwidth=5>
+</td>
+<td>
+		<center>
+<button value="Apply augment" action="bypass -h npc_%objectId%_passive $passive" width=128 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected"></td>
+<td>
+
+<center><font color=F2F5A9>Augment Skills [Passive]</font>
+		<center><combobox width=120 height=17 var="passive" list=Empower;DuelMight;Might;Shield;MagicBarrier;Agility;Guidance;Focus;WildMagic;ReflectDamage;Prayer;Clarity;
+</td>
+<td fixwidth=50>
+</td>
+</tr>
+</table>
+<br>
+<center><img src="L2UI.SquareWhite" width=290 height=1> <img src="L2UI.SquareBlank" width=1 height=2></center>
+<center><font color=F2F5A9>Clan Services:</font><table >
+
+	<tr> <td><button value="20k Points" action="bypass -h npc_%objectId%_clan $clan ClanRep_20k" width=64 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected"></td>
+		                             <td><button value="Level 8" action="bypass -h npc_%objectId%_clan $clan ClanLevel" width=128 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected">
+<br></td>                             
+									
+		                              <td><button value="Clan Skills" action="bypass -h npc_%objectId%_clan $clan ClanSkills" width=64 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected">
+</td>                                                                                                                     
+
+	</tr>
+</table></center>
+
+
+<br>
+<center><img src="L2UI.SquareWhite" width=290 height=1> <img src="L2UI.SquareBlank" width=1 height=2></center>
+<br>
+<center><font color=F2F5A9>Change your character's name</font><table >
+
+	<tr>
+<td><button value="Change Name" action="bypass -h npc_%objectId%_name $newName" width=128 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected"></td>
+<td>
+<center><br>
+<center><edit var="newName" width=120></td>                          
+                                                                                                                 
+
+	</tr>
+</table></center>
+
+<center><font color=F2F5A9>Change your acounts's password</font><table >
+
+	<tr>
+<td><button value="Change Password" action="bypass -h npc_%objectId%_password $newPass $repeatNewPass" width=128 height=32 back="fButtons.Center_Unselected_Over" fore="fButtons.Center_Selected"></td>
+<td>
+
+<center><edit var="newPass" width=120>
+<center><edit var="repeatNewPass" width=120></td>                         
+                                                                                                                 
+
+	</tr>
+</table></center>
+
+<br><br>
+<center><img src="L2UI.SquareWhite" width=290 height=1> <img src="L2UI.SquareBlank" width=1 height=2></center>
+</body>
+</html>

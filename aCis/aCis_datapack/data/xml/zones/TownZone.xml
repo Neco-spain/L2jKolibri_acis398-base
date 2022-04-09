@@ -1056,10 +1056,10 @@
 	</zone>
 	<zone shape="NPoly" minZ="-4290" maxZ="-1290"><!-- Primeval Isle (Town Zone) -->
 		<stat name="townId" val="19"/>
-		<node x="11795" y="-24655"/>
-		<node x="12248" y="-24728"/>
-		<node x="12354" y="-23523"/>
-		<node x="11704" y="-23571"/>
+		<node x="16529" y="170516"/>
+		<node x="16645" y="170141"/>
+		<node x="16747" y="169833"/>
+		<node x="16770" y="169677"/>
 		<spawn type="NORMAL" x="10468" y="-24569" z="-3645"/>
 	</zone>
 </list>

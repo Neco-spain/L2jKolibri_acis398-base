@@ -14,7 +14,7 @@
 	<aCar name="admin_setvip" accessLevel="7" />
 	<aCar name="admin_removevip" accessLevel="7" />
 	<aCar name="admin_ptfarm" accessLevel="7" />
-
+	<aCar name="admin_tour" accessLevel="7" params="" desc="Activate or Deactivate the manual tournament."/>
 
 	<!-- ANNOUNCEMENTS -->
 	<aCar name="admin_announce" accessLevel="7" params="[list|all|add|add_auto|del]" desc="Open the Announcements panel."/>
@@ -165,4 +165,13 @@
 
 	<!-- ZONE -->
 	<aCar name="admin_zone" accessLevel="7" params="[show - all|clear|id]" desc="Show the zone panel, or the zone visually."/>
+		
+	<!-- ZONE CREATE -->
+	<aCar name="admin_create_zone" accessLevel="7"/>
+	<aCar name="admin_setType" accessLevel="7"/>
+	<aCar name="admin_saveLoc" accessLevel="7"/>
+	<aCar name="admin_setRad" accessLevel="7"/>
+	<aCar name="admin_reset" accessLevel="7"/>
+	<aCar name="admin_removeLoc" accessLevel="7"/>
+	<aCar name="admin_storeLocs" accessLevel="7"/>
 </list>

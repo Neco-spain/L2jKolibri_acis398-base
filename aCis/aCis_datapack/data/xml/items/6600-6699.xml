@@ -648,6 +648,7 @@
 		<set name="weight" val="10" />
 		<set name="price" val="500000" />
 		<set name="is_stackable" val="true" />
+		<set name="handler" val="Bog" />
 	</item>
 	<item id="6623" type="EtcItem" name="Dummy - Quest Item 1">
 		<set name="material" val="STEEL" />
@@ -1107,8 +1108,6 @@
 		<set name="weight" val="120" />
 		<set name="price" val="1800000" />
 		<set name="is_oly_restricted" val="true" />
-		<set name="handler" val="EnchantScrolls" />
-		<set name="item_skill" val="2006-1" />
 	</item>
 	<item id="6674" type="Armor" name="Sealed Imperial Crusader Breastplate">
 		<set name="default_action" val="equip" />

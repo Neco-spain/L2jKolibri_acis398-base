@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <list>
 	<!-- PVP Zones -->
-	<zone shape="NPoly" minZ="-5000" maxZ="5000"><!-- Abandoned Camp -->
-		<node x="-52056" y="13186"/>
-		<node x="-57126" y="135259"/>
-		<node x="-60124" y="136577"/>
-		<node x="-59878" y="139486"/>
-		<node x="-56525" y="141257"/>
-		<node x="-53797" y="139047"/>
+	<zone shape="Cylinder" minZ="-5000" maxZ="5000" rad='10000'><!-- Abandoned Camp -->
+		<node x="-56608" y="138683"/>
 	</zone>
 </list>
