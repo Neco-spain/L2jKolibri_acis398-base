@@ -52,6 +52,7 @@ public class FastAugmentNoGrade implements IItemHandler {
 			} else
 				checkaugment(playable, weap);
 		}
+		
 	}
 	private static void checkaugment(Playable playable, ItemInstance item) {
 		Player player = (Player) playable;
