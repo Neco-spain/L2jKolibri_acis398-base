@@ -30,6 +30,13 @@ public class PartyZone extends ZoneType {
 
 			final Player player = (Player) character;
 
+
+			PvpFlagTaskManager.getInstance().remove(player, true);
+			noblesse.getEffects(player, player);
+			player.updatePvPFlag(1);
+			character.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System", "Entered Party Zone!"));
+			character.setInsideZone(ZoneId.NO_SUMMON_FRIEND, true);
+			character.setInsideZone(ZoneId.PARTY, true);
 			if (Config.PARTY_ONLY) {
 				if (!player.isInParty() || player.getParty().getMembersCount() < Config.MIN_PARTY_MEMBERS) {
 
@@ -39,13 +46,6 @@ public class PartyZone extends ZoneType {
 									+ Config.MIN_PARTY_MEMBERS + " members !"));
 				}
 			}
-
-			PvpFlagTaskManager.getInstance().remove(player, true);
-			noblesse.getEffects(player, player);
-			player.updatePvPFlag(1);
-			character.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System", "Entered Party Zone!"));
-			character.setInsideZone(ZoneId.NO_SUMMON_FRIEND, true);
-			character.setInsideZone(ZoneId.PARTY, true);
 			if (player.getPvpKills() < Config.PVP_REQUIRED) {
 				player.teleportTo(TeleportType.TOWN);
 
