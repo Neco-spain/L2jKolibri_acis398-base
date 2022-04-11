@@ -33,7 +33,6 @@ public class FastAugmentHighGrade implements IItemHandler {
 		} else if (weap.isAugmented()) {
 			weap.getAugmentation().removeBonus(player);
 			weap.removeAugmentation();
-//			askRemove(player, forceUse);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
@@ -51,11 +50,8 @@ public class FastAugmentHighGrade implements IItemHandler {
 				player.sendMessage("No luck try again!");
 			} else
 				checkaugment(playable, weap);
-
 		}
-
 	}
-
 	private static void checkaugment(Playable playable, ItemInstance item) {
 		Player player = (Player) playable;
 
@@ -65,53 +61,35 @@ public class FastAugmentHighGrade implements IItemHandler {
 				&& !weap.getAugmentation().getSkill().isChance();
 		boolean isactive = weap.getAugmentation().getSkill().isActive();
 		boolean isChance = weap.getAugmentation().getSkill().isChance();
-
-		while (isChance == true) {
-
+		if (isChance == true) {
 			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[CHANCE]", "You got " + name));
 			sendMsg(player, "CHANCE : " + "You got " + name);
-
 			player.disarmWeapon(true);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
-
-			break;
 		}
-
-		while (isactive == true) {
-
+		if (isactive == true) {
 			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[ACTIVE]", "You got " + name));
 			sendMsg(player, "ACTIVE : " + "You got " + name);
-
 			player.disarmWeapon(true);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
-
-			break;
 		}
-
-		while (isPassive == true) {
-
+		if (isPassive == true) {
 			player.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "[PASSIVE]", "You got " + name));
 			sendMsg(player, "PASSIVE : " + "You got " + name);
-
 			player.disarmWeapon(true);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
-			break;
-
 		}
-
 		return;
-
 	}
-
 	private static void sendMsg(final Player player, final String s) {
 		player.sendPacket(new ExShowScreenMessage(s, 3000, ExShowScreenMessage.SMPOS.TOP_CENTER, true));
 		player.sendMessage(s);

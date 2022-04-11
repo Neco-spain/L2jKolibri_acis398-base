@@ -29,7 +29,7 @@ public class TournamentZone extends SpawnZone {
 		character.setInsideZone(ZoneId.TOURNAMENT, true);
 		if (character instanceof Player)
 			((Player) character).sendPacket(SystemMessageId.ENTERED_COMBAT_ZONE);
-		character.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System", "Entered Tournament area!"));
+		character.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System", "Entered Tournament arena!"));
 
 		character.setInsideZone(ZoneId.PVP, true);
 		character.setInsideZone(ZoneId.NO_SUMMON_FRIEND, true);
@@ -40,7 +40,7 @@ public class TournamentZone extends SpawnZone {
 		character.setInsideZone(ZoneId.TOURNAMENT, false);
 		character.setInsideZone(ZoneId.PVP, false);
 		character.setInsideZone(ZoneId.NO_SUMMON_FRIEND, false);
-		character.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System", "Left Tournament area!"));
+		character.sendPacket(new CreatureSay(0, SayType.HERO_VOICE, "System", "Left Tournament arena!"));
 
 		if (character instanceof Player)
 			((Player) character).sendPacket(SystemMessageId.LEFT_COMBAT_ZONE);
