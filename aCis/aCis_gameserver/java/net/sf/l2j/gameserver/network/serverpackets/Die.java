@@ -41,11 +41,11 @@ public class Die extends L2GameServerPacket {
 
 		writeC(0x06);
 		writeD(_objectId);
-		writeD(_funEvent ? 0x01 : 0); // to nearest village ; // to nearest village
-		writeD(_canTeleport ? 0x01 : 0); // to nearest village
-		// writeD(0x01); // to nearest village
+		writeD(_funEvent ?  _canTeleport ? 0x01 : 0 :0); // to nearest village ; // to nearest village
+//		writeD(_canTeleport ? 0x01 : 0); // to nearest village
+//		// writeD(0x01); // to nearest village
 
-		if (_funEvent && _clan != null) {
+		if (_funEvent  && _canTeleport && _clan != null) {
 			SiegeSide side = null;
 
 			final Siege siege = CastleManager.getInstance().getActiveSiege(_creature);

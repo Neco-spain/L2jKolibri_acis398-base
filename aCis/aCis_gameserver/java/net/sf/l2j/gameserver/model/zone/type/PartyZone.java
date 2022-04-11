@@ -26,7 +26,7 @@ public class PartyZone extends ZoneType {
 
 	@Override
 	protected void onEnter(Creature character) {
-		if (character instanceof Player && PartyFarm.is_started()) {
+		if (character instanceof Player && PartyFarm.is_started() && !character.isGM()) {
 
 			final Player player = (Player) character;
 
@@ -62,7 +62,7 @@ public class PartyZone extends ZoneType {
 
 	@Override
 	protected void onExit(Creature character) {
-		if (character instanceof Player && PartyFarm.is_started()) {
+		if (character instanceof Player && PartyFarm.is_started() ) {
 			final Player player = (Player) character;
 			PvpFlagTaskManager.getInstance().remove(player, false);
 			player.updatePvPFlag(0);
