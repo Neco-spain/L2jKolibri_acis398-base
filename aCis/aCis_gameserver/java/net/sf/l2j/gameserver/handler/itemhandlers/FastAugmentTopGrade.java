@@ -1,6 +1,7 @@
 package net.sf.l2j.gameserver.handler.itemhandlers;
 
 
+import net.sf.l2j.commons.pool.ThreadPool;
 import net.sf.l2j.gameserver.data.xml.AugmentationData;
 import net.sf.l2j.gameserver.enums.Paperdoll;
 import net.sf.l2j.gameserver.enums.SayType;
@@ -65,17 +66,22 @@ public class FastAugmentTopGrade implements IItemHandler {
 		}
 	}
 
-	public void sendDlg(Player player , Playable playable) {
-		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
-		String name = weap.getAugmentation().getSkill().getName();
-		ConfirmDlg confirm = new ConfirmDlg(SystemMessageId.S1.getId());
-		confirm.addString("Do you wish to remove " + name + "augment ?");
-		confirm.addTime(5000);
-		weap.removeAugmentation(true);
-		player.sendPacket(confirm);
-		playable.sendMessage("Removed" + name + " augmentation.");
+		private void sendDlg(Player player , Playable playable) {
+			ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
+			String name = weap.getAugmentation().getSkill().getName();
 
-	}
+
+
+
+			ConfirmDlg confirm = new ConfirmDlg(SystemMessageId.S1.getId());
+			confirm.addString("Do you wish to remove " + name + "augment ?");
+			confirm.addTime(10000);
+			weap.removeAugmentation(true);
+			ThreadPool.schedule(() -> weap.removeAugmentation(false), 10000);
+			player.sendPacket(confirm);
+		}
+
+
 	private static void checkAugment(Playable playable) {
 		Player player = (Player) playable;
 		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
