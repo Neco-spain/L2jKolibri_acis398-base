@@ -18,7 +18,9 @@ public class FastAugmentTopGrade implements IItemHandler {
 	public void useItem(Playable playable, ItemInstance item, boolean forceUse) {
 		Player player = (Player) playable;
 		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
-		Augmentation aug = AugmentationData.getInstance().generateRandomAugmentation(76, 3);
+		Augmentation augTop = AugmentationData.getInstance().generateRandomAugmentation(76, 3);
+		Augmentation augHigh = AugmentationData.getInstance().generateRandomAugmentation(76, 2);
+		Augmentation augMid = AugmentationData.getInstance().generateRandomAugmentation(76, 2);
 
 		if (weap == null) {
 			player.sendMessage(player.getName() + " you have to equip a weapon.");
@@ -38,7 +40,17 @@ public class FastAugmentTopGrade implements IItemHandler {
 			player.broadcastUserInfo();
 		} else {
 			player.destroyItem("Consume", item.getObjectId(), 1, null, false);
-			weap.setAugmentation(aug);
+
+			// TODO CHECK THIS OUT !??!
+			if (item.getItem().getItemId() == 8762) {
+				weap.setAugmentation(augTop);
+			} else if (item.getItem().getItemId() == 8752) {
+				weap.setAugmentation(augHigh);
+
+			} else if (item.getItem().getItemId() == 8742) {
+				weap.setAugmentation(augMid);
+
+			}
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
