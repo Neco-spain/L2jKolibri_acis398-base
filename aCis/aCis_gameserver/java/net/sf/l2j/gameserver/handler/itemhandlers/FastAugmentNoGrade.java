@@ -31,7 +31,7 @@ public class FastAugmentNoGrade implements IItemHandler {
 
 		} else if (weap.isAugmented()) {
 			weap.getAugmentation().removeBonus(player);
-			weap.removeAugmentation();
+			weap.removeAugmentation(true);
 //			askRemove(player, forceUse);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);

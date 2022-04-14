@@ -492,7 +492,7 @@ public class MultiShop extends Folk {
 		}
 
 		item.getAugmentation().removeBonus(player);
-		item.removeAugmentation();
+		item.removeAugmentation(true);
 		{
 			player.sendMessage("Your augmented has been removed!");
 			// Unequip the weapon

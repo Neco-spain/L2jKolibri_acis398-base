@@ -93,7 +93,7 @@ public final class RequestRefineCancel extends L2GameClientPacket
 			player.disarmWeapon(false);
 		
 		// remove the augmentation
-		item.removeAugmentation();
+		item.removeAugmentation(true);
 		
 		// send ExVariationCancelResult
 		player.sendPacket(new ExVariationCancelResult(1));

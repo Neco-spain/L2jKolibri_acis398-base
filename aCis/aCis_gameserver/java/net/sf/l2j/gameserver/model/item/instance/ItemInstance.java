@@ -632,8 +632,9 @@ public final class ItemInstance extends WorldObject implements Runnable, Compara
 
 	/**
 	 * Remove the augmentation.
+	 * @param b
 	 */
-	public void removeAugmentation() {
+	public void removeAugmentation(boolean b) {
 		if (_augmentation == null)
 			return;
 

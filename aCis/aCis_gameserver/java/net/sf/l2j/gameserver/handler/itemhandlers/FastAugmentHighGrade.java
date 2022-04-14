@@ -32,7 +32,7 @@ public class FastAugmentHighGrade implements IItemHandler {
 
 		} else if (weap.isAugmented()) {
 			weap.getAugmentation().removeBonus(player);
-			weap.removeAugmentation();
+			weap.removeAugmentation(true);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
