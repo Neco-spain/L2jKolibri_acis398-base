@@ -1,5 +1,6 @@
 package net.sf.l2j.gameserver.handler.itemhandlers;
 
+import net.sf.l2j.commons.pool.ThreadPool;
 import net.sf.l2j.gameserver.data.xml.AugmentationData;
 import net.sf.l2j.gameserver.enums.Paperdoll;
 import net.sf.l2j.gameserver.enums.SayType;
@@ -8,6 +9,8 @@ import net.sf.l2j.gameserver.model.Augmentation;
 import net.sf.l2j.gameserver.model.actor.Playable;
 import net.sf.l2j.gameserver.model.actor.Player;
 import net.sf.l2j.gameserver.model.item.instance.ItemInstance;
+import net.sf.l2j.gameserver.network.SystemMessageId;
+import net.sf.l2j.gameserver.network.serverpackets.ConfirmDlg;
 import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
 import net.sf.l2j.gameserver.network.serverpackets.InventoryUpdate;
@@ -19,8 +22,8 @@ public class FastAugmentTopGrade implements IItemHandler {
 		Player player = (Player) playable;
 		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
 		Augmentation augTop = AugmentationData.getInstance().generateRandomAugmentation(76, 3);
-		Augmentation augHigh = AugmentationData.getInstance().generateRandomAugmentation(76, 2);
-		Augmentation augMid = AugmentationData.getInstance().generateRandomAugmentation(76, 2);
+//		Augmentation augHigh = AugmentationData.getInstance().generateRandomAugmentation(76, 2);
+//		Augmentation augMid = AugmentationData.getInstance().generateRandomAugmentation(76, 2);
 
 		if (weap == null) {
 			player.sendMessage(player.getName() + " you have to equip a weapon.");
@@ -32,38 +35,55 @@ public class FastAugmentTopGrade implements IItemHandler {
 			player.sendMessage("You can't add Augment on " + weap.getItemName() + " !");
 
 		} else if (weap.isAugmented()) {
-			weap.getAugmentation().removeBonus(player);
-			weap.removeAugmentation(true);
-			InventoryUpdate iu = new InventoryUpdate();
-			iu.addModifiedItem(weap);
-			player.sendPacket(iu);
-			player.broadcastUserInfo();
-		} else {
-			player.destroyItem("Consume", item.getObjectId(), 1, null, false);
-
-			// TODO CHECK THIS OUT !??!
-			if (item.getItem().getItemId() == 8762) {
-				weap.setAugmentation(augTop);
-			} else if (item.getItem().getItemId() == 8752) {
-				weap.setAugmentation(augHigh);
-
-			} else if (item.getItem().getItemId() == 8742) {
-				weap.setAugmentation(augMid);
-
-			}
-			InventoryUpdate iu = new InventoryUpdate();
-			iu.addModifiedItem(weap);
-			player.sendPacket(iu);
-			player.broadcastUserInfo();
-
+			boolean isPassive = weap.getAugmentation().getSkill().isPassive()
+					&& !weap.getAugmentation().getSkill().isChance();
+			boolean isActive = weap.getAugmentation().getSkill().isActive();
+			boolean isChance = weap.getAugmentation().getSkill().isChance();
 			if (weap.getAugmentation().getSkill() == null) {
-				player.sendMessage("No luck try again!");
-			} else
-				checkaugment(playable, weap);
-		}
+				weap.getAugmentation().removeBonus(player);
+				weap.removeAugmentation(true);
+				InventoryUpdate iu = new InventoryUpdate();
+				iu.addModifiedItem(weap);
+				player.sendPacket(iu);
+				player.broadcastUserInfo();
+			} else if (isActive || isPassive || isChance) {
+				checkCancel(player);
+				InventoryUpdate iu = new InventoryUpdate();
+				iu.addModifiedItem(weap);
+				player.sendPacket(iu);
+				player.broadcastUserInfo();
+			} else {
+				player.destroyItem("Consume", item.getObjectId(), 1, null, false);
+				weap.setAugmentation(augTop);
+				InventoryUpdate iu = new InventoryUpdate();
+				iu.addModifiedItem(weap);
+				player.sendPacket(iu);
+				player.broadcastUserInfo();
+			}
+		} else if (weap.getAugmentation().getSkill() == null) {
+			player.sendMessage("No luck try again!");
+		} else
+			checkAugment(playable, weap);
+
 	}
 
-	private static void checkaugment(Playable playable, ItemInstance item) {
+	public void checkCancel(Player player) {
+		ItemInstance weap = player.getInventory().getItemFrom(Paperdoll.RHAND);
+		String name = weap.getAugmentation().getSkill().getName();
+		ConfirmDlg confirm = new ConfirmDlg(SystemMessageId.S1.getId());
+		confirm.addString("Do you wish to remove " + name + " ?");
+		confirm.addTime(5000);
+		weap.removeAugmentation(true);
+		ThreadPool.schedule(new Runnable() {
+			@Override
+			public void run() {
+				weap.removeAugmentation(false);
+			}
+		}, 5000);
+		player.sendPacket(confirm);
+	}
+
+	private static void checkAugment(Playable playable, ItemInstance item) {
 		Player player = (Player) playable;
 		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
 		String name = weap.getAugmentation().getSkill().getName();
