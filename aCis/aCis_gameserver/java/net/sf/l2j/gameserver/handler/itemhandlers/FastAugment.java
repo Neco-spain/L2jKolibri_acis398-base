@@ -1,6 +1,6 @@
 package net.sf.l2j.gameserver.handler.itemhandlers;
 
-
+//
 import net.sf.l2j.gameserver.data.xml.AugmentationData;
 import net.sf.l2j.gameserver.enums.Paperdoll;
 import net.sf.l2j.gameserver.enums.SayType;
@@ -13,12 +13,16 @@ import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
 import net.sf.l2j.gameserver.network.serverpackets.InventoryUpdate;
 
-public class FastAugmentNoGrade implements IItemHandler {
+public class FastAugment implements IItemHandler {
+
 	@Override
 	public void useItem(Playable playable, ItemInstance item, boolean forceUse) {
 		Player player = (Player) playable;
 		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
-		Augmentation aug = AugmentationData.getInstance().generateRandomAugmentation(76, 0);
+		Augmentation augtop = AugmentationData.getInstance().generateRandomAugmentation(76, 3);
+		Augmentation aughigh = AugmentationData.getInstance().generateRandomAugmentation(76, 2);
+		Augmentation augmid = AugmentationData.getInstance().generateRandomAugmentation(76, 1);
+		Augmentation augnograde = AugmentationData.getInstance().generateRandomAugmentation(76, 0);
 
 		if (weap == null) {
 			player.sendMessage(player.getName() + " you have to equip a weapon.");
@@ -32,15 +36,28 @@ public class FastAugmentNoGrade implements IItemHandler {
 		} else if (weap.isAugmented()) {
 			weap.getAugmentation().removeBonus(player);
 			weap.removeAugmentation(true);
-//			askRemove(player, forceUse);
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
 			player.broadcastUserInfo();
 		} else {
 			player.destroyItem("Consume", item.getObjectId(), 1, null, false);
-			weap.setAugmentation(aug);
+			if (item.getItemId() == 8762) {
+				weap.setAugmentation(augtop);
+				player.sendMessage("TOP LS");
+			} else if (item.getItemId() == 8752) {
+				weap.setAugmentation(aughigh);
+				player.sendMessage("HIGH LS");
 
+			} else if (item.getItemId() == 8742) {
+				weap.setAugmentation(augmid);
+				player.sendMessage("MID LS");
+
+			} else if (item.getItemId() == 8732) {
+				weap.setAugmentation(augnograde);
+				player.sendMessage("NOGRADE LS");
+
+			}
 			InventoryUpdate iu = new InventoryUpdate();
 			iu.addModifiedItem(weap);
 			player.sendPacket(iu);
@@ -51,13 +68,14 @@ public class FastAugmentNoGrade implements IItemHandler {
 			} else
 				checkaugment(playable, weap);
 		}
-		
 	}
+
 	private static void checkaugment(Playable playable, ItemInstance item) {
 		Player player = (Player) playable;
 		ItemInstance weap = playable.getInventory().getItemFrom(Paperdoll.RHAND);
 		String name = weap.getAugmentation().getSkill().getName();
-		boolean isPassive = weap.getAugmentation().getSkill().isPassive()&& !weap.getAugmentation().getSkill().isChance();
+		boolean isPassive = weap.getAugmentation().getSkill().isPassive()
+				&& !weap.getAugmentation().getSkill().isChance();
 		boolean isactive = weap.getAugmentation().getSkill().isActive();
 		boolean isChance = weap.getAugmentation().getSkill().isChance();
 		if (isChance == true) {
@@ -89,6 +107,7 @@ public class FastAugmentNoGrade implements IItemHandler {
 		}
 		return;
 	}
+
 	private static void sendMsg(final Player player, final String s) {
 		player.sendPacket(new ExShowScreenMessage(s, 3000, ExShowScreenMessage.SMPOS.TOP_CENTER, true));
 		player.sendMessage(s);
