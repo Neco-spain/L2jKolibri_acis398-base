@@ -19,7 +19,7 @@ import net.sf.l2j.gameserver.model.holder.IntIntHolder;
 import net.sf.l2j.gameserver.model.location.Location;
 import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
 import net.sf.l2j.util.RewardHolder;
-
+//
 /**
  * This class contains global server configuration.<br>
  * It has static final fields initialized from configuration files.
