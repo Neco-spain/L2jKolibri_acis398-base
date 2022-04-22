@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="aCis_gameserver/java"/>
+	<classpathentry kind="src" path="java"/>
 	<classpathentry exported="true" kind="lib" path="aCis_gameserver/lib/mariadb-java-client-2.6.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk17.0.2_8">
 		<attributes>
