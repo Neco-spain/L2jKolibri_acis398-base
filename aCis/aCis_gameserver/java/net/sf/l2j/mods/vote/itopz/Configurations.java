@@ -147,7 +147,7 @@ public class Configurations {
 	 */
 	public static void load() {
 		// load configuration file
-		ExProperties ep = initProperties("./config/VDSystem.properties");
+		ExProperties ep = initProperties("./config/custom/VDSystem.properties");
 
 		// debug messages
 		DEBUG = ep.getProperty("VDS_DEBUG", false);

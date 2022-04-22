@@ -36,16 +36,16 @@ public final class Config {
 	public static final String PLAYERS_FILE = "./config/players.properties";
 	public static final String SERVER_FILE = "./config/server.properties";
 	public static final String SIEGE_FILE = "./config/siege.properties";
-	public static final String MODS_FILE = "./config/mods.properties";
-	public static final String SKIN_FILE = "./config/Skin.properties";
-	public static final String ENCHANT_FILE = "./config/EnchantSystem.properties";
-	public static final String PARTYFARMEVENT = "./config/PartyFarmEvent.properties";
-	public static final String PCBANGEVENT = "./config/PcBangEvent.properties";
-	public static final String TVTEVENT = "./config/TvT.properties";
-	public static final String CUSTOMQUESTS = "./config/quests.properties";
-	public static final String PVP = "./config/pvp.properties";
-	public static final String TOURNAMENT = "./config/Tournament.properties";
-	public static final String MULTI_FILE = "./config/multishop.properties";
+	public static final String MODS_FILE = "./config/custom/mods.properties";
+	public static final String SKIN_FILE = "./config/custom/Skin.properties";
+	public static final String ENCHANT_FILE = "./config/custom/EnchantSystem.properties";
+	public static final String PARTYFARMEVENT = "./config/custom/PartyFarmEvent.properties";
+	public static final String PCBANGEVENT = "./config/custom/PcBangEvent.properties";
+	public static final String TVTEVENT = "./config/custom/TvT.properties";
+	public static final String CUSTOMQUESTS = "./config/custom/quests.properties";
+	public static final String PVP = "./config/custom/pvp.properties";
+	public static final String TOURNAMENT = "./config/custom/Tournament.properties";
+	public static final String MULTI_FILE = "./config/custom/multishop.properties";
 //=====================================================================================================================================================
 	/** Multi Shop Manager */
 	public static int DONATE_ITEM;
