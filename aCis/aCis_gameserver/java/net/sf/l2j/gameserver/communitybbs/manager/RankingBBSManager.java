@@ -38,7 +38,7 @@ public class RankingBBSManager extends BaseBBSManager {
 
 			try (Connection con = ConnectionPool.getConnection()) {
 				try (PreparedStatement ps = con.prepareStatement(
-						"SELECT char_name, pvpkills FROM characters WHERE pvpkills > 0 ORDER BY pvpkills DESC LIMIT "
+						"SELECT char_name, pvpkills FROM characters WHERE pvpkills > 0 AND accesslevel = 0  ORDER BY pvpkills DESC LIMIT "
 								+ PAGE_LIMIT_15);
 						ResultSet rs = ps.executeQuery()) {
 					int index = 1;
@@ -61,7 +61,7 @@ public class RankingBBSManager extends BaseBBSManager {
 				}
 
 				try (PreparedStatement ps = con.prepareStatement(
-						"SELECT char_name, pkkills FROM characters WHERE pkkills > 0 ORDER BY pkkills DESC LIMIT "
+						"SELECT char_name, pkkills FROM characters WHERE pkkills > 0 AND accesslevel = 0  ORDER BY pkkills DESC LIMIT "
 								+ PAGE_LIMIT_15);
 						ResultSet rs = ps.executeQuery()) {
 					int index = 1;
