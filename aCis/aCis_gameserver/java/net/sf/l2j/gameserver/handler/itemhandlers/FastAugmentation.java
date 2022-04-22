@@ -12,7 +12,7 @@ import net.sf.l2j.gameserver.network.serverpackets.CreatureSay;
 import net.sf.l2j.gameserver.network.serverpackets.ExShowScreenMessage;
 import net.sf.l2j.gameserver.network.serverpackets.InventoryUpdate;
 
-public class FastAugment implements IItemHandler {
+public class FastAugmentation implements IItemHandler {
 
 	@Override
 	public void useItem(Playable playable, ItemInstance item, boolean forceUse) {
