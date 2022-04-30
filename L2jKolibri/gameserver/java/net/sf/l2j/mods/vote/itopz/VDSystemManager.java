@@ -48,7 +48,7 @@ public class VDSystemManager {
 		Configurations.load();
 
 		// load gui console
-		Gui.getInstance();
+//		Gui.getInstance();
 
 		// load iTopz
 		VDSystem.getInstance();

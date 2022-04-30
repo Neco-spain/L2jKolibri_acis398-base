@@ -14,6 +14,11 @@
  */
 package net.sf.l2j.gameserver.handler.voicedcommandhandlers;
 
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -35,7 +40,7 @@ import net.sf.l2j.mods.Tournament.TournamentManager;
 import net.sf.l2j.mods.Tournament.enums.TournamentFightType;
 
 /**
- * @author klevi
+ * @author Kolibri
  */
 
 public class Menu implements IVoicedCommandHandler
@@ -177,7 +182,7 @@ public class Menu implements IVoicedCommandHandler
 
 			if (command.startsWith("siege_")) {
 				if (activeChar.getClan() != null && !activeChar.isClanLeader()) {
-					activeChar.sendMessage("Only Clan Leader can be use this command");
+					activeChar.sendMessage("Only Clan Leader can use this command");
 					return false;
 				}
 
@@ -233,10 +238,23 @@ public class Menu implements IVoicedCommandHandler
 	private static void showHtml(Player activeChar)
 
 	{
+		
 
 		NpcHtmlMessage html = new NpcHtmlMessage(0);
+		String pattern = "dd/MM/yyyy HH:mm:ss";
+
+		// Create an instance of SimpleDateFormat used for formatting 
+		// the string representation of date according to the chosen pattern
+		DateFormat df = new SimpleDateFormat(pattern);
+
+		// Get the today date using Calendar object.
+		Date today = Calendar.getInstance().getTime();        
+		// Using DateFormat format method we can create a string 
+		// representation of a date with the defined format.
+		String todayAsString = df.format(today); 
 
 		html.setFile("data/html/mods/menu.htm");
+		html.replace("%time%" , todayAsString);
 
 		html.replace("%online%", World.getInstance().getPlayers().size());
 
