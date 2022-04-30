@@ -15,10 +15,8 @@
 package net.sf.l2j.gameserver.handler.voicedcommandhandlers;
 
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -49,6 +47,17 @@ public class Menu implements IVoicedCommandHandler
 	private static final String ACTIVED = "<font color=00FF00>ON</font>";
 
 	private static final String DESATIVED = "<font color=FF0000>OFF</font>";
+	String pattern = "dd/MM/yyyy HH:mm:ss";
+
+	// Create an instance of SimpleDateFormat used for formatting 
+	// the string representation of date according to the chosen pattern
+	DateFormat df = new SimpleDateFormat(pattern);
+
+	// Get the today date using Calendar object.
+	Date today = Calendar.getInstance().getTime();        
+	// Using DateFormat format method we can create a string 
+	// representation of a date with the defined format.
+	String todayAsString = df.format(today);
 	private static final String[] _voicedCommands =
 
 			{
@@ -133,15 +142,13 @@ public class Menu implements IVoicedCommandHandler
 			showHtml(activeChar);
 
 		} else if (command.equals("skins")) {
-			;
-
 			skinsHtml(activeChar);
 		}
 
 		else if (command.startsWith("visualTest")) {
 			if (activeChar.getVisualTest() > 0) {
 				activeChar.sendPacket(new CreatureSay(0, SayType.TELL, "[SKIN System]",
-						"You are already trying on a uniform, please wait till it finishes."));
+						"You are already trying on a skin, please wait till it finishes."));
 
 				skinsHtml(activeChar);
 				return false;
@@ -168,17 +175,7 @@ public class Menu implements IVoicedCommandHandler
 			showHtml(activeChar);
 		} else if (command.equals("time")) {
 
-			String pattern = "dd/MM/yyyy HH:mm:ss";
-
-			// Create an instance of SimpleDateFormat used for formatting 
-			// the string representation of date according to the chosen pattern
-			DateFormat df = new SimpleDateFormat(pattern);
-
-			// Get the today date using Calendar object.
-			Date today = Calendar.getInstance().getTime();        
-			// Using DateFormat format method we can create a string 
-			// representation of a date with the defined format.
-			String todayAsString = df.format(today);
+			
 			activeChar.sendPacket(
 					new CreatureSay(0, SayType.PARTY, "[System]", "Current Server's  time is : " + todayAsString + "."));
 			showHtml(activeChar);
