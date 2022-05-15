@@ -178,7 +178,7 @@ public class Menu implements IVoicedCommandHandler
 
 			
 			activeChar.sendPacket(
-					new CreatureSay(0, SayType.PARTY, "[System]", "Current Server's  time is : " + todayAsString + "."));
+					new CreatureSay(0, SayType.PARTY, "[System]", "Current  time is : " + todayAsString + "."));
 			showHtml(activeChar);
 		} else if (command.startsWith("mytour")) {
 			TournamentManager.getInstance().showHtml(activeChar, "myTour", TournamentFightType.NONE);
@@ -246,8 +246,6 @@ public class Menu implements IVoicedCommandHandler
 	private static void showHtml(Player activeChar)
 
 	{
-		
-
 		NpcHtmlMessage html = new NpcHtmlMessage(0);
 		String pattern = "dd/MM/yyyy HH:mm:ss";
 
@@ -262,6 +260,7 @@ public class Menu implements IVoicedCommandHandler
 		String todayAsString = df.format(today); 
 
 		html.setFile("data/html/mods/menu.htm");
+		
 		html.replace("%time%" , todayAsString);
 
 		html.replace("%online%", World.getInstance().getPlayers().size());
