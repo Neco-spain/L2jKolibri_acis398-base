@@ -128,7 +128,7 @@ public class Menu implements IVoicedCommandHandler
 			showHtml(activeChar);
 
 		} else if (command.equals("skins")) {
-			;
+			
 
 			skinsHtml(activeChar);
 		}
