@@ -648,7 +648,6 @@
 		<set name="weight" val="10" />
 		<set name="price" val="500000" />
 		<set name="is_stackable" val="true" />
-		<set name="handler" val="Bog" />
 	</item>
 	<item id="6623" type="EtcItem" name="Dummy - Quest Item 1">
 		<set name="material" val="STEEL" />

@@ -250,7 +250,7 @@
 		<set name="weight" val="2" />
 		<set name="is_stackable" val="true" />
 		<set name="price" val="24000" />
-		<set name="handler" val="FastAugment" />
+		<set name="handler" val="FastAugmentation" />
 		<cond msgId="113">
 			<player level="76" />
 		</cond>
@@ -341,7 +341,7 @@
 		<set name="weight" val="2" />
 		<set name="price" val="96000" />
 		<set name="is_stackable" val="true" />
-				<set name="handler" val="FastAugment" />
+				<set name="handler" val="FastAugmentation" />
 
 		<cond msgId="113">
 			<player level="76" />
@@ -432,7 +432,7 @@
 		<set name="weight" val="2" />
 		<set name="is_stackable" val="true" />
 		<set name="price" val="960000" />
-		<set name="handler" val="FastAugment" />
+		<set name="handler" val="FastAugmentation" />
 
 
 		<cond msgId="113">
@@ -525,7 +525,7 @@
 		<set name="weight" val="2" />
 		<set name="price" val="4800000" />
 		<set name="is_stackable" val="true" />
-		<set name="handler" val="FastAugment" />
+		<set name="handler" val="FastAugmentation" />
 		<cond msgId="113">
 			<player level="76" />
 		</cond>

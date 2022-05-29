@@ -240,44 +240,42 @@
 			<skill id="4897" level="1"/>
 		</skills>
 	</npc>
-	<npc id="50012" idTemplate="25002" name="Mob" title="Party Farm">
+	<npc id="50012" idTemplate="29032" name="Lava Bomber" title="Party Farm">
 		<set name="usingServerSideName" val="true"/>
 		<set name="usingServerSideTitle" val="true"/>
-		<set name="level" val="80"/>
-		<set name="radius" val="13.5"/>
-		<set name="height" val="25"/>
-		<set name="rHand" val="7"/>
+		<set name="level" val="85"/>
+		<set name="radius" val="22"/>
+		<set name="height" val="45"/>
+		<set name="rHand" val="0"/>
 		<set name="lHand" val="0"/>
 		<set name="type" val="Monster"/>
 		<set name="exp" val="0"/>
-		<set name="sp" val="128"/>
-		<set name="hp" val="4185.61380792955"/>
-		<set name="mp" val="218.52"/>
-		<set name="hpRegen" val="17.1576881427546"/>
-		<set name="mpRegen" val="1.5"/>
-		<set name="pAtk" val="154.12029514765"/>
-		<set name="pDef" val="138.98541"/>
-		<set name="mAtk" val="25.8557002815554"/>
-		<set name="mDef" val="135.6"/>
+		<set name="sp" val="0"/>
+		<set name="hp" val="4000.42094757852"/>
+		<set name="mp" val="1607.808"/>
+		<set name="hpRegen" val="48"/>
+		<set name="mpRegen" val="3.84"/>
+		<set name="pAtk" val="6000.32"/>
+		<set name="pDef" val="3000.88"/>
+		<set name="mAtk" val="5000.88"/>
+		<set name="mDef" val="2000.616"/>
 		<set name="crit" val="4"/>
 		<set name="atkSpd" val="253"/>
-		<set name="str" val="40"/>
-		<set name="int" val="41"/>
+		<set name="str" val="60"/>
+		<set name="int" val="21"/>
 		<set name="dex" val="30"/>
 		<set name="wit" val="20"/>
-		<set name="con" val="43"/>
+		<set name="con" val="60"/>
 		<set name="men" val="10"/>
 		<set name="corpseTime" val="7"/>
-		<set name="walkSpd" val="50"/>
-		<set name="runSpd" val="170"/>
+		<set name="walkSpd" val="180"/>
+		<set name="runSpd" val="260"/>
 		<set name="dropHerbGroup" val="0"/>
 		<ai type="DEFAULT" ssCount="0" ssRate="0" spsCount="0" spsRate="0" aggro="0" canMove="true" seedable="false"/>
 		<skills>
 			<skill id="4045" level="1"/>
-			<skill id="4191" level="2"/>
-			<skill id="4198" level="2"/>
-			<skill id="4414" level="3"/>
-			<skill id="4416" level="6"/>
+			<skill id="4416" level="2"/>
+			<skill id="4314" level="9"/>
 		</skills>
 	</npc>
 	<npc id="50013" idTemplate="30474" name="Skill Enchanter" title="Lineage II">
@@ -291,7 +289,7 @@
 		<set name="type" val="Trainer"/>
 		<set name="exp" val="0"/>
 		<set name="sp" val="0"/>
-		<set name="hp" val="2444.46819"/>
+		<set name="hp" val="5000.46819"/>
 		<set name="mp" val="1345.8"/>
 		<set name="hpRegen" val="7.5"/>
 		<set name="mpRegen" val="2.7"/>

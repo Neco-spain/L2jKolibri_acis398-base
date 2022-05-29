@@ -1,9 +1,12 @@
 <component name="libraryTable">
   <library name="mariadb-java-client-2.6.1">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/aCis/aCis_gameserver/lib/mariadb-java-client-2.6.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/L2jKolibri/gameserver/lib/mariadb-java-client-2.6.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <excluded>
+      <root url="jar://$PROJECT_DIR$/L2jKolibri/gameserver/lib/mariadb-java-client-2.6.1.jar!/" />
+    </excluded>
   </library>
 </component>
