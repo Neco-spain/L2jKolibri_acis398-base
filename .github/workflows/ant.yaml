@@ -5,9 +5,9 @@ name: Java CI
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -22,4 +22,4 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Build with Ant
-      run: ant -noinput -buildfile L2jKolibri/gameserver/build.xml jar
+      run: ant -noinput -buildfile L2jKolibri/gameserver/build.xml
