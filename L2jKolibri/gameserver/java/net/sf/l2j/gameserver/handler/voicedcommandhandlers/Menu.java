@@ -16,7 +16,6 @@ package net.sf.l2j.gameserver.handler.voicedcommandhandlers;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-
 import java.util.Calendar;
 import java.util.Date;
 
@@ -47,15 +46,16 @@ public class Menu implements IVoicedCommandHandler
 	private static final String ACTIVED = "<font color=00FF00>ON</font>";
 
 	private static final String DESATIVED = "<font color=FF0000>OFF</font>";
+
 	String pattern = "dd/MM/yyyy HH:mm:ss";
 
-	// Create an instance of SimpleDateFormat used for formatting 
+	// Create an instance of SimpleDateFormat used for formatting
 	// the string representation of date according to the chosen pattern
 	DateFormat df = new SimpleDateFormat(pattern);
 
 	// Get the today date using Calendar object.
-	Date today = Calendar.getInstance().getTime();        
-	// Using DateFormat format method we can create a string 
+	Date today = Calendar.getInstance().getTime();
+	// Using DateFormat format method we can create a string
 	// representation of a date with the defined format.
 	String todayAsString = df.format(today);
 	private static final String[] _voicedCommands =
@@ -174,12 +174,7 @@ public class Menu implements IVoicedCommandHandler
 
 			RepairBBSManager.getInstance().parseCmd("_bbsShowRepair", activeChar);
 			showHtml(activeChar);
-		} else if (command.equals("time")) {
 
-			
-			activeChar.sendPacket(
-					new CreatureSay(0, SayType.PARTY, "[System]", "Current  time is : " + todayAsString + "."));
-			showHtml(activeChar);
 		} else if (command.startsWith("mytour")) {
 			TournamentManager.getInstance().showHtml(activeChar, "myTour", TournamentFightType.NONE);
 		}
@@ -243,25 +238,25 @@ public class Menu implements IVoicedCommandHandler
 
 	}
 
-	private static void showHtml(Player activeChar)
+	private void showHtml(Player activeChar)
 
 	{
 		NpcHtmlMessage html = new NpcHtmlMessage(0);
 		String pattern = "dd/MM/yyyy HH:mm:ss";
 
-		// Create an instance of SimpleDateFormat used for formatting 
+		// Create an instance of SimpleDateFormat used for formatting
 		// the string representation of date according to the chosen pattern
 		DateFormat df = new SimpleDateFormat(pattern);
 
 		// Get the today date using Calendar object.
-		Date today = Calendar.getInstance().getTime();        
-		// Using DateFormat format method we can create a string 
+		Date today = Calendar.getInstance().getTime();
+		// Using DateFormat format method we can create a string
 		// representation of a date with the defined format.
-		String todayAsString = df.format(today); 
+		String todayAsString = df.format(today);
 
 		html.setFile("data/html/mods/menu.htm");
-		
-		html.replace("%time%" , todayAsString);
+
+		html.replace("%time%", todayAsString);
 
 		html.replace("%online%", World.getInstance().getPlayers().size());
 
