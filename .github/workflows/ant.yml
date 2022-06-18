@@ -20,6 +20,11 @@ jobs:
       uses: actions/setup-java@v3
       with:
         java-version: '11'
-        distribution: 'temurin'
+        distribution: 'adopt'
     - name: Build with Ant
-      run: ant -noinput -buildfile l2jkolibri/gameserver/build.xml
+      run: ant -noinput -buildfile l2jkolibri/gameserver/build.xml jar
+    - uses: actions/upload-artifact@v3
+      with:
+        name: Package
+        path: build/jar
+      
