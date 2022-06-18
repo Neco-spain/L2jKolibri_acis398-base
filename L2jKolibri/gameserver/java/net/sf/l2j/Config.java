@@ -26,7 +26,7 @@ import net.sf.l2j.util.RewardHolder;
  */
 public final class Config {
 	private static final CLogger LOGGER = new CLogger(Config.class.getName());
-
+//================================================================================================================================================
 	public static final String CLANS_FILE = "./config/clans.properties";
 	public static final String EVENTS_FILE = "./config/events.properties";
 	public static final String GEOENGINE_FILE = "./config/geoengine.properties";
