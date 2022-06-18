@@ -303,7 +303,7 @@ public class GameServer {
 		if (Config.ALLOW_FISH_CHAMPIONSHIP)
 			FishingChampionshipManager.getInstance();
 		VDSystemManager.getInstance();
-		StringUtil.printSection("Balancer");
+		StringUtil.printSection("Class-Balancer");
 		ClassBalanceManager.getInstance();
 		SkillBalanceManager.getInstance();
 		StringUtil.printSection("Handlers");

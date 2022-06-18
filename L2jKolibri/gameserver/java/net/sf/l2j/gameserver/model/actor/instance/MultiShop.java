@@ -460,6 +460,7 @@ public class MultiShop extends Folk {
 		player.disarmWeapon(true);
 
 		try (Connection con = ConnectionPool.getConnection()) {
+			@SuppressWarnings("resource")
 			PreparedStatement statement = con.prepareStatement("REPLACE INTO augmentations VALUES(?,?,?,?)");
 			statement.setInt(1, item.getObjectId());
 			statement.setInt(2, attributes);
@@ -482,19 +483,19 @@ public class MultiShop extends Folk {
 		ItemInstance item = player.getInventory().getItemFrom(Paperdoll.RHAND);
 
 		if (item == null) {
-			player.sendMessage("Equipped first a weapon!");
+			player.sendMessage("You have to equip a weapon first!");
 			return;
 		}
 
 		if (!item.isAugmented()) {
-			player.sendMessage("The weapon is not augmented.");
+			player.sendMessage("The weapon is not augmentable.");
 			return;
 		}
 
 		item.getAugmentation().removeBonus(player);
 		item.removeAugmentation(true);
 		{
-			player.sendMessage("Your augmented has been removed!");
+			player.sendMessage("Your augmentation has been removed!");
 			// Unequip the weapon
 			player.disarmWeapon(true);
 		}
