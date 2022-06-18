@@ -65,7 +65,7 @@ public class Menu implements IVoicedCommandHandler
 					"menu", "setPartyRefuse", "setTradeRefuse", "setbuffsRefuse", "setMessageRefuse", "raid", "rank",
 					"visualTest", "skins", "skin", "castlemanager", "siege_of_gludio", "siege_of_dion",
 					"siege_of_giran", "siege_of_oren", "siege_of_aden", "siege_of_innadril", "siege_of_goddard",
-					"siege_of_rune", "siege_of_schuttgart", "siege_of_", "repair", "time", "mytour",
+					"siege_of_rune", "siege_of_schuttgart", "siege_of_", "repair", "mytour",
 
 			};
 
